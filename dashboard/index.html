@@ -1,0 +1,1144 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>준현 인생 대시보드</title>
+<style>
+  :root {
+    color-scheme: light;
+    --surface-1:      #fcfcfb;
+    --page:           #f9f9f7;
+    --card:           #ffffff;
+    --text-primary:   #0b0b0b;
+    --text-secondary: #52514e;
+    --text-muted:     #898781;
+    --gridline:       #e1e0d9;
+    --border:         rgba(11,11,11,0.10);
+    --good:           #0ca30c;
+
+    --cat-asset:   #2a78d6; /* 자산 */
+    --cat-workout: #1baf7a; /* 운동 */
+    --cat-dn8:     #eda100; /* DN8 */
+    --cat-study:   #008300; /* 공부 */
+    --cat-ai:      #4a3aa7; /* AI프로젝트 */
+    --cat-invest:  #e34948; /* 투자 */
+    --cat-love:    #e87ba4; /* 연애 */
+    --cat-happy:   #eb6834; /* 행복도 */
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) {
+      color-scheme: dark;
+      --surface-1:      #1a1a19;
+      --page:           #0d0d0d;
+      --card:           #232322;
+      --text-primary:   #ffffff;
+      --text-secondary: #c3c2b7;
+      --text-muted:     #898781;
+      --gridline:       #2c2c2a;
+      --border:         rgba(255,255,255,0.10);
+      --good:           #0ca30c;
+      --cat-asset:   #3987e5;
+      --cat-workout: #199e70;
+      --cat-dn8:     #c98500;
+      --cat-study:   #008300;
+      --cat-ai:      #9085e9;
+      --cat-invest:  #e66767;
+      --cat-love:    #d55181;
+      --cat-happy:   #d95926;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --surface-1:      #1a1a19;
+    --page:           #0d0d0d;
+    --card:           #232322;
+    --text-primary:   #ffffff;
+    --text-secondary: #c3c2b7;
+    --text-muted:     #898781;
+    --gridline:       #2c2c2a;
+    --border:         rgba(255,255,255,0.10);
+    --cat-asset:   #3987e5;
+    --cat-workout: #199e70;
+    --cat-dn8:     #c98500;
+    --cat-study:   #008300;
+    --cat-ai:      #9085e9;
+    --cat-invest:  #e66767;
+    --cat-love:    #d55181;
+    --cat-happy:   #d95926;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    background: var(--page);
+    color: var(--text-primary);
+    padding: 24px 16px 80px;
+  }
+  .page-layout {
+    display: flex; gap: 20px; max-width: 1120px; margin: 0 auto;
+    align-items: flex-start; justify-content: center;
+  }
+  .wrap { max-width: 780px; width: 100%; margin: 0; }
+  .sidebar { width: 300px; flex-shrink: 0; }
+  @media (max-width: 1100px) {
+    .page-layout { flex-direction: column; align-items: stretch; }
+    .sidebar { width: 100%; }
+  }
+
+  .marathon-panel h3 {
+    font-size: 13px; font-weight: 700; margin: 18px 0 8px; color: var(--text-secondary);
+    display: flex; align-items: center; gap: 5px;
+  }
+  .marathon-panel h3:first-child { margin-top: 4px; }
+  .race-item {
+    padding: 10px 12px; border-bottom: 1px solid var(--gridline); font-size: 12.5px;
+  }
+  .race-item:last-child { border-bottom: none; }
+  .race-item .race-name { font-weight: 700; color: var(--text-primary); }
+  .race-item .race-date { color: var(--cat-dn8); font-weight: 600; margin-top: 2px; }
+  .race-item .race-reg { color: var(--text-muted); margin-top: 2px; }
+  .race-item .race-warn { color: var(--cat-invest); font-size: 11px; margin-top: 2px; }
+  .race-item a { color: var(--cat-asset); font-size: 11px; text-decoration: none; }
+  .race-item a:hover { text-decoration: underline; }
+  .marathon-note {
+    font-size: 11px; color: var(--text-muted); padding: 10px 12px 4px; line-height: 1.5;
+  }
+  .marathon-note a { color: var(--cat-asset); }
+
+  .region-tabs {
+    display: flex; flex-wrap: wrap; gap: 6px; padding: 0 12px 10px;
+  }
+  .region-tab {
+    font-size: 12px; color: var(--text-secondary); background: rgba(127,127,127,0.10);
+    border: 1px solid transparent; border-radius: 999px; padding: 5px 11px; cursor: pointer;
+  }
+  .region-tab:hover { background: rgba(127,127,127,0.18); }
+  .region-tab.active {
+    background: var(--cat-dn8); color: #fff; font-weight: 700;
+  }
+
+  header { text-align: center; margin-bottom: 24px; }
+  header h1 { font-size: 22px; margin: 0 0 4px; }
+  header .sub { color: var(--text-secondary); font-size: 14px; }
+  .theme-toggle {
+    position: fixed; top: 16px; right: 16px;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 999px; padding: 6px 12px; font-size: 13px;
+    cursor: pointer; color: var(--text-secondary);
+  }
+
+  .points-bar {
+    display: flex; justify-content: center; align-items: baseline; gap: 8px;
+    margin-bottom: 20px;
+  }
+  .points-bar .num { font-size: 32px; font-weight: 700; font-variant-numeric: normal; }
+  .points-bar .label { color: var(--text-secondary); font-size: 14px; }
+
+  .date-nav {
+    display: flex; align-items: center; justify-content: center; gap: 12px;
+    margin-bottom: 12px; font-size: 14px; color: var(--text-secondary);
+  }
+  .date-nav button {
+    background: var(--card); border: 1px solid var(--border); border-radius: 8px;
+    padding: 4px 10px; cursor: pointer; color: var(--text-primary); font-size: 13px;
+  }
+  .date-nav .today-label { font-weight: 600; color: var(--text-primary); min-width: 150px; text-align: center; }
+
+  section { margin-bottom: 28px; }
+  section > h2 {
+    font-size: 15px; font-weight: 700; margin: 0 0 10px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  section > h2 .count { color: var(--text-muted); font-weight: 500; font-size: 13px; }
+
+  .card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+    padding: 4px;
+  }
+
+  .quest {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 14px; border-bottom: 1px solid var(--gridline);
+    cursor: pointer; user-select: none;
+    transition: opacity .15s;
+  }
+  .quest:last-child { border-bottom: none; }
+  .quest:hover { background: rgba(127,127,127,0.06); }
+  .quest .box {
+    width: 22px; height: 22px; border-radius: 6px; flex-shrink: 0;
+    border: 2px solid var(--cat-color, var(--text-muted));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; color: var(--card);
+    transition: background .15s;
+  }
+  .quest.done .box { background: var(--cat-color, var(--good)); }
+  .quest .icon { font-size: 16px; }
+  .quest .label { flex: 1; font-size: 14px; }
+  .quest.done .label { color: var(--text-muted); text-decoration: line-through; }
+  .quest .tag {
+    font-size: 11px; color: var(--card); background: var(--cat-color, var(--text-muted));
+    padding: 2px 8px; border-radius: 999px; flex-shrink: 0;
+  }
+
+  .stat-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
+  }
+  @media (max-width: 560px) { .stat-grid { grid-template-columns: repeat(2, 1fr); } }
+  .stat-tile {
+    background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+    padding: 12px; text-align: center;
+  }
+  .stat-tile .icon { font-size: 20px; }
+  .stat-tile .name { font-size: 12px; color: var(--text-secondary); margin: 4px 0 6px; }
+  .stat-tile .val { font-size: 18px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .stat-tile .bar { height: 4px; border-radius: 2px; background: var(--gridline); margin-top: 8px; overflow: hidden; }
+  .stat-tile .bar > i { display: block; height: 100%; border-radius: 2px; }
+
+  .week-grid {
+    display: grid; grid-template-columns: 90px repeat(7, 1fr); gap: 4px; font-size: 12px;
+  }
+  .week-grid .cat-name {
+    display: flex; align-items: center; gap: 4px; color: var(--text-secondary);
+    padding: 4px 2px;
+  }
+  .week-grid .day-head {
+    text-align: center; color: var(--text-muted); padding-bottom: 4px; font-weight: 600;
+  }
+  .week-grid .cell {
+    aspect-ratio: 1; border-radius: 4px; background: var(--gridline);
+  }
+  .week-grid .cell.on { background: var(--dot-color, var(--good)); }
+  .week-grid .cell.today { box-shadow: 0 0 0 2px var(--text-primary) inset; }
+
+  .goal-list .quest .box { border-radius: 999px; }
+
+  footer.note {
+    text-align: center; color: var(--text-muted); font-size: 12px; margin-top: 32px;
+  }
+
+  /* 보상 팝업 */
+  #reward-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.45);
+    display: none; align-items: center; justify-content: center; z-index: 100;
+  }
+  #reward-overlay.show { display: flex; }
+  #reward-card {
+    background: var(--card); border-radius: 16px; padding: 32px 28px; text-align: center;
+    max-width: 300px; box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    animation: pop .25s ease;
+  }
+  @keyframes pop { from { transform: scale(.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  #reward-card .emoji { font-size: 44px; margin-bottom: 8px; }
+  #reward-card .title { font-size: 17px; font-weight: 700; margin-bottom: 6px; }
+  #reward-card .desc { font-size: 13px; color: var(--text-secondary); margin-bottom: 16px; }
+  #reward-card .pts { font-size: 20px; font-weight: 700; color: var(--good); margin-bottom: 18px; }
+  #reward-card button {
+    background: var(--text-primary); color: var(--card); border: none;
+    border-radius: 999px; padding: 8px 22px; font-size: 14px; cursor: pointer;
+  }
+
+  /* 운동 항목 자세보기 아코디언 */
+  .quest .expand-btn {
+    flex-shrink: 0; font-size: 12px; font-weight: 700; color: var(--cat-workout);
+    background: rgba(27,175,122,0.14); border: 1px solid var(--cat-workout);
+    border-radius: 8px; padding: 6px 10px; cursor: pointer; white-space: nowrap;
+  }
+  .quest .expand-btn:hover { background: rgba(27,175,122,0.24); }
+  .exercise-panel {
+    max-height: 0; overflow: hidden; transition: max-height .28s ease;
+    border-bottom: 0 solid var(--gridline);
+    background: rgba(127,127,127,0.04);
+  }
+  .exercise-panel.open { max-height: 600px; border-bottom-width: 1px; }
+  .exercise-panel .inner { padding: 6px 14px 14px 48px; }
+  .exercise-item {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 7px 0; border-bottom: 1px dashed var(--gridline); font-size: 13px;
+  }
+  .exercise-item:last-child { border-bottom: none; }
+  .exercise-item .ex-name { color: var(--text-primary); }
+  .exercise-item .ex-reps { color: var(--text-muted); font-size: 12px; margin-left: 8px; }
+  .exercise-item a {
+    color: var(--cat-workout); text-decoration: none; font-size: 12px;
+    background: rgba(27,175,122,0.12); padding: 4px 9px; border-radius: 999px;
+    flex-shrink: 0; margin-left: 10px;
+  }
+  .exercise-item a:hover { text-decoration: underline; }
+
+  /* 보너스 박스 */
+  #lootbox-btn {
+    position: fixed; right: 18px; bottom: 18px; z-index: 90;
+    background: linear-gradient(135deg, #eda100, #eb6834);
+    color: #fff; border: none; border-radius: 999px;
+    padding: 14px 20px; font-size: 14px; font-weight: 700; cursor: pointer;
+    box-shadow: 0 8px 24px rgba(235,104,52,0.4);
+    display: none; animation: floatBounce 1.4s ease-in-out infinite;
+  }
+  #lootbox-btn.show { display: block; }
+  @keyframes floatBounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+
+  #lootbox-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.55);
+    display: none; align-items: center; justify-content: center; z-index: 110;
+  }
+  #lootbox-overlay.show { display: flex; }
+  #lootbox-card {
+    background: var(--card); border-radius: 16px; padding: 32px 28px; text-align: center;
+    max-width: 300px; box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    animation: pop .25s ease;
+  }
+  #lootbox-card .emoji { font-size: 52px; margin-bottom: 8px; }
+  #lootbox-card .title { font-size: 17px; font-weight: 700; margin-bottom: 6px; }
+  #lootbox-card .desc { font-size: 13px; color: var(--text-secondary); margin-bottom: 16px; }
+  #lootbox-card .pts { font-size: 22px; font-weight: 700; color: var(--cat-dn8); margin-bottom: 18px; min-height: 27px; }
+  #lootbox-card button {
+    background: linear-gradient(135deg, #eda100, #eb6834); color: #fff; border: none;
+    border-radius: 999px; padding: 9px 24px; font-size: 14px; cursor: pointer; font-weight: 700;
+  }
+  #lootbox-card.opening .emoji { animation: shake .5s ease; }
+  @keyframes shake {
+    0%,100% { transform: rotate(0); }
+    20% { transform: rotate(-12deg); }
+    40% { transform: rotate(10deg); }
+    60% { transform: rotate(-8deg); }
+    80% { transform: rotate(6deg); }
+  }
+</style>
+</head>
+<body>
+<button class="theme-toggle" id="themeToggle">🌓 테마</button>
+
+<div class="page-layout">
+<div class="wrap">
+  <header>
+    <h1>🎮 준현 인생 대시보드</h1>
+    <div class="sub">오늘도 퀘스트 깨자</div>
+  </header>
+
+  <div class="points-bar">
+    <div class="num" id="totalPoints">0</div>
+    <div class="label">누적 포인트 · 총 <span id="totalDone">0</span>개 퀘스트 완료</div>
+  </div>
+
+  <div class="date-nav">
+    <button id="prevDay">◀ 어제</button>
+    <div class="today-label" id="dateLabel"></div>
+    <button id="nextDay">내일 ▶</button>
+    <button id="gotoToday">오늘로</button>
+  </div>
+
+  <section>
+    <h2>📋 오늘의 퀘스트 <span class="count" id="questCount"></span></h2>
+    <div class="card"><div id="questList"></div></div>
+  </section>
+
+  <section>
+    <h2>🧠 오늘의 행복도</h2>
+    <div class="card" style="padding:14px; display:flex; gap:8px; justify-content:center;" id="moodPicker"></div>
+  </section>
+
+  <section>
+    <h2>📅 이번 주 체크 현황</h2>
+    <div class="card" style="padding:14px;">
+      <div class="week-grid" id="weekGrid"></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>📊 인생 스탯</h2>
+    <div class="stat-grid" id="statGrid"></div>
+  </section>
+
+  <section>
+    <h2>🎯 올해 목표 <span class="count" id="goalCount"></span></h2>
+    <div class="card goal-list"><div id="goalList"></div></div>
+  </section>
+
+  <footer class="note">
+    체크는 브라우저에 저장돼 — 이 파일을 그대로 두고 매번 열면 이어짐 (같은 브라우저 기준)<br>
+    <span id="resetPoints" style="text-decoration:underline; cursor:pointer;">포인트만 0으로 초기화</span>
+  </footer>
+</div>
+
+<aside class="sidebar">
+  <div class="card marathon-panel" id="marathonPanel"></div>
+  <div class="card marathon-panel" id="hikingPanel" style="margin-top:16px;"></div>
+</aside>
+</div>
+
+<div id="reward-overlay">
+  <div id="reward-card">
+    <div class="emoji" id="rewardEmoji">🎉</div>
+    <div class="title" id="rewardTitle">퀘스트 완료!</div>
+    <div class="desc" id="rewardDesc"></div>
+    <div class="pts" id="rewardPts"></div>
+    <button id="rewardClose">계속하기</button>
+  </div>
+</div>
+
+<button id="lootbox-btn">🎁 보너스 박스 도착!</button>
+<div id="lootbox-overlay">
+  <div id="lootbox-card">
+    <div class="emoji" id="lootboxEmoji">🎁</div>
+    <div class="title" id="lootboxTitle">미스터리 박스</div>
+    <div class="desc" id="lootboxDesc">눌러서 열어보기</div>
+    <div class="pts" id="lootboxPts"></div>
+    <button id="lootboxAction">박스 열기</button>
+  </div>
+</div>
+
+<script>
+// ── 카테고리 정의 (고정 순서 — 색상은 슬롯 순서 그대로) ─────────────────
+const CATS = {
+  asset:   { name: "자산",      icon: "💰", color: "var(--cat-asset)"   },
+  workout: { name: "운동",      icon: "💪", color: "var(--cat-workout)" },
+  dn8:     { name: "DN8",       icon: "🚗", color: "var(--cat-dn8)"     },
+  study:   { name: "공부",      icon: "📚", color: "var(--cat-study)"   },
+  ai:      { name: "AI프로젝트", icon: "🤖", color: "var(--cat-ai)"      },
+  invest:  { name: "투자",      icon: "📈", color: "var(--cat-invest)"  },
+  love:    { name: "연애",      icon: "❤️", color: "var(--cat-love)"    },
+  happy:   { name: "행복도",    icon: "🧠", color: "var(--cat-happy)"   },
+  etc:     { name: "일반",      icon: "🌙", color: "var(--text-muted)"  },
+};
+
+// ── 요일별 퀘스트 (0=일 ~ 6=토) — 운동일정 스크린샷(달력/루틴/엉덩이루틴) 그대로 반영 ──
+// ex: WORKOUT_EXERCISES 키와 연결되면 "자세보기" 아코디언이 붙음
+const DAILY_ITEMS = {
+  1: [ // 월
+    { id: "stretch",  label: "스트레칭 5분",        cat: "workout", icon: "🌅" },
+    { id: "worknote", label: "문제 해결 메모",        cat: "etc",     icon: "💼" },
+    { id: "study",    label: "반도체 30분 + AI 30분", cat: "study",   icon: "📖" },
+    { id: "wk_chest", label: "가슴 + 삼두",           cat: "workout", icon: "💪", ex: "wk_chest" },
+    { id: "hip_mon",  label: "힙 브리지",             cat: "workout", icon: "🍑", ex: "hip_bridge" },
+    { id: "invest",   label: "복기 30분",            cat: "invest",  icon: "📈" },
+    { id: "project",  label: "블로그 / 자동화",        cat: "ai",      icon: "🤖" },
+    { id: "speaking", label: "스피킹 연습 (차 안에서)", cat: "study",   icon: "🗣️" },
+    { id: "reflect",  label: "하루 회고",             cat: "etc",     icon: "🌙" },
+  ],
+  2: [ // 화
+    { id: "stretch",  label: "스트레칭 5분",        cat: "workout", icon: "🌅" },
+    { id: "worknote", label: "문제 해결 메모",        cat: "etc",     icon: "💼" },
+    { id: "study",    label: "반도체 + AI",          cat: "study",   icon: "📖" },
+    { id: "wk_back",  label: "등 + 이두",             cat: "workout", icon: "💪", ex: "wk_back" },
+    { id: "hip_tue",  label: "힙 쓰러스트",           cat: "workout", icon: "🍑", ex: "hip_thrust" },
+    { id: "invest",   label: "뉴스 복기",             cat: "invest",  icon: "📈" },
+    { id: "project",  label: "크몽",                 cat: "ai",      icon: "🤖" },
+    { id: "speaking", label: "스피킹 연습 (차 안에서)", cat: "study",   icon: "🗣️" },
+    { id: "reflect",  label: "하루 회고",             cat: "etc",     icon: "🌙" },
+  ],
+  3: [ // 수
+    { id: "stretch",  label: "스트레칭 5분",        cat: "workout", icon: "🌅" },
+    { id: "worknote", label: "문제 해결 메모",        cat: "etc",     icon: "💼" },
+    { id: "study",    label: "반도체 + AI",          cat: "study",   icon: "📖" },
+    { id: "wk_leg",   label: "하체 + 코어 ⭐",         cat: "workout", icon: "💪", ex: "wk_leg" },
+    { id: "hip_wed",  label: "RDL",                 cat: "workout", icon: "🍑", ex: "hip_rdl" },
+    { id: "invest",   label: "복기",                 cat: "invest",  icon: "📈" },
+    { id: "project",  label: "GPT",                 cat: "ai",      icon: "🤖" },
+    { id: "speaking", label: "스피킹 연습 (차 안에서)", cat: "study",   icon: "🗣️" },
+    { id: "reflect",  label: "하루 회고",             cat: "etc",     icon: "🌙" },
+  ],
+  4: [ // 목
+    { id: "stretch",  label: "스트레칭 5분",        cat: "workout", icon: "🌅" },
+    { id: "worknote", label: "문제 해결 메모",        cat: "etc",     icon: "💼" },
+    { id: "study",    label: "반도체 + AI",          cat: "study",   icon: "📖" },
+    { id: "wk_shldr", label: "어깨",                 cat: "workout", icon: "💪", ex: "wk_shldr" },
+    { id: "hip_thu",  label: "힙 브리지",             cat: "workout", icon: "🍑", ex: "hip_bridge" },
+    { id: "invest",   label: "뉴스 복기",             cat: "invest",  icon: "📈" },
+    { id: "project",  label: "자동화",               cat: "ai",      icon: "🤖" },
+    { id: "speaking", label: "스피킹 연습 (차 안에서)", cat: "study",   icon: "🗣️" },
+    { id: "reflect",  label: "하루 회고",             cat: "etc",     icon: "🌙" },
+  ],
+  5: [ // 금
+    { id: "stretch",  label: "스트레칭 5분",        cat: "workout", icon: "🌅" },
+    { id: "worknote", label: "문제 해결 메모",        cat: "etc",     icon: "💼" },
+    { id: "study",    label: "반도체 + AI",          cat: "study",   icon: "📖" },
+    { id: "wk_full",  label: "전신 + 유산소",         cat: "workout", icon: "💪", ex: "wk_full" },
+    { id: "hip_fri",  label: "불가리안 스플릿 스쿼트",   cat: "workout", icon: "🍑", ex: "hip_bulgarian" },
+    { id: "invest",   label: "복기",                 cat: "invest",  icon: "📈" },
+    { id: "project",  label: "자료 정리",             cat: "ai",      icon: "🤖" },
+    { id: "speaking", label: "스피킹 연습 (차 안에서)", cat: "study",   icon: "🗣️" },
+    { id: "reflect",  label: "하루 회고",             cat: "etc",     icon: "🌙" },
+  ],
+  6: [ // 토
+    { id: "sleep_ok", label: "늦잠 OK, 푹 쉬기",       cat: "etc",     icon: "🌅" },
+    { id: "dn8",      label: "DN8 드라이브 (새 카페/지역)", cat: "dn8", icon: "🚗" },
+    { id: "wk_sat",   label: "가벼운 운동",            cat: "workout", icon: "💪", ex: "wk_sat" },
+    { id: "hip_sat",  label: "산책",                 cat: "workout", icon: "🍑", ex: "hip_walk" },
+    { id: "study",    label: "프로젝트",              cat: "study",   icon: "📖" },
+    { id: "invest",   label: "주간 정리",             cat: "invest",  icon: "📈" },
+    { id: "project",  label: "집중 작업",             cat: "ai",      icon: "🤖" },
+    { id: "speaking", label: "스피킹 연습 (드라이브 중)", cat: "study",  icon: "🗣️" },
+    { id: "week_review", label: "주간 회고",          cat: "etc",     icon: "🌙" },
+  ],
+  0: [ // 일
+    { id: "sleep_ok", label: "늦잠 OK, 푹 쉬기",       cat: "etc",     icon: "🌅" },
+    { id: "rest",     label: "운동 휴식",             cat: "workout", icon: "💪" },
+    { id: "study",    label: "복습",                 cat: "study",   icon: "📖" },
+    { id: "project",  label: "아이디어 정리",          cat: "ai",      icon: "🤖" },
+    { id: "speaking", label: "스피킹 연습 (차 안에서)", cat: "study",   icon: "🗣️" },
+    { id: "next_week",label: "다음 주 계획",          cat: "etc",     icon: "🌙" },
+  ],
+};
+
+// ── 운동 세부 종목 (엉덩이 루틴.png 세트/횟수 반영) — 자세보기 아코디언에 표시 ──
+const WORKOUT_EXERCISES = {
+  wk_chest: [
+    { name: "벤치프레스", reps: "4×8" },
+    { name: "인클라인 덤벨프레스", reps: "3×10" },
+    { name: "케이블 크로스오버", reps: "3×12" },
+    { name: "딥스", reps: "3×10" },
+    { name: "트라이셉스 푸시다운", reps: "3×12" },
+  ],
+  wk_back: [
+    { name: "랫풀다운", reps: "4×10" },
+    { name: "바벨 로우", reps: "3×10" },
+    { name: "시티드 케이블 로우", reps: "3×12" },
+    { name: "바벨 컬", reps: "3×10" },
+    { name: "해머 컬", reps: "3×12" },
+  ],
+  wk_leg: [
+    { name: "스쿼트", reps: "4×8" },
+    { name: "레그프레스", reps: "3×10" },
+    { name: "레그컬", reps: "3×12" },
+    { name: "카프레이즈", reps: "3×15" },
+    { name: "플랭크", reps: "3×40초" },
+  ],
+  wk_shldr: [
+    { name: "밀리터리 프레스", reps: "4×8" },
+    { name: "사이드 레터럴 레이즈", reps: "3×12" },
+    { name: "프론트 레이즈", reps: "3×12" },
+    { name: "페이스 풀", reps: "3×12" },
+  ],
+  wk_full: [
+    { name: "버피", reps: "3×15" },
+    { name: "케틀벨 스윙", reps: "3×15" },
+    { name: "런지", reps: "3×12" },
+    { name: "유산소 (러닝/사이클)", reps: "20분" },
+  ],
+  wk_sat: [
+    { name: "가벼운 산책/조깅", reps: "20~30분" },
+    { name: "전신 스트레칭", reps: "10분" },
+  ],
+  hip_bridge: [ { name: "글루트 브리지", reps: "15×3" } ],
+  hip_thrust: [ { name: "힙 쓰러스트", reps: "10~12×4" } ],
+  hip_rdl:    [ { name: "루마니안 데드리프트 (RDL)", reps: "10×4" } ],
+  hip_bulgarian: [ { name: "불가리안 스플릿 스쿼트", reps: "10×3" } ],
+  hip_walk:   [ { name: "가볍게 산책", reps: "20분" } ],
+};
+
+function ytSearchUrl(name) {
+  return "https://www.youtube.com/results?search_query=" + encodeURIComponent(name + " 자세 하는법");
+}
+
+// 요일 상관없이 "이번 주" 단위로 체크하는 항목들
+const WEEKLY_ITEMS = [
+  { id: "weekly_output", label: "이번 주 결과물 1개 (블로그/GPT/자동화/크몽/반도체자료)", cat: "asset",   icon: "💰" },
+  { id: "weekly_love",   label: "이번 주 연애/데이트 시간 챙기기",                     cat: "love",    icon: "❤️" },
+  { id: "weekly_hike",   label: "이번 주 등산",                                    cat: "workout", icon: "⛰️" },
+];
+
+// ── 마라톤 일정 (2026-07-19 웹서치로 수동 확인·입력 — 정적 스냅샷, 자동 갱신 아님) ──
+// 접수일/대회일 출처가 갈리는 대회는 warn에 표기, 공식 링크로 직접 확인 유도
+// 세계 7대 메이저는 대부분 추첨제 — 접수(추첨) 창구가 대회 6개월~1년 전에 열림.
+// 2026년 대회분 접수는 전부 2025년에 이미 진행돼서 지금(2026-07) 기준 마감된 상태 — 2027년 대회 노리려면 참고용.
+const WORLD_MAJORS_2026 = [
+  { name: "도쿄 마라톤",   date: "2026-03-01", reg: "추첨 접수: 2025-08-15~08-29 (마감)" },
+  { name: "보스턴 마라톤", date: "2026-04-20", reg: "접수: 2025-09-08~09-12 (마감, 기록(BQ) 보유자 중심)" },
+  { name: "런던 마라톤",   date: "2026-04-26", reg: "추첨 접수: 2025-04-25~05-02 (마감)" },
+  { name: "시드니 마라톤", date: "2026-08-30", reg: "추첨 접수: 마감 (12만명+ 신청, 2025년 진행)" },
+  { name: "베를린 마라톤", date: "2026-09-27", reg: "추첨 접수: 2025-09-25~11-06 (마감)" },
+  { name: "시카고 마라톤", date: "2026-10-11", reg: "접수: 2025-10-21~11-18 (마감)" },
+  { name: "뉴욕시티 마라톤", date: "2026-11-01", reg: "접수: 통상 2월 오픈, 3월 초 발표 (2026년분 마감)" },
+];
+// 지역별 탭 — 지금은 대구/경북·부산울산경남만 실제 조사해서 채움(사용자 실거주 기준권).
+// 나머지 지역은 아직 하나하나 조사 못 했음 — 억지로 채우면 틀린 정보 넣을 위험이 커서
+// 링크(마라톤GO 지역필터)로 대체해둠. 나중에 요청 오면 그 지역도 채워나가면 됨.
+const DOMESTIC_BY_REGION = {
+  "대구경북": {
+    label: "대구·경북",
+    races: [
+      { name: "2026 대구마라톤", date: "2026-02-22 (종료됨)",
+        reg: "이미 지난 대회 — 통상 매년 2월, 접수는 전년도 9월경 오픈",
+        warn: "올해분은 끝남, 다음 대회 공지 뜨면 갱신 필요",
+        link: "https://daegumarathon.daegu.go.kr/" },
+      { name: "제20회 달서하프마라톤 (대구 달서구)", date: "2026-10-04",
+        reg: "접수: 2026-05-20 ~ 06-30",
+        link: "https://marathongo.co.kr/raceDetail/domestic/20th-dalseo-half-marathon-2026" },
+      { name: "제19회 북구사랑마라톤 (대구 북구)", date: "미정 — 매년 10월경 (작년 21회는 10/19)",
+        reg: "2003년부터 매해 개최, 매년 10월경 열리는 패턴 → 2026년도 이맘때(10월경)일 것으로 추정",
+        warn: "정확한 날짜는 아직 공식 공지 전 — 추정치임, 공식 사이트에서 확정되면 확인 필요",
+        link: "http://maraton.dbsfa365.co.kr/" },
+      { name: "경청마라톤 (경북)", date: "미공지",
+        reg: "접수: 2026-07-07 ~ 10-07",
+        link: "https://runningwikii.com/entry/gyeongcheong-marathon/" },
+      { name: "2026 경주국제마라톤", date: "2026-10-17",
+        reg: "우선접수 5/11~15, 본접수 5/26~ (선착순, 마감 가능성 있음)",
+        link: "https://www.gyeongjumarathon.com/" },
+    ],
+  },
+  "부산울산경남": {
+    label: "부산·울산·경남",
+    races: [
+      { name: "제28회 부산국제마라톤", date: "2026-11-15 또는 12-06 (출처 상이)",
+        reg: "접수 시작: 7월 초~중순 (출처 상이)",
+        warn: "날짜가 자료마다 달라 공식 사이트 확인 필요",
+        link: "https://www.kormarathon.com/ko/races/2026-busan-international-marathon" },
+      { name: "2026 부산브릿지 마라톤", date: "2026-12-06",
+        reg: "접수 정보 공식 사이트 확인",
+        link: "https://marathongo.co.kr/raceSchedule/domestic" },
+      { name: "제23회 태화강마라톤 (울산)", date: "2026-03-28 (종료됨)",
+        reg: "이미 지난 대회 — 접수는 통상 대회 4개월 전(12월경)",
+        link: "https://www.ulsanmaeilmara.com/" },
+    ],
+  },
+  "서울경기": { label: "서울·경기", races: [] },
+  "광주전라": { label: "광주·전라", races: [] },
+  "대전충청": { label: "대전·충청", races: [] },
+  "강원":     { label: "강원",     races: [] },
+  "제주":     { label: "제주",     races: [] },
+};
+
+// ── 대구 등산 코스 (2026-07-20 웹서치로 확인) ──
+// 사진은 Pexels로 시도했으나 팔공산=경복궁, 앞산=동유럽 공업도시 사진이 나와서(엉뚱한 산 사진 걸어두면 더 나쁨) 폐기.
+// 대신 정확한 실제 사진/지도를 볼 수 있는 검색 링크로 대체.
+const HIKING_COURSES = [
+  {
+    name: "팔공산 (1,192m)",
+    course: "동화사 → 갓바위 코스",
+    info: "소요 3~4시간 · 난이도 중급(코스별 편차 큼)",
+    desc: "대구 대표 명산. 자연 풍경 위주로 걷고 싶으면 수태골 코스도 추천.",
+  },
+  {
+    name: "비슬산 (1,084m)",
+    course: "비슬산자연휴양림 코스",
+    info: "소요 3~4시간 · 난이도 초급~중급(완만한 경사)",
+    desc: "경사가 완만해서 초보자도 도전 가능. 경치가 좋음.",
+  },
+  {
+    name: "앞산",
+    course: "안지랑 코스 (초보 추천) / 전체 등산로",
+    info: "왕복 약 1시간(안지랑) ~ 2시간(전체) · 난이도 초급",
+    desc: "시내에서 가깝고 접근성 좋음. 처음이면 안지랑 코스로 가볍게 왕복 추천.",
+  },
+];
+
+const GOALS = [
+  { id: "dn8_buy",   label: "DN8 구매",        done0: true  },
+  { id: "japan",     label: "일본 여행",        done0: true  },
+  { id: "deposit",   label: "보증금 해결",       done0: true  },
+  { id: "kmong",     label: "크몽 첫 판매",      done0: true  },
+  { id: "wk_routine",label: "운동 루틴 만들기",   done0: false },
+  { id: "asset1",    label: "자산 1개 만들기",   done0: false },
+  { id: "job",       label: "이직 준비 시작",    done0: false },
+  { id: "grad",      label: "대학원 2학기",      done0: false },
+];
+
+const REWARDS = [
+  { emoji: "🎉", title: "잘했어!", desc: "오늘도 한 걸음 나아갔다." },
+  { emoji: "🔥", title: "불타는 실행력", desc: "이 페이스 유지하면 뭐든 된다." },
+  { emoji: "🍑", title: "엉짱 적립", desc: "루틴 하나 더, 몸은 거짓말 안 함." },
+  { emoji: "🚗", title: "드라이브 각", desc: "이번 주말엔 어디로 튈까?" },
+  { emoji: "🤖", title: "자동화 마스터", desc: "니가 일하는 동안 봇도 일한다." },
+  { emoji: "💰", title: "자산 +1", desc: "작은 결과물이 쌓이면 자산이 된다." },
+  { emoji: "📈", title: "복기 완료", desc: "오늘의 실수는 내일의 수익." },
+  { emoji: "🧠", title: "똑똑해지는 중", desc: "공부는 배신 안 한다." },
+  { emoji: "❤️", title: "밸런스 좋다", desc: "일만 하지 말고 사람도 챙기기." },
+  { emoji: "🎯", title: "목표 근접", desc: "달력 체크만으로 이미 반은 갔다." },
+  { emoji: "😴", title: "쉬는 것도 실력", desc: "잘 쉬어야 잘 달린다." },
+  { emoji: "🏆", title: "오늘의 MVP", desc: "너 자신이 오늘의 주인공." },
+];
+
+// ── 상태 ────────────────────────────────────────────────────────────
+const LS = {
+  checks:   "jh_checks",    // { "2026-07-20": { itemId: true } }
+  goals:    "jh_goals",     // { goalId: true }
+  points:   "jh_points",    // number
+  mood:     "jh_mood",      // { "2026-07-20": 1~5 }
+  weekly:   "jh_weekly",    // { "weekKeyMon": { weekly_output:true, weekly_love:true } }
+  pointLog: "jh_pointlog",  // { "c:2026-07-20:stretch": 20 } — 체크당 실제 지급된 포인트, 체크 해제 시 그대로 환수
+};
+
+function load(key, fallback) {
+  try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; }
+  catch { return fallback; }
+}
+function save(key, val) { localStorage.setItem(key, JSON.stringify(val)); }
+
+let checks   = load(LS.checks, {});
+let goals    = load(LS.goals, null);
+if (!goals) { goals = {}; GOALS.forEach(g => goals[g.id] = g.done0); save(LS.goals, goals); }
+let points   = load(LS.points, 0);
+let moodAll  = load(LS.mood, {});
+let weekly   = load(LS.weekly, {});
+let pointLog = load(LS.pointLog, {});
+
+let viewDate = new Date();
+
+function dateStr(d) {
+  return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0");
+}
+function mondayOf(d) {
+  const nd = new Date(d);
+  const day = (nd.getDay() + 6) % 7; // 0=Mon
+  nd.setDate(nd.getDate() - day);
+  return dateStr(nd);
+}
+function isToday(d) { return dateStr(d) === dateStr(new Date()); }
+
+// ── 보상 팝업 ───────────────────────────────────────────────────────
+// key: 이 체크에 대한 고유 키 — 나중에 체크 해제되면 정확히 이만큼 환수(포인트 파밍 방지)
+function showReward(key) {
+  const r = REWARDS[Math.floor(Math.random() * REWARDS.length)];
+  const pts = [10, 15, 20, 25, 30, 50][Math.floor(Math.random() * 6)];
+  points += pts;
+  pointLog[key] = pts;
+  save(LS.points, points);
+  save(LS.pointLog, pointLog);
+  document.getElementById("rewardEmoji").textContent = r.emoji;
+  document.getElementById("rewardTitle").textContent = r.title;
+  document.getElementById("rewardDesc").textContent = r.desc;
+  document.getElementById("rewardPts").textContent = "+" + pts + "P";
+  document.getElementById("reward-overlay").classList.add("show");
+  renderPoints();
+}
+document.getElementById("rewardClose").onclick = () => {
+  document.getElementById("reward-overlay").classList.remove("show");
+};
+
+// 체크 해제 시 그 체크로 받았던 포인트만 정확히 환수 (보너스박스 포인트는 유지 — 그건 별도 이벤트)
+function refundPoints(key) {
+  const pts = pointLog[key];
+  if (!pts) return;
+  points -= pts;
+  delete pointLog[key];
+  save(LS.points, points);
+  save(LS.pointLog, pointLog);
+  renderPoints();
+}
+
+// ── 렌더 ────────────────────────────────────────────────────────────
+function renderPoints() {
+  document.getElementById("totalPoints").textContent = points;
+  let doneCount = 0;
+  Object.values(checks).forEach(day => doneCount += Object.values(day).filter(Boolean).length);
+  Object.values(weekly).forEach(wk => doneCount += Object.values(wk).filter(Boolean).length);
+  document.getElementById("totalDone").textContent = doneCount;
+}
+
+// 같은 항목이 짧은 시간 안에 두 번 눌리는 걸 막는 디바운스 (중복 포인트 적립 방지)
+let _lastToggleKey = null, _lastToggleAt = 0;
+function _debounced(key) {
+  const now = Date.now();
+  if (key === _lastToggleKey && now - _lastToggleAt < 350) return true;
+  _lastToggleKey = key; _lastToggleAt = now;
+  return false;
+}
+
+function toggleCheck(ds, itemId) {
+  if (_debounced("c:" + ds + ":" + itemId)) return;
+  const key = "c:" + ds + ":" + itemId;
+  if (!checks[ds]) checks[ds] = {};
+  const nowOn = !checks[ds][itemId];
+  checks[ds][itemId] = nowOn;
+  save(LS.checks, checks);
+  if (nowOn) { showReward(key); maybeSpawnLootBox(); } else { refundPoints(key); }
+  renderAll();
+}
+function toggleWeekly(wk, itemId) {
+  if (_debounced("w:" + wk + ":" + itemId)) return;
+  const key = "w:" + wk + ":" + itemId;
+  if (!weekly[wk]) weekly[wk] = {};
+  const nowOn = !weekly[wk][itemId];
+  weekly[wk][itemId] = nowOn;
+  save(LS.weekly, weekly);
+  if (nowOn) { showReward(key); maybeSpawnLootBox(); } else { refundPoints(key); }
+  renderAll();
+}
+function toggleGoal(id) {
+  if (_debounced("g:" + id)) return;
+  const key = "g:" + id;
+  goals[id] = !goals[id];
+  save(LS.goals, goals);
+  if (goals[id]) { showReward(key); maybeSpawnLootBox(); } else { refundPoints(key); }
+  renderGoals();
+}
+
+function renderQuests() {
+  const ds = dateStr(viewDate);
+  const dow = viewDate.getDay();
+  const items = [...DAILY_ITEMS[dow]];
+  const wk = mondayOf(viewDate);
+  const weeklyChecked = weekly[wk] || {};
+
+  document.getElementById("dateLabel").textContent =
+    viewDate.toLocaleDateString("ko-KR", { month: "long", day: "numeric", weekday: "short" }) +
+    (isToday(viewDate) ? " (오늘)" : "");
+
+  const dayChecked = checks[ds] || {};
+  const list = document.getElementById("questList");
+  list.innerHTML = "";
+
+  items.forEach(it => {
+    const done = !!dayChecked[it.id];
+    const cat = CATS[it.cat];
+    const hasEx = !!(it.ex && WORKOUT_EXERCISES[it.ex]);
+    const row = document.createElement("div");
+    row.className = "quest" + (done ? " done" : "");
+    row.style.setProperty("--cat-color", cat.color);
+    row.innerHTML = `
+      <div class="box">${done ? "✓" : ""}</div>
+      <div class="icon">${it.icon}</div>
+      <div class="label">${it.label}</div>
+      <div class="tag">${cat.name}</div>
+      ${hasEx ? `<button class="expand-btn" type="button">▸ 자세보기</button>` : ""}
+    `;
+
+    // 행 어디를 눌러도 완료 토글(기존과 동일 동작) — 운동 항목도 똑같이 클릭하면 완료됨
+    row.onclick = () => toggleCheck(ds, it.id);
+
+    if (hasEx) {
+      // "▸ 자세보기" 버튼만 따로 — 이거 누르면 완료 토글 안 되고 종목 목록만 펼쳐짐
+      const panel = document.createElement("div");
+      panel.className = "exercise-panel";
+      panel.innerHTML = `<div class="inner">` + WORKOUT_EXERCISES[it.ex].map(ex => `
+        <div class="exercise-item">
+          <span class="ex-name">${ex.name} <span class="ex-reps">${ex.reps}</span></span>
+          <a href="${ytSearchUrl(ex.name)}" target="_blank" rel="noopener">▶ 자세 영상</a>
+        </div>
+      `).join("") + `</div>`;
+      row.querySelector(".expand-btn").onclick = (e) => { e.stopPropagation(); panel.classList.toggle("open"); };
+
+      list.appendChild(row);
+      list.appendChild(panel);
+    } else {
+      list.appendChild(row);
+    }
+  });
+
+  // 주간 항목(자산/연애/등산) — 요일 상관없이 이번 주에 체크
+  WEEKLY_ITEMS.forEach(it => {
+    const done = !!weeklyChecked[it.id];
+    const cat = CATS[it.cat];
+    const row = document.createElement("div");
+    row.className = "quest" + (done ? " done" : "");
+    row.style.setProperty("--cat-color", cat.color);
+    row.innerHTML = `
+      <div class="box">${done ? "✓" : ""}</div>
+      <div class="icon">${it.icon}</div>
+      <div class="label">${it.label} <span style="color:var(--text-muted); font-size:11px;">(이번 주)</span></div>
+      <div class="tag">${cat.name}</div>
+    `;
+    row.onclick = () => toggleWeekly(wk, it.id);
+    list.appendChild(row);
+  });
+
+  document.getElementById("questCount").textContent =
+    `${items.filter(it => dayChecked[it.id]).length + WEEKLY_ITEMS.filter(it => weeklyChecked[it.id]).length}/${items.length + WEEKLY_ITEMS.length} 완료`;
+}
+
+function renderMood() {
+  const ds = dateStr(viewDate);
+  const cur = moodAll[ds];
+  const picker = document.getElementById("moodPicker");
+  const faces = ["😞","😕","😐","🙂","😄"];
+  picker.innerHTML = "";
+  faces.forEach((f, i) => {
+    const btn = document.createElement("button");
+    const level = i + 1;
+    btn.textContent = f;
+    btn.style.cssText = `font-size:26px; background:none; border:2px solid ${cur===level ? 'var(--cat-happy)' : 'var(--border)'}; border-radius:12px; padding:6px 10px; cursor:pointer;`;
+    btn.onclick = () => {
+      const key = "m:" + ds;
+      const wasSet = moodAll[ds] === level;
+      moodAll[ds] = wasSet ? undefined : level;
+      save(LS.mood, moodAll);
+      if (!wasSet) { showReward(key); maybeSpawnLootBox(); } else { refundPoints(key); }
+      renderMood();
+    };
+    picker.appendChild(btn);
+  });
+}
+
+function renderWeekGrid() {
+  const wk = mondayOf(viewDate);
+  const monday = new Date(wk);
+  const dayLabels = ["월","화","수","목","금","토","일"];
+  const grid = document.getElementById("weekGrid");
+  grid.innerHTML = `<div></div>` + dayLabels.map(d => `<div class="day-head">${d}</div>`).join("");
+
+  const catOrder = ["workout","study","invest","ai","dn8","asset","love","happy"];
+  catOrder.forEach(catKey => {
+    const cat = CATS[catKey];
+    grid.innerHTML += `<div class="cat-name">${cat.icon} ${cat.name}</div>`;
+    const weeklyForCat = WEEKLY_ITEMS.filter(w => w.cat === catKey);
+    for (let i = 0; i < 7; i++) {
+      const d = new Date(monday); d.setDate(monday.getDate() + i);
+      const ds = dateStr(d);
+      const dow = d.getDay();
+      const dayItems = (DAILY_ITEMS[dow] || []).filter(it => it.cat === catKey);
+      const dayChecked = checks[ds] || {};
+      let on = dayItems.some(it => dayChecked[it.id]);
+      if (catKey === "happy") {
+        on = moodAll[ds] >= 4;
+      } else if (weeklyForCat.length && i === 6) {
+        const wkChecked = weekly[wk] || {};
+        on = on || weeklyForCat.some(w => wkChecked[w.id]); // 주 항목은 마지막 칸에 요약 반영
+      }
+      const cellClass = "cell" + (on ? " on" : "") + (isToday(d) ? " today" : "");
+      grid.innerHTML += `<div class="${cellClass}" style="--dot-color:${cat.color}"></div>`;
+    }
+  });
+}
+
+function renderStats() {
+  const wk = mondayOf(viewDate);
+  const monday = new Date(wk);
+  const catOrder = ["asset","workout","dn8","study","ai","invest","love","happy"];
+  const grid = document.getElementById("statGrid");
+  grid.innerHTML = "";
+
+  catOrder.forEach(catKey => {
+    const cat = CATS[catKey];
+    let done = 0, total = 0;
+
+    if (catKey === "happy") {
+      for (let i = 0; i < 7; i++) {
+        const d = new Date(monday); d.setDate(monday.getDate() + i);
+        if (d > new Date()) continue;
+        total++;
+        if ((moodAll[dateStr(d)] || 0) >= 4) done++;
+      }
+      total = Math.max(total, 1);
+    } else {
+      for (let i = 0; i < 7; i++) {
+        const d = new Date(monday); d.setDate(monday.getDate() + i);
+        const dow = d.getDay();
+        const dayItems = (DAILY_ITEMS[dow] || []).filter(it => it.cat === catKey);
+        const dayChecked = checks[dateStr(d)] || {};
+        total += dayItems.length;
+        done += dayItems.filter(it => dayChecked[it.id]).length;
+      }
+      const weeklyForCat = WEEKLY_ITEMS.filter(w => w.cat === catKey);
+      if (weeklyForCat.length) {
+        const wkChecked = weekly[wk] || {};
+        total += weeklyForCat.length;
+        done += weeklyForCat.filter(w => wkChecked[w.id]).length;
+      }
+      total = Math.max(total, 1);
+    }
+
+    const pct = Math.round((done / total) * 100);
+    const tile = document.createElement("div");
+    tile.className = "stat-tile";
+    tile.innerHTML = `
+      <div class="icon">${cat.icon}</div>
+      <div class="name">${cat.name}</div>
+      <div class="val">${done}/${total}</div>
+      <div class="bar"><i style="width:${pct}%; background:${cat.color};"></i></div>
+    `;
+    grid.appendChild(tile);
+  });
+}
+
+function renderGoals() {
+  const list = document.getElementById("goalList");
+  list.innerHTML = "";
+  let done = 0;
+  GOALS.forEach(g => {
+    const isDone = !!goals[g.id];
+    if (isDone) done++;
+    const row = document.createElement("div");
+    row.className = "quest" + (isDone ? " done" : "");
+    row.style.setProperty("--cat-color", "var(--good)");
+    row.innerHTML = `
+      <div class="box">${isDone ? "✓" : ""}</div>
+      <div class="icon">🎯</div>
+      <div class="label">${g.label}</div>
+    `;
+    row.onclick = () => toggleGoal(g.id);
+    list.appendChild(row);
+  });
+  document.getElementById("goalCount").textContent = `${done}/${GOALS.length} 완료`;
+}
+
+function renderAll() {
+  renderQuests();
+  renderMood();
+  renderWeekGrid();
+  renderStats();
+  renderGoals();
+  renderPoints();
+}
+
+// 마라톤 패널 — 체크 상태와 무관한 정적 정보라 최초 1회만 렌더
+let activeRegion = "대구경북";
+
+function raceItemHtml(r) {
+  return `
+    <div class="race-item">
+      <div class="race-name">${r.name}</div>
+      <div class="race-date">📅 ${r.date}</div>
+      <div class="race-reg">📝 ${r.reg}</div>
+      ${r.warn ? `<div class="race-warn">⚠️ ${r.warn}</div>` : ""}
+      <a href="${r.link}" target="_blank" rel="noopener">→ 공식/상세 페이지</a>
+    </div>`;
+}
+
+function renderMarathons() {
+  const panel = document.getElementById("marathonPanel");
+
+  let html = `<h3>🌏 세계 7대 마라톤 (2026)</h3>`;
+  WORLD_MAJORS_2026.forEach(r => {
+    html += `
+      <div class="race-item">
+        <div class="race-name">${r.name}</div>
+        <div class="race-date">📅 ${r.date}</div>
+        <div class="race-reg">📝 ${r.reg}</div>
+      </div>`;
+  });
+
+  html += `<h3>🇰🇷 대한민국 마라톤 — 지역별</h3>`;
+  html += `<div class="region-tabs" id="regionTabs">`;
+  Object.keys(DOMESTIC_BY_REGION).forEach(key => {
+    const active = key === activeRegion ? " active" : "";
+    html += `<button class="region-tab${active}" data-region="${key}" type="button">${DOMESTIC_BY_REGION[key].label}</button>`;
+  });
+  html += `</div>`;
+  html += `<div id="regionRaces"></div>`;
+
+  html += `<div class="marathon-note">
+    ※ 2026-07-19 기준 대구·경북 / 부산·울산·경남 위주로 직접 웹서치해서 채운 스냅샷 — 나머지 지역은 아직 하나하나 확인 못 해서 비어있음(억지로 채우면 틀린 정보 들어갈 위험). 필요한 지역 말해주면 그때그때 채워나갈게.
+    이 파일은 정적 파일이라 실시간 자동 갱신은 안 됨.
+    전국 목록은 <a href="https://marathongo.co.kr/raceSchedule/domestic" target="_blank" rel="noopener">마라톤GO</a>에서 직접 확인 가능.
+  </div>`;
+
+  panel.innerHTML = html;
+  renderRegionRaces();
+
+  document.querySelectorAll(".region-tab").forEach(btn => {
+    btn.onclick = () => {
+      activeRegion = btn.dataset.region;
+      document.querySelectorAll(".region-tab").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      renderRegionRaces();
+    };
+  });
+}
+
+function renderRegionRaces() {
+  const region = DOMESTIC_BY_REGION[activeRegion];
+  const box = document.getElementById("regionRaces");
+  if (!region.races.length) {
+    box.innerHTML = `<div class="marathon-note">아직 이 지역은 조사해서 못 채웠음 — <a href="https://marathongo.co.kr/raceSchedule/domestic" target="_blank" rel="noopener">마라톤GO에서 지역필터로 확인</a></div>`;
+    return;
+  }
+  box.innerHTML = region.races.map(raceItemHtml).join("");
+}
+
+renderMarathons();
+
+function renderHiking() {
+  const panel = document.getElementById("hikingPanel");
+  let html = `<h3>⛰️ 대구 등산 코스</h3>`;
+  HIKING_COURSES.forEach(h => {
+    const imgQ = encodeURIComponent(h.name.split(" ")[0] + " 등산코스");
+    const mapQ = encodeURIComponent(h.name.split(" ")[0]);
+    html += `
+      <div class="race-item">
+        <div class="race-name">${h.name}</div>
+        <div class="race-date">🥾 ${h.course}</div>
+        <div class="race-reg">${h.info}</div>
+        <div class="race-reg">${h.desc}</div>
+        <a href="https://www.google.com/search?tbm=isch&q=${imgQ}" target="_blank" rel="noopener">📷 사진 보기</a>
+        &nbsp;·&nbsp;
+        <a href="https://map.naver.com/p/search/${mapQ}" target="_blank" rel="noopener">🗺 지도 보기</a>
+      </div>`;
+  });
+  html += `<div class="marathon-note">대구 3대 명산 위주로 정리함 — 다른 산/지역도 필요하면 말해줘.</div>`;
+  panel.innerHTML = html;
+}
+renderHiking();
+
+document.getElementById("prevDay").onclick = () => { viewDate.setDate(viewDate.getDate() - 1); renderAll(); };
+document.getElementById("nextDay").onclick = () => { viewDate.setDate(viewDate.getDate() + 1); renderAll(); };
+document.getElementById("gotoToday").onclick = () => { viewDate = new Date(); renderAll(); };
+
+document.getElementById("resetPoints").onclick = () => {
+  if (!confirm("포인트를 0으로 초기화할까? (체크 기록/목표/달력은 그대로 유지됨)")) return;
+  points = 0;
+  pointLog = {};
+  save(LS.points, points);
+  save(LS.pointLog, pointLog);
+  renderPoints();
+};
+
+document.getElementById("themeToggle").onclick = () => {
+  const root = document.documentElement;
+  const cur = root.getAttribute("data-theme");
+  if (cur === "dark") root.setAttribute("data-theme", "light");
+  else if (cur === "light") root.removeAttribute("data-theme");
+  else root.setAttribute("data-theme", "dark");
+};
+
+// ── 보너스 미스터리 박스 (완료 시 25% 확률로 등장, 게임 로또박스 느낌) ────────
+const BONUS_REWARDS = [
+  { emoji: "💎", title: "대박! 다이아 등급", desc: "이번 주 최고의 발견." },
+  { emoji: "🥇", title: "골드 박스", desc: "꾸준함이 만든 보너스." },
+  { emoji: "🎊", title: "깜짝 잭팟", desc: "운도 실력이다." },
+  { emoji: "⭐", title: "스타 보너스", desc: "오늘 제대로 달렸다." },
+  { emoji: "🍀", title: "행운 박스", desc: "이 기세로 내일도." },
+];
+let lootboxPending = false;
+let lootboxOpened = false;
+
+function maybeSpawnLootBox() {
+  if (lootboxPending) return;
+  if (Math.random() < 0.25) {
+    lootboxPending = true;
+    document.getElementById("lootbox-btn").classList.add("show");
+  }
+}
+
+document.getElementById("lootbox-btn").onclick = () => {
+  document.getElementById("lootbox-btn").classList.remove("show");
+  lootboxOpened = false;
+  const card = document.getElementById("lootbox-card");
+  card.classList.remove("opening");
+  document.getElementById("lootboxEmoji").textContent = "🎁";
+  document.getElementById("lootboxTitle").textContent = "미스터리 박스";
+  document.getElementById("lootboxDesc").textContent = "눌러서 열어보기";
+  document.getElementById("lootboxPts").textContent = "";
+  document.getElementById("lootboxAction").textContent = "박스 열기";
+  document.getElementById("lootbox-overlay").classList.add("show");
+};
+
+document.getElementById("lootboxAction").onclick = () => {
+  if (!lootboxOpened) {
+    lootboxOpened = true;
+    const card = document.getElementById("lootbox-card");
+    card.classList.add("opening");
+    document.getElementById("lootboxDesc").textContent = "여는 중...";
+    document.getElementById("lootboxAction").textContent = "여는 중...";
+    setTimeout(() => {
+      const b = BONUS_REWARDS[Math.floor(Math.random() * BONUS_REWARDS.length)];
+      const pts = [40, 60, 80, 100][Math.floor(Math.random() * 4)];
+      points += pts; save(LS.points, points); renderPoints();
+      card.classList.remove("opening");
+      document.getElementById("lootboxEmoji").textContent = b.emoji;
+      document.getElementById("lootboxTitle").textContent = b.title;
+      document.getElementById("lootboxDesc").textContent = b.desc;
+      document.getElementById("lootboxPts").textContent = "+" + pts + "P";
+      document.getElementById("lootboxAction").textContent = "받기!";
+    }, 550);
+  } else {
+    document.getElementById("lootbox-overlay").classList.remove("show");
+    lootboxPending = false;
+  }
+};
+
+renderAll();
+</script>
+</body>
+</html>
