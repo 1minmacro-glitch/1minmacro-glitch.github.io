@@ -1143,7 +1143,9 @@ function completeTodo(id) {
   const idx = todos.findIndex(t => t.id === id);
   if (idx === -1) return;
   const t = todos[idx];
-  const memo = prompt(`"${t.text}" 완료! 어떻게/왜 완료했는지 메모 (선택, 취소해도 완료 처리됨):`) || "";
+  const memoResult = prompt(`"${t.text}" 완료! 어떻게/왜 완료했는지 메모 (취소하면 완료 취소되고 목록에 그대로 남음):`);
+  if (memoResult === null) return; // 취소 → 완료 처리 안 함, 목록에 그대로 유지
+  const memo = memoResult;
   todos.splice(idx, 1);
   save(LS_TODOS, todos);
   const logEntry = { id: t.id, text: t.text, memo, date: dateStr(new Date()) };
