@@ -181,6 +181,11 @@
     font-size: 11px; color: var(--card); background: var(--cat-color, var(--text-muted));
     padding: 2px 8px; border-radius: 999px; flex-shrink: 0;
   }
+  .quest-group-header {
+    font-size: 11px; font-weight: 700; color: var(--text-muted);
+    padding: 12px 14px 4px; letter-spacing: .2px;
+  }
+  .quest-group-header:first-child { padding-top: 8px; }
 
   .stat-grid {
     display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
@@ -608,10 +613,17 @@ function ytSearchUrl(name) {
 
 // 요일 상관없이 "이번 주" 단위로 체크하는 항목들
 const WEEKLY_ITEMS = [
-  { id: "weekly_output", label: "이번 주 결과물 1개 (블로그/GPT/자동화/크몽/반도체자료)", cat: "asset",   icon: "💰" },
-  { id: "weekly_love",   label: "이번 주 연애/데이트 시간 챙기기",                     cat: "love",    icon: "❤️" },
-  { id: "weekly_hike",   label: "이번 주 등산",                                    cat: "workout", icon: "⛰️" },
+  { id: "weekly_output",  label: "이번 주 결과물 1개 (블로그/GPT/자동화/크몽/반도체자료)", cat: "asset",   icon: "💰" },
+  { id: "weekly_running", label: "이번 주 러닝",                                    cat: "workout", icon: "🏃" },
+  { id: "weekly_love",    label: "이번 주 연애/데이트 시간 챙기기",                     cat: "love",    icon: "❤️" },
+  { id: "weekly_hike",    label: "이번 주 등산",                                    cat: "workout", icon: "⛰️" },
 ];
+
+// 오늘의 퀘스트 정렬용 — 이 순서대로 묶어서 렌더 (운동→공부→투자→프로젝트→기타)
+const CAT_GROUP_ORDER = ["workout", "dn8", "study", "invest", "ai", "etc"];
+function groupSort(items) {
+  return [...items].sort((a, b) => CAT_GROUP_ORDER.indexOf(a.cat) - CAT_GROUP_ORDER.indexOf(b.cat));
+}
 
 // ── 마라톤 일정 (2026-07-19 웹서치로 수동 확인·입력 — 정적 스냅샷, 자동 갱신 아님) ──
 // 접수일/대회일 출처가 갈리는 대회는 warn에 표기, 공식 링크로 직접 확인 유도
@@ -854,7 +866,15 @@ function renderQuests() {
   const list = document.getElementById("questList");
   list.innerHTML = "";
 
-  items.forEach(it => {
+  let lastCat = null;
+  groupSort(items).forEach(it => {
+    if (it.cat !== lastCat) {
+      lastCat = it.cat;
+      const header = document.createElement("div");
+      header.className = "quest-group-header";
+      header.textContent = `${CATS[it.cat].icon} ${CATS[it.cat].name}`;
+      list.appendChild(header);
+    }
     const done = !!dayChecked[it.id];
     const cat = CATS[it.cat];
     const hasEx = !!(it.ex && WORKOUT_EXERCISES[it.ex]);
@@ -891,7 +911,13 @@ function renderQuests() {
     }
   });
 
-  // 주간 항목(자산/연애/등산) — 요일 상관없이 이번 주에 체크
+  // 주간 항목(자산/연애/등산/러닝) — 요일 상관없이 이번 주에 체크, 별도 그룹으로 묶어서 표시
+  if (WEEKLY_ITEMS.length) {
+    const wkHeader = document.createElement("div");
+    wkHeader.className = "quest-group-header";
+    wkHeader.textContent = "📅 이번 주 (요일 무관)";
+    list.appendChild(wkHeader);
+  }
   WEEKLY_ITEMS.forEach(it => {
     const done = !!weeklyChecked[it.id];
     const cat = CATS[it.cat];
@@ -901,7 +927,7 @@ function renderQuests() {
     row.innerHTML = `
       <div class="box">${done ? "✓" : ""}</div>
       <div class="icon">${it.icon}</div>
-      <div class="label">${it.label} <span style="color:var(--text-muted); font-size:11px;">(이번 주)</span></div>
+      <div class="label">${it.label}</div>
       <div class="tag">${cat.name}</div>
     `;
     row.onclick = () => toggleWeekly(wk, it.id);
