@@ -305,6 +305,57 @@
     60% { transform: rotate(-8deg); }
     80% { transform: rotate(6deg); }
   }
+
+  /* 칠판 / 완료기록 공용 아이템 */
+  .board-item { padding: 10px 12px; border-bottom: 1px solid var(--gridline); font-size: 12.5px; }
+  .board-item:last-child { border-bottom: none; }
+  .board-item .board-date { color: var(--text-muted); font-size: 11px; margin-bottom: 2px; }
+  .board-item .board-text { color: var(--text-primary); line-height: 1.5; }
+
+  /* 날씨 위젯 */
+  .weather-summary { padding: 10px 12px; font-size: 12.5px; color: var(--cat-workout); font-weight: 700; }
+  .weather-grid { display: flex; overflow-x: auto; gap: 6px; padding: 0 12px 12px; }
+  .weather-hour {
+    flex-shrink: 0; text-align: center; font-size: 11px; padding: 8px 6px; border-radius: 8px;
+    background: rgba(127,127,127,0.06); min-width: 44px;
+  }
+  .weather-hour.rec { background: rgba(27,175,122,0.18); border: 1px solid var(--cat-workout); }
+  .weather-hour .wh-time { color: var(--text-muted); }
+  .weather-hour .wh-temp { font-weight: 700; margin: 4px 0; }
+  .weather-hour .wh-pop { color: var(--cat-asset); }
+
+  /* 할 일 트래커 */
+  .todo-input-row { display: flex; gap: 8px; padding: 10px 12px; }
+  .todo-input-row input {
+    flex: 1; border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px;
+    background: var(--card); color: var(--text-primary); font-size: 14px;
+  }
+  .todo-input-row button {
+    background: var(--text-primary); color: var(--card); border: none; border-radius: 8px;
+    padding: 8px 14px; cursor: pointer; font-size: 14px;
+  }
+  .todo-item {
+    display: flex; align-items: center; gap: 10px; padding: 10px 14px;
+    border-bottom: 1px solid var(--gridline); cursor: pointer;
+  }
+  .todo-item:last-child { border-bottom: none; }
+  .todo-item:hover { background: rgba(127,127,127,0.06); }
+  .todo-item .box { width: 20px; height: 20px; border-radius: 6px; border: 2px solid var(--text-muted); flex-shrink: 0; }
+  .todo-item .label { flex: 1; font-size: 14px; }
+  .todo-log-item { padding: 10px 14px; border-bottom: 1px solid var(--gridline); font-size: 12.5px; }
+  .todo-log-item:last-child { border-bottom: none; }
+  .todo-log-item .log-date { color: var(--text-muted); font-size: 11px; }
+  .todo-log-item .log-title { font-weight: 700; margin: 2px 0; }
+  .todo-log-item .log-memo { color: var(--text-secondary); }
+
+  #undo-toast {
+    position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%);
+    background: var(--text-primary); color: var(--card); padding: 10px 18px; border-radius: 999px;
+    font-size: 13px; display: none; align-items: center; gap: 12px; z-index: 120;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  }
+  #undo-toast.show { display: flex; }
+  #undo-toast button { background: none; border: none; color: var(--cat-dn8); font-weight: 700; cursor: pointer; font-size: 13px; }
 </style>
 </head>
 <body>
@@ -335,6 +386,17 @@
   </section>
 
   <section>
+    <h2>📝 할 일 <span class="count" id="todoCount"></span></h2>
+    <div class="card">
+      <div class="todo-input-row">
+        <input type="text" id="todoInput" placeholder="할 일 입력 후 Enter">
+        <button id="todoAddBtn" type="button">추가</button>
+      </div>
+      <div id="todoList"></div>
+    </div>
+  </section>
+
+  <section>
     <h2>🧠 오늘의 행복도</h2>
     <div class="card" style="padding:14px; display:flex; gap:8px; justify-content:center;" id="moodPicker"></div>
   </section>
@@ -356,6 +418,11 @@
     <div class="card goal-list"><div id="goalList"></div></div>
   </section>
 
+  <section>
+    <h2>📜 완료 기록</h2>
+    <div class="card" id="todoLogList"></div>
+  </section>
+
   <footer class="note">
     체크는 브라우저에 저장돼 — 이 파일을 그대로 두고 매번 열면 이어짐 (같은 브라우저 기준)<br>
     <span id="resetPoints" style="text-decoration:underline; cursor:pointer;">포인트만 0으로 초기화</span>
@@ -363,9 +430,16 @@
 </div>
 
 <aside class="sidebar">
-  <div class="card marathon-panel" id="marathonPanel"></div>
+  <div class="card marathon-panel" id="boardPanel"></div>
+  <div class="card marathon-panel" id="weatherPanel" style="margin-top:16px;"></div>
+  <div class="card marathon-panel" id="marathonPanel" style="margin-top:16px;"></div>
   <div class="card marathon-panel" id="hikingPanel" style="margin-top:16px;"></div>
 </aside>
+</div>
+
+<div id="undo-toast">
+  <span id="undoText"></span>
+  <button id="undoBtn" type="button">되돌리기</button>
 </div>
 
 <div id="reward-overlay">
@@ -971,6 +1045,176 @@ function renderAll() {
   renderGoals();
   renderPoints();
 }
+
+// ── 칠판 (클로드가 세션마다 남기는 메모 — git push로만 갱신됨, 로컬 조작 아님) ──
+const BOARD_NOTES = [
+  { date: "2026-07-27", text: "GitHub 동기화 버그 발견·수정: 07-21 할일트래커·07-26 날씨위젯이 레포에 push된 적이 없어서, 매일 자동 pull이 로컬 파일을 07-20 옛날 버전으로 계속 덮어쓰고 있었음. 지금부터는 이 dashboard/index.html이 진짜 소스 — 여기 수정하고 push해야 다음날 동기화에 반영됨." },
+  { date: "2026-07-27", text: "채널 현황: 월가비상구 106명 / 부동산비상구 149명(TOP 영등포구 1,425뷰) / KoreaWorld 18명(시청률 95%) / BrainSnack 1명 / 드라마 14명. 부동산 어제 하루 13개 업로드, 재건축/청약 테마 강세 지속." },
+  { date: "2026-07-27", text: "요청게시판 구글시트 자동화 여전히 막힘 — Drive 커넥터가 이 계정 파일을 하나도 못 봄(스코프 문제로 추정). Settings → Connectors → Google Drive에 파일/폴더 선택 버튼 있는지 확인 필요." },
+];
+
+function renderBoard() {
+  const panel = document.getElementById("boardPanel");
+  let html = `<h3>📌 칠판 (클로드 메모)</h3>`;
+  if (!BOARD_NOTES.length) {
+    html += `<div class="marathon-note">현재 메모 없음</div>`;
+  } else {
+    BOARD_NOTES.slice().reverse().forEach(n => {
+      html += `<div class="board-item"><div class="board-date">${n.date}</div><div class="board-text">${n.text}</div></div>`;
+    });
+  }
+  html += `<div class="marathon-note">이 칠판은 클로드가 GitHub에 push한 내용이 매일 로컬 pull 동기화로 반영되는 방식 — 실시간은 아니고 하루 텀으로 갱신됨.</div>`;
+  panel.innerHTML = html;
+}
+renderBoard();
+
+// ── 대구 날씨 (Open-Meteo, 키 불필요) ──
+const WEATHER_LAT = 35.8714, WEATHER_LON = 128.6014;
+async function loadWeather() {
+  const panel = document.getElementById("weatherPanel");
+  panel.innerHTML = `<h3>🌤️ 대구 날씨 (오늘)</h3><div class="marathon-note">불러오는 중...</div>`;
+  try {
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${WEATHER_LAT}&longitude=${WEATHER_LON}&hourly=temperature_2m,precipitation_probability&timezone=Asia%2FSeoul&forecast_days=1`;
+    const res = await fetch(url);
+    const data = await res.json();
+    const times = data.hourly.time, temps = data.hourly.temperature_2m, pops = data.hourly.precipitation_probability;
+    let html = `<h3>🌤️ 대구 날씨 (오늘)</h3>`;
+    let recRanges = [], curStart = null, rows = "";
+    for (let i = 5; i <= 21; i++) {
+      const idx = times.findIndex(t => t.endsWith(String(i).padStart(2, "0") + ":00"));
+      if (idx === -1) continue;
+      const temp = Math.round(temps[idx]);
+      const pop = pops[idx];
+      const rec = pop <= 30 && temp <= 33;
+      if (rec) { if (curStart === null) curStart = i; }
+      else { if (curStart !== null) { recRanges.push([curStart, i - 1]); curStart = null; } }
+      rows += `<div class="weather-hour${rec ? " rec" : ""}"><div class="wh-time">${i}시</div><div class="wh-temp">${temp}°</div><div class="wh-pop">${pop}%</div></div>`;
+    }
+    if (curStart !== null) recRanges.push([curStart, 21]);
+    if (recRanges.length) {
+      const label = recRanges.map(r => r[0] === r[1] ? `${r[0]}시` : `${r[0]}~${r[1]}시`).join(", ");
+      html += `<div class="weather-summary">🥾 등산 추천 시간대: ${label}</div>`;
+    } else {
+      html += `<div class="weather-summary" style="color:var(--cat-invest);">오늘은 추천 시간대 없음(더움/비)</div>`;
+    }
+    html += `<div class="weather-grid">${rows}</div>`;
+    html += `<div class="marathon-note">Open-Meteo 실시간 API · 강수확률 30%↓ &amp; 기온 33도↓ 구간 자동 하이라이트</div>`;
+    panel.innerHTML = html;
+  } catch (e) {
+    panel.innerHTML = `<h3>🌤️ 대구 날씨</h3><div class="marathon-note">불러오기 실패 — <a href="https://www.weather.go.kr/w/weather/forecast/short-term.do" target="_blank" rel="noopener">기상청에서 확인</a></div>`;
+  }
+}
+loadWeather();
+
+// ── 할 일 트래커 (자유 텍스트 추가/삭제, 완료 즉시 목록에서 빠지고 완료기록에 누적) ──
+const LS_TODOS = "jh_todos";
+const LS_TODO_LOG = "jh_todo_log";
+let todos = load(LS_TODOS, null);
+if (todos === null) {
+  todos = [
+    { id: "t1", text: "논문 RQ3 pseudo-replication 결함 처리" },
+    { id: "t2", text: "논문 참고문헌 [8]~[16] 미인용 처리" },
+    { id: "t3", text: "크몽 심화편 승인 결과 확인" },
+    { id: "t4", text: "틱톡 2차 심사 결과 확인" },
+    { id: "t5", text: "요청게시판 구글시트 연결 마무리" },
+    { id: "t6", text: "산격동 화장실 공사 — 법률구조공단 상담" },
+    { id: "t7", text: "AI 캐릭터 캐스팅 다음 단계" },
+    { id: "t8", text: "반도체 PMOS 레시피 실제 장비 입력" },
+  ];
+  save(LS_TODOS, todos);
+}
+let todoLog = load(LS_TODO_LOG, []);
+let lastRemovedTodo = null, lastRemovedLog = null, undoTimer = null;
+
+function renderTodos() {
+  const list = document.getElementById("todoList");
+  list.innerHTML = "";
+  todos.forEach(t => {
+    const row = document.createElement("div");
+    row.className = "todo-item";
+    row.innerHTML = `<div class="box"></div><div class="label">${t.text}</div>`;
+    row.onclick = () => completeTodo(t.id);
+    list.appendChild(row);
+  });
+  document.getElementById("todoCount").textContent = `${todos.length}개`;
+}
+
+function completeTodo(id) {
+  const idx = todos.findIndex(t => t.id === id);
+  if (idx === -1) return;
+  const t = todos[idx];
+  const memo = prompt(`"${t.text}" 완료! 어떻게/왜 완료했는지 메모 (선택, 취소해도 완료 처리됨):`) || "";
+  todos.splice(idx, 1);
+  save(LS_TODOS, todos);
+  const logEntry = { id: t.id, text: t.text, memo, date: dateStr(new Date()) };
+  todoLog.unshift(logEntry);
+  save(LS_TODO_LOG, todoLog);
+  points += 20; save(LS.points, points); renderPoints();
+
+  lastRemovedTodo = { item: t, index: idx };
+  lastRemovedLog = logEntry;
+  showUndoToast(`"${t.text}" 완료 처리됨`);
+
+  renderTodos();
+  renderTodoLog();
+}
+
+function showUndoToast(msg) {
+  clearTimeout(undoTimer);
+  document.getElementById("undoText").textContent = msg;
+  document.getElementById("undo-toast").classList.add("show");
+  undoTimer = setTimeout(() => {
+    document.getElementById("undo-toast").classList.remove("show");
+    lastRemovedTodo = null; lastRemovedLog = null;
+  }, 5000);
+}
+
+document.getElementById("undoBtn").onclick = () => {
+  clearTimeout(undoTimer);
+  document.getElementById("undo-toast").classList.remove("show");
+  if (lastRemovedTodo) {
+    todos.splice(lastRemovedTodo.index, 0, lastRemovedTodo.item);
+    save(LS_TODOS, todos);
+  }
+  if (lastRemovedLog) {
+    const i = todoLog.indexOf(lastRemovedLog);
+    if (i !== -1) todoLog.splice(i, 1);
+    save(LS_TODO_LOG, todoLog);
+    points -= 20; save(LS.points, points); renderPoints();
+  }
+  lastRemovedTodo = null; lastRemovedLog = null;
+  renderTodos();
+  renderTodoLog();
+};
+
+document.getElementById("todoAddBtn").onclick = addTodo;
+document.getElementById("todoInput").onkeydown = (e) => { if (e.key === "Enter") addTodo(); };
+function addTodo() {
+  const input = document.getElementById("todoInput");
+  const text = input.value.trim();
+  if (!text) return;
+  todos.push({ id: "t" + Date.now(), text });
+  save(LS_TODOS, todos);
+  input.value = "";
+  renderTodos();
+}
+
+function renderTodoLog() {
+  const list = document.getElementById("todoLogList");
+  if (!todoLog.length) {
+    list.innerHTML = `<div class="board-item"><div class="board-text" style="color:var(--text-muted);">아직 없음</div></div>`;
+    return;
+  }
+  list.innerHTML = todoLog.map(l => `
+    <div class="todo-log-item">
+      <div class="log-date">${l.date}</div>
+      <div class="log-title">✅ ${l.text}</div>
+      ${l.memo ? `<div class="log-memo">${l.memo}</div>` : ""}
+    </div>`).join("");
+}
+
+renderTodos();
+renderTodoLog();
 
 // 마라톤 패널 — 체크 상태와 무관한 정적 정보라 최초 1회만 렌더
 let activeRegion = "대구경북";
