@@ -1006,10 +1006,20 @@ function renderMood() {
     btn.style.cssText = `font-size:26px; background:none; border:2px solid ${cur===level ? 'var(--cat-happy)' : 'var(--border)'}; border-radius:12px; padding:6px 10px; cursor:pointer;`;
     btn.onclick = () => {
       const key = "m:" + ds;
-      const wasSet = moodAll[ds] === level;
-      moodAll[ds] = wasSet ? undefined : level;
-      save(LS.mood, moodAll);
-      if (!wasSet) { showReward(key); maybeSpawnLootBox(); } else { refundPoints(key); }
+      const alreadyPicked = moodAll[ds] !== undefined; // 오늘 이미 뭐든 하나 골라놨는지
+      const wasThisLevel = moodAll[ds] === level;
+
+      if (wasThisLevel) {
+        // 같은 레벨 다시 누르면 선택 취소 + 포인트 환수
+        moodAll[ds] = undefined;
+        save(LS.mood, moodAll);
+        refundPoints(key);
+      } else {
+        moodAll[ds] = level;
+        save(LS.mood, moodAll);
+        // 오늘 처음 고르는 거일 때만 포인트 지급 — 레벨만 바꾸는 건 중복 지급 안 함(포인트 중첩 버그 수정)
+        if (!alreadyPicked) { showReward(key); maybeSpawnLootBox(); }
+      }
       renderMood();
     };
     picker.appendChild(btn);
