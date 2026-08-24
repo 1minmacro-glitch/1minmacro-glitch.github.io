@@ -1210,6 +1210,19 @@ const GH_RAW_URL = `https://raw.githubusercontent.com/${GH_OWNER}/${GH_REPO}/mai
 const GH_API_URL = `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_PATH}`;
 const LS_REPLY_DRAFT = "jh_reply_draft";
 const LS_GH_PAT = "jh_gh_pat";
+const LS_GH_PAT_DATE = "jh_gh_pat_date";
+const PAT_EXPIRY_DAYS = 30;
+
+function patExpiryNote() {
+  const savedDate = localStorage.getItem(LS_GH_PAT_DATE);
+  if (!savedDate) return "";
+  const saved = new Date(savedDate);
+  const expiry = new Date(saved.getTime() + PAT_EXPIRY_DAYS * 86400000);
+  const daysLeft = Math.ceil((expiry - new Date()) / 86400000);
+  const warn = daysLeft <= 5;
+  const color = warn ? "var(--warn, #b23a22)" : "var(--text-muted)";
+  return `<div style="font-size:11px; color:${color}; margin-top:4px;">토큰 만료 예정: ${expiry.toISOString().slice(0,10)} (D-${daysLeft})${warn ? " — 곧 새로 발급 필요" : ""}</div>`;
+}
 
 function renderReply() {
   const panel = document.getElementById("replyPanel");
@@ -1223,10 +1236,11 @@ function renderReply() {
         <button class="copy-btn" id="replySubmitBtn">${token ? "제출하기" : "연결 설정 먼저"}</button>
         <button class="clear-btn" id="replySettingsBtn">⚙️ 연결설정</button>
       </div>
+      ${token ? patExpiryNote() : ""}
       <div class="reply-status" id="replyStatus"></div>
       <div id="replySettingsBox" style="display:none; margin-top:8px; padding:10px; border:1px dashed var(--border); border-radius:8px; font-size:11.5px; color:var(--text-muted);">
-        최초 1회만: <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">GitHub 토큰 발급 페이지</a>에서 —
-        Repository access: <b>Only select repositories → ${GH_REPO}</b>, Permissions: <b>Contents → Read and write</b> 설정 후 발급.
+        최초 1회 또는 만료 후 재발급: <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">GitHub 토큰 발급 페이지</a>에서 —
+        Repository access: <b>Only select repositories → ${GH_REPO}</b>, Permissions: <b>Contents → Read and write</b>, Expiration: <b>30 days</b> 설정 후 발급.
         발급된 토큰(ghp_ 또는 github_pat_로 시작)을 아래에 붙여넣기(이 브라우저에만 저장됨, 서버로 안 감).
         <div style="display:flex; gap:6px; margin-top:6px;">
           <input type="password" id="ghPatInput" placeholder="여기에 토큰 붙여넣기" style="flex:1; border:1px solid var(--border); border-radius:6px; padding:6px 8px; background:var(--card); color:var(--text-primary); font-size:12px;">
@@ -1248,6 +1262,7 @@ function renderReply() {
     const v = document.getElementById("ghPatInput").value.trim();
     if (!v) return;
     localStorage.setItem(LS_GH_PAT, v);
+    localStorage.setItem(LS_GH_PAT_DATE, new Date().toISOString());
     renderReply();
   };
 
