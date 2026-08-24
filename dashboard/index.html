@@ -367,6 +367,21 @@
   .todo-item .box { width: 20px; height: 20px; border-radius: 6px; border: 2px solid var(--text-muted); flex-shrink: 0; }
   .todo-item .label { flex: 1; font-size: 14px; }
   .todo-log-item { padding: 10px 14px; border-bottom: 1px solid var(--gridline); font-size: 12.5px; }
+
+  /* 답변 남기기 */
+  .reply-box { padding: 10px 12px; }
+  .reply-box textarea {
+    width: 100%; min-height: 84px; resize: vertical; box-sizing: border-box;
+    border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px;
+    background: var(--card); color: var(--text-primary); font-size: 13.5px; font-family: inherit;
+  }
+  .reply-btn-row { display: flex; gap: 8px; margin-top: 8px; }
+  .reply-btn-row button {
+    border: none; border-radius: 8px; padding: 7px 12px; cursor: pointer; font-size: 12.5px;
+  }
+  .reply-btn-row .copy-btn { background: var(--text-primary); color: var(--card); flex: 1; }
+  .reply-btn-row .clear-btn { background: rgba(127,127,127,0.15); color: var(--text-primary); }
+  .reply-status { font-size: 11.5px; color: var(--cat-workout); margin-top: 6px; min-height: 14px; }
   .todo-log-item:last-child { border-bottom: none; }
   .todo-log-item .log-date { color: var(--text-muted); font-size: 11px; }
   .todo-log-item .log-title { font-weight: 700; margin: 2px 0; }
@@ -455,6 +470,7 @@
 
 <aside class="sidebar">
   <div class="card marathon-panel" id="boardPanel"></div>
+  <div class="card marathon-panel" id="replyPanel" style="margin-top:16px;"></div>
   <div class="card marathon-panel" id="channelPanel" style="margin-top:16px;"></div>
   <div class="card marathon-panel" id="weatherPanel" style="margin-top:16px;"></div>
   <div class="card marathon-panel" id="marathonPanel" style="margin-top:16px;"></div>
@@ -1183,6 +1199,51 @@ function renderBoard() {
   panel.innerHTML = html;
 }
 renderBoard();
+
+// ── 답변 남기기 (칠판의 반대방향 — 유저가 클로드에게 남기는 메모) ──
+// localStorage는 클로드가 세션 시작 시 자동으로 못 읽음. 그래서 "복사→답변노트.txt에 붙여넣기"로 우회.
+const LS_REPLY = "jh_reply_draft";
+const REPLY_NOTE_PATH = "C:\\Users\\김준현\\Desktop\\준현폴더\\준현_대시보드\\답변노트.txt";
+function renderReply() {
+  const panel = document.getElementById("replyPanel");
+  const saved = localStorage.getItem(LS_REPLY) || "";
+  panel.innerHTML = `
+    <h3>💬 답변 남기기</h3>
+    <div class="reply-box">
+      <textarea id="replyText" placeholder="클로드한테 남길 답변/메모 적기 (자동저장됨)">${saved}</textarea>
+      <div class="reply-btn-row">
+        <button class="copy-btn" id="replyCopyBtn">복사하기</button>
+        <button class="clear-btn" id="replyClearBtn">비우기</button>
+      </div>
+      <div class="reply-status" id="replyStatus"></div>
+      <div class="marathon-note">복사한 내용을 메모장으로 <code>답변노트.txt</code>에 붙여넣고 저장하면, 다음 세션에서 클로드가 자동으로 읽음. 경로: <code>${REPLY_NOTE_PATH}</code></div>
+    </div>`;
+  const ta = document.getElementById("replyText");
+  ta.oninput = () => localStorage.setItem(LS_REPLY, ta.value);
+  document.getElementById("replyCopyBtn").onclick = () => {
+    const text = ta.value.trim();
+    const status = document.getElementById("replyStatus");
+    if (!text) { status.textContent = "빈 내용은 복사 안 함"; return; }
+    const stamped = `\n[${new Date().toISOString().slice(0,16).replace("T"," ")}]\n${text}\n`;
+    const doCopy = () => navigator.clipboard.writeText(stamped)
+      .then(() => status.textContent = "복사 완료 — 답변노트.txt에 붙여넣기")
+      .catch(() => fallbackCopy(stamped, status));
+    if (navigator.clipboard && window.isSecureContext) doCopy();
+    else fallbackCopy(stamped, status);
+  };
+  document.getElementById("replyClearBtn").onclick = () => {
+    ta.value = ""; localStorage.removeItem(LS_REPLY);
+    document.getElementById("replyStatus").textContent = "비움";
+  };
+}
+function fallbackCopy(text, status) {
+  const tmp = document.createElement("textarea");
+  tmp.value = text; document.body.appendChild(tmp); tmp.select();
+  try { document.execCommand("copy"); status.textContent = "복사 완료 — 답변노트.txt에 붙여넣기"; }
+  catch (e) { status.textContent = "복사 실패 — 직접 드래그해서 복사해줘"; }
+  document.body.removeChild(tmp);
+}
+renderReply();
 
 // ── 채널 실적 (channel_analytics.py 결과 스냅샷 — PC 세션마다 클로드가 갱신) ──
 const CHANNEL_STATS_DATE = "2026-07-28";
