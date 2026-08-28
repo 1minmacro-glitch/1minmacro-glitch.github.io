@@ -1289,8 +1289,9 @@ function renderReply() {
       } else if (getRes.status !== 404) {
         throw new Error(`GET ${getRes.status}`);
       }
+      const newId = Date.now();
       arr.push({
-        id: Date.now(),
+        id: newId,
         date: new Date().toISOString(),
         text,
         read: false,
@@ -1304,9 +1305,10 @@ function renderReply() {
         body: JSON.stringify({ message: `답변 추가 ${new Date().toISOString()}`, content: b64, sha }),
       });
       if (!putRes.ok) throw new Error(`PUT ${putRes.status}`);
-      status.textContent = "전송 완료 — 다음 세션에 클로드가 확인함";
+      status.textContent = "전송 완료 — 클로드 답변 기다리는 중...";
       ta.value = ""; localStorage.removeItem(LS_REPLY_DRAFT);
       loadReplyThread();
+      pollForReply(newId, status);
     } catch (e) {
       status.textContent = `전송 실패(${e.message}) — 토큰 권한/만료 확인 필요`;
     }
@@ -1334,9 +1336,31 @@ async function loadReplyThread() {
       </div>`;
     });
     box.innerHTML = html;
+    return arr;
   } catch (e) {
     box.innerHTML = "";
+    return null;
   }
+}
+
+// 제출 직후 페이지 새로고침 없이 답변 도착을 감지 — 6초 간격으로 최대 2분(20회) 폴링, 답변 오면 즉시 중단
+function pollForReply(targetId, status) {
+  let tries = 0;
+  const maxTries = 20;
+  const timer = setInterval(async () => {
+    tries++;
+    const arr = await loadReplyThread();
+    const item = arr && arr.find(x => x.id === targetId);
+    if (item && item.read) {
+      clearInterval(timer);
+      status.textContent = "클로드 답변 도착!";
+    } else if (tries >= maxTries) {
+      clearInterval(timer);
+      status.textContent = "아직 답변 안 옴 — 나중에 새로고침해서 다시 확인해줘";
+    } else {
+      status.textContent = `전송 완료 — 클로드 답변 기다리는 중... (${tries * 6}초)`;
+    }
+  }, 6000);
 }
 renderReply();
 
