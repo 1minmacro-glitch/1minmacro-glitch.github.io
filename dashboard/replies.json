@@ -14,5 +14,13 @@
     "read": true,
     "claude_reply": "6! 들림. 토큰 세팅 잘 됐고 이 파이프라인 정상 작동 확인함.",
     "claude_reply_date": "2026-08-28T04:39:34.756845Z"
+  },
+  {
+    "id": 1787892370604,
+    "date": "2026-08-28T04:46:10.604Z",
+    "text": "ㅎㅇㅎㅇ 그럼 실시간 답변간으?",
+    "read": false,
+    "claude_reply": null,
+    "claude_reply_date": null
   }
 ]
