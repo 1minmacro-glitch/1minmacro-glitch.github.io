@@ -1319,7 +1319,9 @@ async function loadReplyThread() {
   const box = document.getElementById("replyThread");
   if (!box) return;
   try {
-    const res = await fetch(GH_RAW_URL, { cache: "no-store" });
+    // raw.githubusercontent.com은 Fastly CDN 캐시 때문에 push 후 몇 분씩 지연될 수 있어서
+    // 캐시가 안 걸리는 GitHub Contents API로 직접 읽음(공개 저장소라 토큰 없이도 됨).
+    const res = await fetch(GH_API_URL, { cache: "no-store", headers: { "Accept": "application/vnd.github.raw+json" } });
     if (!res.ok) { box.innerHTML = ""; return; }
     const arr = await res.json();
     if (!arr.length) { box.innerHTML = ""; return; }
