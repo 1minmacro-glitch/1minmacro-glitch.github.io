@@ -469,6 +469,7 @@
 </div>
 
 <aside class="sidebar">
+  <div class="card marathon-panel" id="ddayPanel"></div>
   <div class="card marathon-panel" id="boardPanel"></div>
   <div class="card marathon-panel" id="replyPanel" style="margin-top:16px;"></div>
   <div class="card marathon-panel" id="channelPanel" style="margin-top:16px;"></div>
@@ -1173,6 +1174,39 @@ function renderAll() {
   renderPoints();
 }
 
+// ── D-Day 카운터 (2026-09-05 신설 — 사용자가 "자유롭게 업그레이드해봐"라고 해서 클로드가 자체 판단으로 추가함) ──
+// 오늘 세션 전체가 "퇴사 후 독립"이라는 동기부여를 계속 얘기했어서, 그 목표를 매일 여는 대시보드 맨 위에
+// 숫자로 못박아두면 실제로 동기부여가 될 거라 판단함. 부동산비상구 커뮤니티탭 500명 목표도 같이 넣음
+// (오늘 확인한 실제 진행중인 목표라 연결지음 — 개인 목표 + 사업 목표를 한 화면에 묶은 게 이 카드의 의도).
+const RESIGN_DATE = new Date("2027-02-28T00:00:00+09:00");
+const COMMUNITY_TAB_GOAL = 500;
+
+function renderDday() {
+  const panel = document.getElementById("ddayPanel");
+  const now = new Date();
+  const dday = Math.ceil((RESIGN_DATE - now) / 86400000);
+  const currentSubs = (CHANNEL_STATS.find(c => c.name === "부동산비상구") || {}).subs || 0;
+  const remain = Math.max(0, COMMUNITY_TAB_GOAL - currentSubs);
+  panel.innerHTML = `
+    <h3>🎯 카운트다운</h3>
+    <div style="text-align:center; padding:8px 0 4px;">
+      <div style="font-size:42px; font-weight:800; color:var(--cat-invest); line-height:1;">D-${dday}</div>
+      <div style="font-size:12px; color:var(--text-muted); margin-top:4px;">2027-02-28 퇴사 · 그날부터 온전히 내 사업</div>
+    </div>
+    <div style="border-top:1px solid var(--line, #e5e5e5); margin:10px 0; padding-top:10px;">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <span style="font-size:13px;">부동산비상구 커뮤니티탭</span>
+        <span style="font-size:13px; font-weight:700; color:var(--cat-asset);">${currentSubs} / 500명</span>
+      </div>
+      <div style="background:var(--line,#e5e5e5); border-radius:6px; height:8px; margin-top:6px; overflow:hidden;">
+        <div style="background:var(--cat-asset); height:100%; width:${Math.min(100, currentSubs/COMMUNITY_TAB_GOAL*100)}%;"></div>
+      </div>
+      <div style="font-size:11px; color:var(--text-muted); margin-top:4px;">${remain}명 남으면 커뮤니티 수익화 전략 바로 적용</div>
+    </div>
+    <div class="marathon-note">D-Day는 오늘 세션에서 클로드가 스스로 추가한 카드임 — 마음에 안 들면 얘기해줘, 다른 목표로 바꾸거나 없앨 수 있음.</div>
+  `;
+}
+
 // ── 칠판 (클로드가 세션마다 남기는 메모 — git push로만 갱신됨, 로컬 조작 아님) ──
 // source: "PC" (Cursor/터미널 등 이 컴퓨터에서 진행한 세션) | "폰" (remote-control로 폰에서 진행한 세션)
 const BOARD_NOTES = [
@@ -1391,6 +1425,7 @@ function renderChannelStats() {
   panel.innerHTML = html;
 }
 renderChannelStats();
+renderDday();
 
 // ── 대구 날씨 (Open-Meteo, 키 불필요) ──
 const WEATHER_LAT = 35.8714, WEATHER_LON = 128.6014;
