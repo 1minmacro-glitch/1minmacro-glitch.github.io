@@ -1208,7 +1208,7 @@ function renderDday() {
   `;
 }
 
-// ── 가계부 (2026-09-06 신설 — 월 실수령/고정비/남는돈 구조를 눈으로 바로 보게) ──
+// ── 가계부 (2026-09-06 신설, 2026-09-08 지출로그+경고등 추가) ──
 // 숫자 바뀌면(월급 인상, 학자금 완납 등) 이 배열만 고쳐서 다시 push하면 됨.
 const BUDGET_INCOME = 2880000;
 const BUDGET_MOM = [
@@ -1225,29 +1225,100 @@ const BUDGET_SELF = [
   { label: "트위터(X)", amount: 12000 },
   { label: "패트리온", amount: 8000 },
   { label: "기름값", amount: 110000, note: "평균, 주행량에 따라 변동" },
+  { label: "복싱", amount: 160000, note: "2026-09-08 추가" },
 ];
+const BUDGET_GAME = 100000; // 게임비 고정 할당(2026-09-08 결정, 가챠 등은 이 안에서만)
+
+const LS_EXPENSES = "jh_expenses";
+let expenses = load(LS_EXPENSES, []);
+if (!load("jh_expenses_seed_0908", false)) {
+  expenses.push({ id: "e0908a", date: "2026-09-08", label: "병원비", amount: 110000 });
+  expenses.push({ id: "e0908b", date: "2026-09-08", label: "커피", amount: 6800 });
+  save(LS_EXPENSES, expenses);
+  save("jh_expenses_seed_0908", true);
+}
+
+function addExpense() {
+  const labelEl = document.getElementById("expLabel");
+  const amountEl = document.getElementById("expAmount");
+  const label = labelEl.value.trim();
+  const amount = parseInt(amountEl.value, 10);
+  if (!label || !amount) return;
+  expenses.push({ id: "e" + Date.now(), date: dateStr(new Date()), label, amount });
+  save(LS_EXPENSES, expenses);
+  labelEl.value = ""; amountEl.value = "";
+  renderBudget();
+}
+
+function deleteExpense(id) {
+  expenses = expenses.filter(e => e.id !== id);
+  save(LS_EXPENSES, expenses);
+  renderBudget();
+}
 
 function renderBudget() {
   const panel = document.getElementById("budgetPanel");
   const momTotal = BUDGET_MOM.reduce((s, i) => s + i.amount, 0);
   const selfTotal = BUDGET_SELF.reduce((s, i) => s + i.amount, 0);
   const fixedTotal = momTotal + selfTotal;
-  const remain = BUDGET_INCOME - fixedTotal;
+  const freeFund = BUDGET_INCOME - fixedTotal - BUDGET_GAME; // 게임비 제외 진짜 자유자금
   const fmt = n => n.toLocaleString("ko-KR") + "원";
+
+  const now = new Date();
+  const ym = now.toISOString().slice(0, 7); // "2026-09"
+  const thisMonthExp = expenses.filter(e => e.date.startsWith(ym));
+  const spent = thisMonthExp.reduce((s, e) => s + e.amount, 0);
+  const remain = freeFund - spent;
+
+  const dayOfMonth = now.getDate();
+  const daysInMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
+  const daysLeft = daysInMonth - dayOfMonth + 1;
+  const expectedRatio = dayOfMonth / daysInMonth;
+  const actualRatio = freeFund > 0 ? spent / freeFund : 1;
+  const perDayLeft = daysLeft > 0 ? Math.max(0, Math.round(remain / daysLeft)) : 0;
+
+  let light = "🟢", lightMsg = "정상 페이스로 쓰는 중";
+  if (remain < 0) { light = "🔴"; lightMsg = "이번달 자유자금 이미 초과함"; }
+  else if (actualRatio - expectedRatio > 0.2) { light = "🔴"; lightMsg = "날짜 대비 너무 빨리 쓰고 있음 — 페이스 조절 필요"; }
+  else if (actualRatio - expectedRatio > 0.08) { light = "🟡"; lightMsg = "페이스보다 조금 빠르게 쓰는 중"; }
 
   const row = (i) => `<div style="display:flex; justify-content:space-between; font-size:12.5px; padding:2px 0;">
     <span>${i.label}${i.note ? ` <span style="color:var(--text-muted);font-size:10.5px;">(${i.note})</span>` : ""}</span>
     <span style="font-variant-numeric:tabular-nums;">${fmt(i.amount)}</span>
   </div>`;
 
+  const expRow = (e) => `<div style="display:flex; justify-content:space-between; align-items:center; font-size:12.5px; padding:2px 0;">
+    <span>${e.date.slice(5)} ${e.label}</span>
+    <span style="display:flex; align-items:center; gap:6px;">
+      <span style="font-variant-numeric:tabular-nums;">${fmt(e.amount)}</span>
+      <span onclick="deleteExpense('${e.id}')" style="cursor:pointer; color:var(--text-muted);">✕</span>
+    </span>
+  </div>`;
+
   panel.innerHTML = `
     <h3>💰 이번달 가계부</h3>
     <div style="text-align:center; padding:4px 0 8px;">
-      <div style="font-size:12px; color:var(--text-muted);">실수령 ${fmt(BUDGET_INCOME)} 기준</div>
+      <div style="font-size:12px; color:var(--text-muted);">자유자금(게임비 ${fmt(BUDGET_GAME)} 제외) ${fmt(freeFund)} 중</div>
       <div style="font-size:30px; font-weight:800; color:${remain >= 0 ? "var(--good)" : "var(--cat-invest)"}; line-height:1.3;">${fmt(remain)}</div>
-      <div style="font-size:12px; color:var(--text-muted);">고정비 다 빼고 남는 돈(이론상)</div>
+      <div style="font-size:12px; color:var(--text-muted);">남음 (이번달 지출 ${fmt(spent)} 반영)</div>
     </div>
-    <details style="margin-top:4px;">
+    <div style="display:flex; align-items:center; gap:8px; background:var(--bg-alt,rgba(0,0,0,0.04)); border-radius:8px; padding:8px 10px; margin:6px 0;">
+      <span style="font-size:20px;">${light}</span>
+      <div style="flex:1;">
+        <div style="font-size:12px; font-weight:700;">${lightMsg}</div>
+        <div style="font-size:11px; color:var(--text-muted);">남은 ${daysLeft}일간 하루 ${fmt(perDayLeft)}까지 쓰면 페이스 유지</div>
+      </div>
+    </div>
+    <div style="display:flex; gap:4px; margin:6px 0;">
+      <input id="expLabel" placeholder="뭐에 썼는지" style="flex:1; min-width:0; font-size:12px; padding:4px 6px;" />
+      <input id="expAmount" type="number" placeholder="금액" style="width:70px; font-size:12px; padding:4px 6px;" />
+      <button onclick="addExpense()" style="font-size:12px; padding:4px 8px;">+</button>
+    </div>
+    <details ${thisMonthExp.length ? "open" : ""} style="margin-top:4px;">
+      <summary style="cursor:pointer; font-size:12.5px; font-weight:700;">이번달 지출 기록 (${thisMonthExp.length}건, ${fmt(spent)})</summary>
+      ${thisMonthExp.slice().reverse().map(expRow).join("") || `<div class="marathon-note">아직 기록 없음</div>`}
+    </details>
+    <details style="margin-top:8px;">
       <summary style="cursor:pointer; font-size:12.5px; font-weight:700;">엄마에게 (${fmt(momTotal)})</summary>
       ${BUDGET_MOM.map(row).join("")}
     </details>
@@ -1255,7 +1326,7 @@ function renderBudget() {
       <summary style="cursor:pointer; font-size:12.5px; font-weight:700;">직접 쓰는 것 (${fmt(selfTotal)})</summary>
       ${BUDGET_SELF.map(row).join("")}
     </details>
-    <div class="marathon-note">지난달 실제로는 3만원만 남았다고 했는데 원인 아직 못 찾음(자동차보험은 이미 200만원 안에 포함이라 원인 아님) — 뭔가 예상외 지출 있었으면 알려주면 반영할게. 평소 기준으론 이 금액이 남는다고 보면 됨.</div>
+    <div class="marathon-note">매달 이론치랑 실제 잔액 사이에 10만원대 차이가 반복되고 있음(원인 미확인) — 위 지출기록에 없는 카드값이 또 있을 가능성 있음.</div>
   `;
 }
 
@@ -1272,6 +1343,7 @@ const BOARD_NOTES = [
   { date: "2026-09-02", source: "PC", text: "정정: 부동산비상구 토큰은 재인증 필요 없었음 — check_comments.py가 토큰의 실제 스코프(youtube/youtube.force-ssl/yt-analytics.readonly)와 다른 스코프(youtube.readonly)를 하드코딩해서 생긴 코드 버그였음. channel_analytics.py랑 같은 방식(토큰파일에서 실제 스코프 읽기)으로 고쳐서 이미 해결함 — 로그인 다시 할 필요 없음." },
   { date: "2026-09-06", source: "PC", text: "🎮 명조(게임) 가챠 지출 마무리: 캐릭터 뽑기 62,000원 + 무기 뽑기 37,000원 = 총 99,000원 쓰고 캐릭터·무기 둘 다 뽑기 성공! 이번달 이론상 여유자금(47.65만원) − 99,000원 = **377,500원 남음**. 다음 달엔 다시 5만원 한도로 돌아가는 걸로." },
   { date: "2026-09-07", source: "PC", text: "🐦 새 프로젝트 후보 등록: aagag.com 인기짤 자동수집→텔레그램 승인→X 자동게시 봇. 다른 분 빌드 가이드 검토해서 기술적으로 다 맞는 내용인 거 확인했고, 필요한 단계 9개를 아래 '오늘의 할 일'에 [X봇] 태그로 넣어둠(사장님이 몸이 안 좋아서 까먹을까봐 미리 정리). 저작권 리스크(원글 무단재게시) 아직 안 풀린 채로 남아있으니 첫 번째 할일이 '진행할지 최종 결정'임 — 이거 먼저 판단하고 나머지 진행할 것." },
+  { date: "2026-09-08", source: "PC", text: "💰 가계부에 실제 지출로그 + 경고등 추가함: 이제 뭐 쓸 때마다 입력창에 항목+금액 넣으면 이번달 자유자금에서 자동으로 빠짐. 🟢🟡🔴 신호등으로 '날짜 대비 너무 빨리 쓰고 있나'도 자동 계산해서 보여줌(오늘 며칠 지났는데 자유자금 몇 % 썼는지 비교). 복싱 16만원 고정비로 추가, 게임비는 매달 10만원 고정 할당(가챠 등은 이 안에서만)으로 분리 — 자유자금은 이제 288-256.35-10=21.65만원 기준. 오늘 병원비 11만원+커피 6,800원 미리 기록해둠. 몸 안 좋은 채로 병원 다녀온 김에 만든 기능임." },
   { date: "2026-09-05", source: "PC", text: "🧹 영상 파일 대청소: bot 폴더가 46GB까지 쌓여서, 이미 유튜브에 올라간 영상 중 성과 안 좋은 것들(1,579개)은 지우고 상위 5%(97개, 잘 나온 것들)만 남김 — 46GB→29GB로 17GB 정리됨. 남긴 97개는 `osmu_ready/` 폴더에 인스타/틱톡 캡션까지 같이 준비해둠 — 계정만 만들면 바로 올릴 수 있음." },
   { date: "2026-09-05", source: "PC", text: "🆕 대시보드 자체 개편: 사장님이 '자유롭게 업그레이드해보라'고 해서 스스로 판단해서 만든 것 — 사이드바 맨 위에 'D-Day 카운터' 새로 넣음. ①퇴사일(2027-02-28)까지 며칠 남았는지 큰 숫자로 표시(오늘 기준 D-176), ②부동산비상구가 커뮤니티탭 쓸 수 있는 500명까지 몇 명 남았는지 진행바로 표시. 오늘 대화 내내 '퇴사 후 독립'이 계속 원동력으로 나와서, 그걸 매일 여는 화면 맨 위에 숫자로 박아두면 동기부여 될 거라 판단해서 만든 카드임. 마음에 안 들면 얘기하면 바꾸거나 뺄 수 있음." },
   { date: "2026-09-05", source: "PC", text: "📝 오늘 한 일 요약(쉽게 풀어씀) — ① 부동산비상구 댓글 관리: 원래 '최근 영상 10개'만 보던 방식이라 실제로는 26개나 있던 진짜 시청자 댓글을 거의 다 놓치고 있었음(업로드가 하루 13~15개라 10개론 반나절도 안 봄) → 채널 전체를 훑는 방식으로 고침. '58억 아파트가 말이 되냐'는 항의 댓글도 있었는데, 확인해보니 국토부 실거래가 데이터에 진짜로 있는 거래였음(압구정 한양3차 117㎡, 58.7억) → 근거 대서 답글 달아둠. ② 댓글 자동관리 봇 만들어서 매일 밤 9시 자동 실행되게 예약해둠 — 숫자+의심표현(예: '데이터 틀렸다')이 같이 있는 댓글만 국토부 데이터로 확인해서 답글 달고, 나머지(정치 얘기·막연한 욕)는 손 안 댐. ③ 유튜브 커뮤니티 게시판 기능은 구독자 500명부터 열리는데 지금 제일 많은 부동산비상구가 246명이라 아직 못 씀 — 500명 넘으면 바로 쓸 수 있게 전략 저장해둠. ④ 참고 자료 정리: 쇼츠 조회수 안 나오는 이유(RPM·통곡의만벽 등), 카메라 무빙 중요성, 네이버 블로그도 브라우저자동화로 반자동 가능하다는 사례 저장해둠(나중에 참고). ⑤ 신창원 탈옥사건 3D영상, 흑백 도주자/경찰 색상으로 스타일 확정, 대본·음성(1분37초)·장면 24개까지 준비 끝남, 실제 제작만 남음." },
