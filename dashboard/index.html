@@ -1237,6 +1237,14 @@ if (!load("jh_expenses_seed_0908", false)) {
   save(LS_EXPENSES, expenses);
   save("jh_expenses_seed_0908", true);
 }
+if (!load("jh_expenses_seed_0910", false)) {
+  // 9월 게임비 누적 136,000원(가챠 99,000+37,000) - 게임비 예산 10만원 초과분(36,000원)만 자유자금에서 차감
+  expenses.push({ id: "e0910a", date: "2026-09-10", label: "게임비 예산초과(가챠)", amount: 36000 });
+  // 복싱 11월부터 재개 결정 — 9월치는 안 나감, BUDGET_SELF엔 고정비로 남아있어서 마이너스로 상쇄
+  expenses.push({ id: "e0910b", date: "2026-09-10", label: "복싱비 스킵(9월분 환급 처리)", amount: -160000 });
+  save(LS_EXPENSES, expenses);
+  save("jh_expenses_seed_0910", true);
+}
 
 function addExpense() {
   const labelEl = document.getElementById("expLabel");
