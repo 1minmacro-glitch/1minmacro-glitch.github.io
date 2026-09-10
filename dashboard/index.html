@@ -1245,6 +1245,12 @@ if (!load("jh_expenses_seed_0910", false)) {
   save(LS_EXPENSES, expenses);
   save("jh_expenses_seed_0910", true);
 }
+if (!load("jh_expenses_seed_0910b", false)) {
+  // 병원비 11만원은 자유자금(신한)이 아니라 식비주유비 통장에서 나간 걸로 확인됨(실제 신한 잔고 대조로 검증) — 자유자금 트래커에서 되돌림
+  expenses.push({ id: "e0910c", date: "2026-09-10", label: "병원비 재분류(식비주유비 통장 지출로 정정)", amount: -110000 });
+  save(LS_EXPENSES, expenses);
+  save("jh_expenses_seed_0910b", true);
+}
 
 function addExpense() {
   const labelEl = document.getElementById("expLabel");
