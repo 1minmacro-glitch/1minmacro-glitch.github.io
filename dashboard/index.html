@@ -1549,6 +1549,14 @@ function renderBudget() {
   const kakaoPending = kakaoRealTotal - kakaoWithdrawn;
   const kakaoSkippedNote = BUDGET_KAKAO.filter(i => i.skipMonths && i.skipMonths.includes(ym));
 
+  // 실제 이체 필요액 = 목표(이번달 이 계좌에 있어야 하는 돈) - 사장님이 직접 입력한 "지금 이 계좌 실잔액"
+  // 은행 API 연동이 없어서 실잔액은 자동으로 못 가져옴 — 앱에서 확인해서 숫자만 넣으면 나머지는 자동 계산됨.
+  const balKakao = Number(localStorage.getItem("jh_bal_kakao") || 0);
+  const balFood = Number(localStorage.getItem("jh_bal_foodfuel") || 0);
+  const needKakao = Math.max(0, kakaoPending - balKakao);
+  const needFood = Math.max(0, foodfuelTotal - balFood);
+  const balInput = (key, val) => `<input type="number" placeholder="지금 잔액" value="${val || ""}" oninput="localStorage.setItem('${key}', this.value); renderBudget();" style="width:100%; font-size:10.5px; padding:3px 4px; margin-top:4px; text-align:center;" />`;
+
   panel.innerHTML = `
     <h3>💰 이번달 가계부</h3>
     <div style="text-align:center; padding:4px 0 8px;">
@@ -1560,20 +1568,24 @@ function renderBudget() {
       <div style="background:var(--bg-alt,rgba(0,0,0,0.04)); border-radius:8px; padding:8px 4px; text-align:center;">
         <div style="font-size:9.5px; color:var(--text-muted);">신한(자유자금)</div>
         <div style="font-size:13px; font-weight:800; color:${remain >= 0 ? "var(--good)" : "var(--cat-invest)"};">${fmt(remain)}</div>
+        <div style="font-size:8.5px; color:var(--text-muted); margin-top:4px;">여기서 아래 2곳으로 이체</div>
       </div>
       <div style="background:var(--bg-alt,rgba(0,0,0,0.04)); border-radius:8px; padding:8px 4px; text-align:center;">
         <div style="font-size:9.5px; color:var(--text-muted);">카카오뱅크(고정비)</div>
-        <div style="font-size:13px; font-weight:800;">${fmt(kakaoPending)}</div>
-        <div style="font-size:8.5px; color:var(--text-muted);">이번달 기준 아직 안 빠진 금액</div>
+        <div style="font-size:13px; font-weight:800;">목표 ${fmt(kakaoPending)}</div>
+        ${balInput("jh_bal_kakao", balKakao)}
+        <div style="font-size:11px; font-weight:800; color:${needKakao > 0 ? "var(--cat-invest)" : "var(--good)"}; margin-top:3px;">${needKakao > 0 ? `${fmt(needKakao)} 이체필요` : "충분함"}</div>
       </div>
       <div style="background:var(--bg-alt,rgba(0,0,0,0.04)); border-radius:8px; padding:8px 4px; text-align:center;">
         <div style="font-size:9.5px; color:var(--text-muted);">식비주유비</div>
-        <div style="font-size:13px; font-weight:800;">${fmt(foodfuelTotal)}</div>
-        <div style="font-size:8.5px; color:var(--text-muted);">이번달 배정액</div>
+        <div style="font-size:13px; font-weight:800;">목표 ${fmt(foodfuelTotal)}</div>
+        ${balInput("jh_bal_foodfuel", balFood)}
+        <div style="font-size:11px; font-weight:800; color:${needFood > 0 ? "var(--cat-invest)" : "var(--good)"}; margin-top:3px;">${needFood > 0 ? `${fmt(needFood)} 이체필요` : "충분함"}</div>
       </div>
     </div>
     <div class="marathon-note" style="margin:0 0 6px;">
-      카카오뱅크: 매달 정상 기준 총액은 ${fmt(kakaoTotal)}이지만, 이번달(${ym}) 실제 반영액은 ${fmt(kakaoRealTotal)}${kakaoSkippedNote.length ? ` (${kakaoSkippedNote.map(i => i.label).join(", ")} 이번달 스킵돼서 제외)` : ""} — 위 "아직 안 빠진 금액"은 이 실제 반영액 기준으로 계산한 거라 이만큼만 이체해두면 됨. 자동이체 날짜(아래 목록) 기준 "오늘(${dayOfMonth}일)까지 안 빠진 금액"임. 식비주유비는 일별 실사용 추적이 아직 없어서 배정액만 표시. 달력의 📌 표시는 그 항목의 자동이체 예정일.
+      은행 앱 잔액 자동 연동은 안 되니까(API 없음) 위 "지금 잔액" 칸에 은행 앱 보고 숫자만 넣으면 "이체필요" 금액이 자동 계산됨 — 입력 안 하면 0원 있는 걸로 치고 목표금액 전체를 이체필요로 보여줌.
+      카카오뱅크 목표(${fmt(kakaoPending)})는 매달 정상 총액(${fmt(kakaoTotal)}) 중 이번달(${ym}) 실제분(${fmt(kakaoRealTotal)})${kakaoSkippedNote.length ? ` (${kakaoSkippedNote.map(i => i.label).join(", ")} 스킵돼서 제외)` : ""}에서 오늘(${dayOfMonth}일)까지 이미 빠진 것 뺀 값. 달력의 📌 표시는 자동이체 예정일.
     </div>
     <div style="display:flex; align-items:center; gap:8px; background:var(--bg-alt,rgba(0,0,0,0.04)); border-radius:8px; padding:8px 10px; margin:6px 0;">
       <span style="font-size:20px;">${light}</span>
