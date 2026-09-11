@@ -204,6 +204,19 @@
 
   .board-scroll { max-height: 320px; overflow-y: auto; border: 1px solid var(--border); border-radius: 8px; }
 
+  /* 가계부 월별 달력 */
+  .budget-cal { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; margin: 10px 0 4px; }
+  .cal-dow { font-size: 10px; color: var(--text-muted); text-align: center; font-weight: 700; padding-bottom: 2px; }
+  .cal-cell { min-height: 38px; border-radius: 7px; padding: 3px 2px; text-align: center; cursor: pointer; border: 1px solid transparent; }
+  .cal-cell.empty { cursor: default; }
+  .cal-cell:not(.empty):hover { background: rgba(127,127,127,0.08); }
+  .cal-cell.today { border-color: var(--cat-invest); }
+  .cal-cell.has-exp { background: rgba(227,73,72,0.09); }
+  .cal-cell.selected { background: rgba(42,120,214,0.14); border-color: var(--cat-asset); }
+  .cal-daynum { font-size: 11px; color: var(--text-secondary); }
+  .cal-amt { font-size: 9px; font-weight: 700; color: var(--cat-invest); margin-top: 1px; line-height: 1.2; }
+  .cal-amt.neg { color: var(--good); }
+
   /* 주간 카운터 항목(러닝/등산 등 — 주에 여러 번 체크 가능) */
   .counter-controls { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
   .ctr-btn {
@@ -352,6 +365,13 @@
   .board-item .board-src {
     color: #fff; font-size: 10px; font-weight: 700; padding: 1px 7px; border-radius: 999px;
   }
+  /* 칠판이 <details>로 접혀있을 때 — 한 줄 요약만, 화살표 마커 제거 */
+  details.board-item summary { list-style: none; }
+  details.board-item summary::-webkit-details-marker { display: none; }
+  details.board-item summary:hover { opacity: .8; }
+  .board-preview { font-size: 12px; color: var(--text-secondary); margin-top: 1px; }
+  details.board-item[open] .board-preview { display: none; }
+  details.board-item[open] .board-text { margin-top: 4px; }
 
   /* 날씨 위젯 */
   .weather-summary { padding: 10px 12px; font-size: 12.5px; color: var(--cat-workout); font-weight: 700; }
@@ -486,11 +506,11 @@
 </div>
 
 <aside class="sidebar">
-  <div class="card marathon-panel" id="ddayPanel"></div>
+  <div class="card marathon-panel" id="replyPanel"></div>
+  <div class="card marathon-panel" id="ddayPanel" style="margin-top:16px;"></div>
   <div class="card marathon-panel" id="budgetPanel" style="margin-top:16px;"></div>
-  <div class="card marathon-panel" id="boardPanel"></div>
-  <div class="card marathon-panel" id="replyPanel" style="margin-top:16px;"></div>
-  <div class="card marathon-panel" id="channelPanel" style="margin-top:16px;"></div>
+  <div class="card marathon-panel" id="boardPanel" style="margin-top:16px;"></div>
+  <!-- 채널 실적 위젯 2026-09-11 임시 비활성화(안 쓰고 갱신도 안 됨) — CHANNEL_STATS/renderChannelStats()는 코드에 남겨둠, 필요해지면 여기에 div 다시 추가 -->
   <div class="card marathon-panel" id="weatherPanel" style="margin-top:16px;"></div>
   <div class="card marathon-panel" id="marathonPanel" style="margin-top:16px;"></div>
   <div class="card marathon-panel" id="hikingPanel" style="margin-top:16px;"></div>
@@ -1301,6 +1321,20 @@ function deleteExpense(id) {
   renderBudget();
 }
 
+const LS_BUDGET_OPEN = "jh_budget_open";
+let selectedCalDay = null; // "05" 형식 — 달력에서 누른 날짜, 재렌더 사이에도 유지
+
+function toggleBudgetOpen() {
+  const open = localStorage.getItem(LS_BUDGET_OPEN) === "1";
+  localStorage.setItem(LS_BUDGET_OPEN, open ? "0" : "1");
+  renderBudget();
+}
+
+function toggleCalDay(dd) {
+  selectedCalDay = selectedCalDay === dd ? null : dd;
+  renderBudget();
+}
+
 function renderBudget() {
   const panel = document.getElementById("budgetPanel");
   const momTotal = BUDGET_MOM.reduce((s, i) => s + i.amount, 0);
@@ -1308,6 +1342,7 @@ function renderBudget() {
   const fixedTotal = momTotal + selfTotal;
   const freeFund = BUDGET_INCOME - fixedTotal - BUDGET_GAME; // 게임비 제외 진짜 자유자금
   const fmt = n => n.toLocaleString("ko-KR") + "원";
+  const isOpen = localStorage.getItem(LS_BUDGET_OPEN) === "1";
 
   const now = new Date();
   const ym = now.toISOString().slice(0, 7); // "2026-09"
@@ -1340,13 +1375,48 @@ function renderBudget() {
     </span>
   </div>`;
 
+  // ── 월별 달력 (이번달 고정 — 날짜별 지출 합계 표시, 클릭하면 그날 내역만 아래에 펼침) ──
+  const byDay = {};
+  thisMonthExp.forEach(e => {
+    const dd = e.date.slice(8, 10);
+    (byDay[dd] = byDay[dd] || []).push(e);
+  });
+  const firstDow = new Date(now.getFullYear(), now.getMonth(), 1).getDay();
+  let calHtml = `<div class="budget-cal">`;
+  ["일", "월", "화", "수", "목", "금", "토"].forEach(d => calHtml += `<div class="cal-dow">${d}</div>`);
+  for (let i = 0; i < firstDow; i++) calHtml += `<div class="cal-cell empty"></div>`;
+  for (let d = 1; d <= daysInMonth; d++) {
+    const dd = String(d).padStart(2, "0");
+    const dayExp = byDay[dd];
+    const daySum = dayExp ? dayExp.reduce((s, e) => s + e.amount, 0) : 0;
+    const cls = ["cal-cell"];
+    if (d === dayOfMonth) cls.push("today");
+    if (dayExp) cls.push("has-exp");
+    if (selectedCalDay === dd) cls.push("selected");
+    calHtml += `<div class="${cls.join(" ")}" onclick="${dayExp ? `toggleCalDay('${dd}')` : ""}">
+      <div class="cal-daynum">${d}</div>
+      ${dayExp ? `<div class="cal-amt${daySum < 0 ? " neg" : ""}">${(daySum / 10000).toFixed(daySum % 10000 === 0 ? 0 : 1)}만</div>` : ""}
+    </div>`;
+  }
+  calHtml += `</div>`;
+  if (selectedCalDay && byDay[selectedCalDay]) {
+    calHtml += `<div style="margin:6px 0 4px; padding:8px; border:1px solid var(--border); border-radius:8px;">
+      <div style="font-size:11.5px; font-weight:700; margin-bottom:4px;">${ym}-${selectedCalDay} 지출</div>
+      ${byDay[selectedCalDay].map(expRow).join("")}
+    </div>`;
+  }
+
   panel.innerHTML = `
-    <h3>💰 이번달 가계부</h3>
+    <h3 style="cursor:pointer; display:flex; align-items:center; justify-content:space-between;" onclick="toggleBudgetOpen()">
+      <span>💰 이번달 가계부</span>
+      <span style="font-size:11px; font-weight:500; color:var(--text-muted);">${isOpen ? "▲ 접기" : "▼ 펼치기"}</span>
+    </h3>
     <div style="text-align:center; padding:4px 0 8px;">
       <div style="font-size:12px; color:var(--text-muted);">자유자금(게임비 ${fmt(BUDGET_GAME)} 제외) ${fmt(freeFund)} 중</div>
       <div style="font-size:30px; font-weight:800; color:${remain >= 0 ? "var(--good)" : "var(--cat-invest)"}; line-height:1.3;">${fmt(remain)}</div>
       <div style="font-size:12px; color:var(--text-muted);">남음 (이번달 지출 ${fmt(spent)} 반영)</div>
     </div>
+    ${isOpen ? `
     <div style="display:flex; align-items:center; gap:8px; background:var(--bg-alt,rgba(0,0,0,0.04)); border-radius:8px; padding:8px 10px; margin:6px 0;">
       <span style="font-size:20px;">${light}</span>
       <div style="flex:1;">
@@ -1359,10 +1429,7 @@ function renderBudget() {
       <input id="expAmount" type="number" placeholder="금액" style="width:70px; font-size:12px; padding:4px 6px;" />
       <button onclick="addExpense()" style="font-size:12px; padding:4px 8px;">+</button>
     </div>
-    <details ${thisMonthExp.length ? "open" : ""} style="margin-top:4px;">
-      <summary style="cursor:pointer; font-size:12.5px; font-weight:700;">이번달 지출 기록 (${thisMonthExp.length}건, ${fmt(spent)})</summary>
-      ${thisMonthExp.slice().reverse().map(expRow).join("") || `<div class="marathon-note">아직 기록 없음</div>`}
-    </details>
+    ${calHtml}
     <details style="margin-top:8px;">
       <summary style="cursor:pointer; font-size:12.5px; font-weight:700;">엄마에게 (${fmt(momTotal)})</summary>
       ${BUDGET_MOM.map(row).join("")}
@@ -1371,7 +1438,8 @@ function renderBudget() {
       <summary style="cursor:pointer; font-size:12.5px; font-weight:700;">직접 쓰는 것 (${fmt(selfTotal)})</summary>
       ${BUDGET_SELF.map(row).join("")}
     </details>
-    <div class="marathon-note">매달 이론치랑 실제 잔액 사이에 10만원대 차이가 반복되고 있음(원인 미확인) — 위 지출기록에 없는 카드값이 또 있을 가능성 있음.</div>
+    <div class="marathon-note">매달 이론치랑 실제 잔액 사이에 10만원대 차이가 반복되고 있음(원인 미확인) — 위 지출기록에 없는 카드값이 또 있을 가능성 있음. 날짜별 지출은 위 달력에서 빨간 표시된 날짜를 눌러서 확인.</div>
+    ` : ""}
   `;
 }
 
@@ -1410,14 +1478,19 @@ function renderBoard() {
   } else {
     BOARD_NOTES.slice().reverse().forEach(n => {
       const s = BOARD_SOURCE_STYLE[n.source] || { icon: "•", color: "var(--text-muted)" };
-      inner += `<div class="board-item">
-        <div class="board-date">${n.date} <span class="board-src" style="background:${s.color}">${s.icon} ${n.source}</span></div>
+      const preview = n.text.length > 34 ? n.text.slice(0, 34) + "…" : n.text;
+      // 접힌 상태(한 줄 요약)로 기본 표시 — 눌러야 전체 문단이 펼쳐짐 (평소엔 심플하게)
+      inner += `<details class="board-item">
+        <summary style="cursor:pointer; list-style:none;">
+          <span class="board-date">${n.date} <span class="board-src" style="background:${s.color}">${s.icon} ${n.source}</span></span>
+          <div class="board-preview">${preview}</div>
+        </summary>
         <div class="board-text">${n.text}</div>
-      </div>`;
+      </details>`;
     });
   }
   html += `<div class="board-scroll">${inner}</div>`;
-  html += `<div class="marathon-note">이 칠판은 클로드가 GitHub에 push한 내용이 매일 로컬 pull 동기화로 반영되는 방식 — 실시간은 아니고 하루 텀으로 갱신됨. 🖥️PC / 📱폰 태그로 어느 세션에서 한 일인지 구분. 메모가 쌓이면 이 박스 안에서만 스크롤됨(페이지 전체가 길어지지 않음).</div>`;
+  html += `<div class="marathon-note">한 줄 요약만 보임 — 눌러야 전체 내용 펼쳐짐. 🖥️PC / 📱폰 태그로 어느 세션에서 한 일인지 구분, 하루 텀으로 갱신(실시간 아님).</div>`;
   panel.innerHTML = html;
 }
 renderBoard();
@@ -1542,15 +1615,15 @@ async function loadReplyThread() {
     if (!res.ok) { box.innerHTML = ""; return; }
     const arr = await res.json();
     if (!arr.length) { box.innerHTML = ""; return; }
-    let html = `<div class="marathon-note" style="margin-top:10px;">지난 답변</div>`;
-    arr.slice().reverse().slice(0, 5).forEach(item => {
-      html += `<div class="board-item">
+    let inner = "";
+    arr.slice().reverse().forEach(item => {
+      inner += `<div class="board-item">
         <div class="board-date">${item.date.slice(0,16).replace("T"," ")} ${item.read ? "✅확인됨" : "⏳대기중"}</div>
         <div class="board-text">${item.text}</div>
         ${item.claude_reply ? `<div class="board-text" style="margin-top:6px; padding-top:6px; border-top:1px dashed var(--border); color:var(--cat-asset);">🤖 ${item.claude_reply}</div>` : ""}
       </div>`;
     });
-    box.innerHTML = html;
+    box.innerHTML = `<div class="marathon-note" style="margin-top:10px;">지난 답변 (최근이 맨 위)</div><div class="board-scroll">${inner}</div>`;
     return arr;
   } catch (e) {
     box.innerHTML = "";
@@ -1591,6 +1664,7 @@ const CHANNEL_STATS = [
 
 function renderChannelStats() {
   const panel = document.getElementById("channelPanel");
+  if (!panel) return; // 위젯 비활성화 상태 — div 없음
   let html = `<h3>📊 채널 실적 (${CHANNEL_STATS_DATE} 기준)</h3>`;
   CHANNEL_STATS.forEach(c => {
     html += `<div class="board-item">
