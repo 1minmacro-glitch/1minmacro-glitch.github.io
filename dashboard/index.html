@@ -1421,6 +1421,31 @@ function deleteExpense(id) {
 
 let selectedCalDay = null; // "05" 형식 — 달력에서 누른 날짜, 재렌더 사이에도 유지
 let calMonthOffset = 0; // 0=이번달, -1=지난달, 1=다음달 — 달력 좌우 버튼으로 조절
+let _budgetLiveTargets = {}; // renderBudget()이 채워둠 — updateBalance()가 전체 재렌더 없이 쓰는 목표값 캐시
+
+// 잔액 입력칸 타이핑 중엔 절대 renderBudget()(=innerHTML 재생성)을 부르면 안 됨 — <input>이 새로
+// 그려지면서 포커스가 날아가 한 글자만 쳐도 칸 밖으로 튕겨나가는 버그가 생김. 그래서 결과 텍스트만 직접 갱신.
+function updateBalance(key, value) {
+  localStorage.setItem(key, value);
+  const n = Number(value || 0);
+  const fmt = n => n.toLocaleString("ko-KR") + "원";
+  const disp = document.getElementById(`balDisplay-${key}`);
+  if (!disp) return;
+  if (key === "jh_bal_shinhan") {
+    if (value === "") { disp.textContent = "잔액 넣으면 차이 표시"; disp.style.color = "var(--text-muted)"; return; }
+    const diff = n - _budgetLiveTargets.remain;
+    disp.style.color = Math.abs(diff) <= 10000 ? "var(--good)" : "var(--cat-invest)";
+    disp.textContent = diff === 0 ? "일치함" : diff > 0 ? `+${fmt(diff)} 더 있음` : `${fmt(diff)} 차이`;
+  } else if (key === "jh_bal_kakao") {
+    const need = Math.max(0, _budgetLiveTargets.kakaoPending - n);
+    disp.style.color = need > 0 ? "var(--cat-invest)" : "var(--good)";
+    disp.textContent = need > 0 ? `${fmt(need)} 이체필요` : "충분함";
+  } else if (key === "jh_bal_foodfuel") {
+    const need = Math.max(0, _budgetLiveTargets.foodfuelTotal - n);
+    disp.style.color = need > 0 ? "var(--cat-invest)" : "var(--good)";
+    disp.textContent = need > 0 ? `${fmt(need)} 이체필요` : "충분함";
+  }
+}
 
 function toggleCalDay(dd) {
   selectedCalDay = selectedCalDay === dd ? null : dd;
@@ -1559,7 +1584,11 @@ function renderBudget() {
   // 신한은 이체 대상이 아니라 이론치(remain) 검증용 — 실제 잔액 넣으면 이론치랑 차이를 바로 보여줌
   // (매달 반복되던 "미스터리 갭" 재확인용, [[project_personal_finance]])
   const shinhanDiff = balShinhan != null && balShinhan !== "" ? Number(balShinhan) - remain : null;
-  const balInput = (key, val) => `<input type="number" placeholder="지금 잔액" value="${val || ""}" oninput="localStorage.setItem('${key}', this.value); renderBudget();" style="width:100%; font-size:10.5px; padding:3px 4px; margin-top:4px; text-align:center;" />`;
+  // 매 렌더마다 바뀌는 목표값을 updateBalance()에서도 써야 해서 전역에 캐싱해둠 — 이거 안 하면
+  // 타이핑할 때마다 renderBudget()을 통째로 다시 불러서 <input>이 새로 그려지고 포커스가 날아감
+  // (숫자 한 자리 치면 칸 밖으로 튕겨나가던 버그의 원인). 이제 입력 시엔 결과 텍스트만 직접 갱신함.
+  _budgetLiveTargets = { kakaoPending, foodfuelTotal, remain };
+  const balInput = (key, val) => `<input type="number" placeholder="지금 잔액" value="${val || ""}" oninput="updateBalance('${key}', this.value)" style="width:100%; font-size:10.5px; padding:3px 4px; margin-top:4px; text-align:center;" />`;
 
   panel.innerHTML = `
     <h3>💰 이번달 가계부</h3>
@@ -1573,19 +1602,19 @@ function renderBudget() {
         <div style="font-size:9.5px; color:var(--text-muted);">신한(자유자금)</div>
         <div style="font-size:13px; font-weight:800; color:${remain >= 0 ? "var(--good)" : "var(--cat-invest)"};">이론상 ${fmt(remain)}</div>
         ${balInput("jh_bal_shinhan", balShinhan)}
-        <div style="font-size:11px; font-weight:800; margin-top:3px; color:${shinhanDiff === null ? "var(--text-muted)" : Math.abs(shinhanDiff) <= 10000 ? "var(--good)" : "var(--cat-invest)"};">${shinhanDiff === null ? "잔액 넣으면 차이 표시" : shinhanDiff === 0 ? "일치함" : shinhanDiff > 0 ? `+${fmt(shinhanDiff)} 더 있음` : `${fmt(shinhanDiff)} 차이`}</div>
+        <div id="balDisplay-jh_bal_shinhan" style="font-size:11px; font-weight:800; margin-top:3px; color:${shinhanDiff === null ? "var(--text-muted)" : Math.abs(shinhanDiff) <= 10000 ? "var(--good)" : "var(--cat-invest)"};">${shinhanDiff === null ? "잔액 넣으면 차이 표시" : shinhanDiff === 0 ? "일치함" : shinhanDiff > 0 ? `+${fmt(shinhanDiff)} 더 있음` : `${fmt(shinhanDiff)} 차이`}</div>
       </div>
       <div style="background:var(--bg-alt,rgba(0,0,0,0.04)); border-radius:8px; padding:8px 4px; text-align:center;">
         <div style="font-size:9.5px; color:var(--text-muted);">카카오뱅크(고정비)</div>
         <div style="font-size:13px; font-weight:800;">목표 ${fmt(kakaoPending)}</div>
         ${balInput("jh_bal_kakao", balKakao)}
-        <div style="font-size:11px; font-weight:800; color:${needKakao > 0 ? "var(--cat-invest)" : "var(--good)"}; margin-top:3px;">${needKakao > 0 ? `${fmt(needKakao)} 이체필요` : "충분함"}</div>
+        <div id="balDisplay-jh_bal_kakao" style="font-size:11px; font-weight:800; color:${needKakao > 0 ? "var(--cat-invest)" : "var(--good)"}; margin-top:3px;">${needKakao > 0 ? `${fmt(needKakao)} 이체필요` : "충분함"}</div>
       </div>
       <div style="background:var(--bg-alt,rgba(0,0,0,0.04)); border-radius:8px; padding:8px 4px; text-align:center;">
         <div style="font-size:9.5px; color:var(--text-muted);">식비주유비</div>
         <div style="font-size:13px; font-weight:800;">목표 ${fmt(foodfuelTotal)}</div>
         ${balInput("jh_bal_foodfuel", balFood)}
-        <div style="font-size:11px; font-weight:800; color:${needFood > 0 ? "var(--cat-invest)" : "var(--good)"}; margin-top:3px;">${needFood > 0 ? `${fmt(needFood)} 이체필요` : "충분함"}</div>
+        <div id="balDisplay-jh_bal_foodfuel" style="font-size:11px; font-weight:800; color:${needFood > 0 ? "var(--cat-invest)" : "var(--good)"}; margin-top:3px;">${needFood > 0 ? `${fmt(needFood)} 이체필요` : "충분함"}</div>
       </div>
     </div>
     <div class="marathon-note" style="margin:0 0 6px;">
