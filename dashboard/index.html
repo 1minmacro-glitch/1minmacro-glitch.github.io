@@ -74,17 +74,12 @@
     font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
     background: var(--page);
     color: var(--text-primary);
-    padding: 24px 16px 80px;
+    padding: 24px 16px 80px 108px; /* 좌측 고정 메뉴 폭만큼 여백 */
   }
-  .page-layout {
-    display: flex; gap: 20px; max-width: 1120px; margin: 0 auto;
-    align-items: flex-start; justify-content: center;
-  }
-  .wrap { max-width: 780px; width: 100%; margin: 0; }
-  .sidebar { width: 300px; flex-shrink: 0; }
-  @media (max-width: 1100px) {
-    .page-layout { flex-direction: column; align-items: stretch; }
-    .sidebar { width: 100%; }
+  .page-layout { max-width: 720px; margin: 0 auto; }
+  .app-page[hidden] { display: none; }
+  @media (max-width: 900px) {
+    body { padding: 20px 16px 96px; } /* 좁은 화면은 메뉴가 하단으로 내려가서 좌측 여백 불필요, 대신 하단 여백 */
   }
 
   .marathon-panel h3 {
@@ -216,6 +211,55 @@
   .cal-daynum { font-size: 11px; color: var(--text-secondary); }
   .cal-amt { font-size: 9px; font-weight: 700; color: var(--cat-invest); margin-top: 1px; line-height: 1.2; }
   .cal-amt.neg { color: var(--good); }
+
+  /* 좌측 고정 메뉴 — 페이지 전환용, 창 폭 상관없이 항상 왼쪽 가장자리에 붙어있음 */
+  .leftnav {
+    position: fixed; left: 10px; top: 50%; transform: translateY(-50%); z-index: 20;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .leftnav button {
+    display: flex; flex-direction: column; align-items: center; gap: 2px;
+    background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+    padding: 10px 8px; cursor: pointer; box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    font-family: inherit; color: var(--text-primary); width: 68px;
+  }
+  .leftnav button:hover { border-color: var(--cat-asset); }
+  .leftnav button.active { border-color: var(--cat-asset); background: rgba(42,120,214,0.08); }
+  .nav-icon { font-size: 19px; }
+  .nav-label { font-size: 10px; font-weight: 700; }
+  .nav-sub { font-size: 9px; color: var(--text-muted); font-variant-numeric: tabular-nums; }
+  @media (max-width: 900px) {
+    .leftnav {
+      left: 0; right: 0; top: auto; bottom: 0; transform: none;
+      flex-direction: row; justify-content: center; gap: 4px;
+      background: var(--card); border-top: 1px solid var(--border); padding: 6px 8px;
+    }
+    .leftnav button { box-shadow: none; border: none; width: auto; flex: 1; max-width: 90px; }
+  }
+
+  /* 우측 하단 고정 채팅 버튼 — 답변 남기기, 어느 페이지에 있든 계속 보임 */
+  .floating-chat {
+    position: fixed; right: 18px; bottom: 18px; z-index: 20;
+    width: 52px; height: 52px; border-radius: 50%; border: none;
+    background: var(--cat-asset); color: #fff; font-size: 22px; cursor: pointer;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+  }
+  @media (max-width: 900px) { .floating-chat { bottom: 74px; } }
+
+  /* 모달 — 좌측 메뉴 눌러야 뜨는 별도 화면 */
+  .modal-backdrop {
+    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45);
+    z-index: 30; align-items: center; justify-content: center; padding: 16px;
+  }
+  .modal-card {
+    position: relative; background: var(--card); border-radius: 16px;
+    max-width: 420px; width: 100%; max-height: 88vh; overflow-y: auto;
+    padding: 18px; box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+  }
+  .modal-close {
+    position: absolute; top: 10px; right: 10px; border: none; background: var(--track, rgba(127,127,127,0.15));
+    color: var(--text-primary); width: 28px; height: 28px; border-radius: 50%; cursor: pointer; font-size: 14px;
+  }
 
   /* 주간 카운터 항목(러닝/등산 등 — 주에 여러 번 체크 가능) */
   .counter-controls { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
@@ -437,84 +481,116 @@
 <body>
 <button class="theme-toggle" id="themeToggle">🌓 테마</button>
 
-<div class="page-layout">
-<div class="wrap">
-  <header>
-    <h1>🎮 준현 인생 대시보드</h1>
-    <div class="sub">오늘도 퀘스트 깨자</div>
-  </header>
+<!-- 좌측 고정 메뉴 — 페이지 전환용. 홈화면은 추후 추가 예정, 지금은 "오늘"이 기본 -->
+<nav class="leftnav">
+  <button class="nav-btn active" data-page="page-today" onclick="activatePage('page-today')">
+    <span class="nav-icon">📋</span><span class="nav-label">오늘</span>
+  </button>
+  <button class="nav-btn" data-page="page-budget" onclick="activatePage('page-budget')">
+    <span class="nav-icon">💰</span><span class="nav-label">가계부</span>
+    <span class="nav-sub" id="leftRailRemain">-</span>
+  </button>
+  <button class="nav-btn" data-page="page-board" onclick="activatePage('page-board')">
+    <span class="nav-icon">📌</span><span class="nav-label">칠판</span>
+  </button>
+  <button class="nav-btn" data-page="page-schedule" onclick="activatePage('page-schedule')">
+    <span class="nav-icon">🏃</span><span class="nav-label">일정</span>
+  </button>
+</nav>
 
-  <div class="points-bar">
-    <div class="num" id="totalPoints">0</div>
-    <div class="label">누적 포인트 · 총 <span id="totalDone">0</span>개 퀘스트 완료</div>
+<!-- 우측 하단 고정 — 답변 남기기(챗봇처럼 항상 떠있음, 어느 페이지든 안 사라짐) -->
+<button class="floating-chat" onclick="openReplyModal()" title="답변 남기기">💬</button>
+<div class="modal-backdrop" id="replyModalBackdrop" onclick="closeReplyModalOutside(event)">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeReplyModal()">✕</button>
+    <div id="replyPanel"></div>
   </div>
-
-  <div class="date-nav">
-    <button id="prevDay">◀ 어제</button>
-    <div class="today-label" id="dateLabel"></div>
-    <button id="nextDay">내일 ▶</button>
-    <button id="gotoToday">오늘로</button>
-  </div>
-
-  <section>
-    <h2>📋 오늘의 퀘스트 <span class="count" id="questCount"></span></h2>
-    <div class="card"><div id="catNav" class="cat-nav"></div><div id="questList"></div></div>
-  </section>
-
-  <section>
-    <h2>📝 할 일 <span class="count" id="todoCount"></span></h2>
-    <div class="card">
-      <div class="todo-input-row">
-        <input type="text" id="todoInput" placeholder="할 일 입력 후 Enter">
-        <button id="todoAddBtn" type="button">추가</button>
-      </div>
-      <div id="todoList"></div>
-    </div>
-  </section>
-
-  <section>
-    <h2>🧠 오늘의 행복도</h2>
-    <div class="card" style="padding:14px; display:flex; gap:8px; justify-content:center;" id="moodPicker"></div>
-  </section>
-
-  <section>
-    <h2>📅 이번 주 체크 현황</h2>
-    <div class="card" style="padding:14px;">
-      <div class="week-grid" id="weekGrid"></div>
-    </div>
-  </section>
-
-  <section>
-    <h2>📊 인생 스탯</h2>
-    <div class="stat-grid" id="statGrid"></div>
-  </section>
-
-  <section>
-    <h2>🎯 올해 목표 <span class="count" id="goalCount"></span></h2>
-    <div class="card goal-list"><div id="goalList"></div></div>
-  </section>
-
-  <section>
-    <h2>📜 완료 기록</h2>
-    <div class="card" id="todoLogList"></div>
-  </section>
-
-  <footer class="note">
-    체크는 브라우저에 저장돼 — 이 파일을 그대로 두고 매번 열면 이어짐 (같은 브라우저 기준)<br>
-    <span id="resetPoints" style="text-decoration:underline; cursor:pointer;">포인트만 0으로 초기화</span>
-  </footer>
 </div>
 
-<aside class="sidebar">
-  <div class="card marathon-panel" id="replyPanel"></div>
-  <div class="card marathon-panel" id="ddayPanel" style="margin-top:16px;"></div>
-  <div class="card marathon-panel" id="budgetPanel" style="margin-top:16px;"></div>
-  <div class="card marathon-panel" id="boardPanel" style="margin-top:16px;"></div>
-  <!-- 채널 실적 위젯 2026-09-11 임시 비활성화(안 쓰고 갱신도 안 됨) — CHANNEL_STATS/renderChannelStats()는 코드에 남겨둠, 필요해지면 여기에 div 다시 추가 -->
-  <div class="card marathon-panel" id="weatherPanel" style="margin-top:16px;"></div>
-  <div class="card marathon-panel" id="marathonPanel" style="margin-top:16px;"></div>
-  <div class="card marathon-panel" id="hikingPanel" style="margin-top:16px;"></div>
-</aside>
+<div class="page-layout">
+  <div class="card marathon-panel" id="ddayPanel"></div>
+
+  <div class="app-page" id="page-today">
+    <header>
+      <h1>🎮 준현 인생 대시보드</h1>
+      <div class="sub">오늘도 퀘스트 깨자</div>
+    </header>
+
+    <div class="points-bar">
+      <div class="num" id="totalPoints">0</div>
+      <div class="label">누적 포인트 · 총 <span id="totalDone">0</span>개 퀘스트 완료</div>
+    </div>
+
+    <div class="date-nav">
+      <button id="prevDay">◀ 어제</button>
+      <div class="today-label" id="dateLabel"></div>
+      <button id="nextDay">내일 ▶</button>
+      <button id="gotoToday">오늘로</button>
+    </div>
+
+    <section>
+      <h2>📋 오늘의 퀘스트 <span class="count" id="questCount"></span></h2>
+      <div class="card"><div id="catNav" class="cat-nav"></div><div id="questList"></div></div>
+    </section>
+
+    <section>
+      <h2>📝 할 일 <span class="count" id="todoCount"></span></h2>
+      <div class="card">
+        <div class="todo-input-row">
+          <input type="text" id="todoInput" placeholder="할 일 입력 후 Enter">
+          <button id="todoAddBtn" type="button">추가</button>
+        </div>
+        <div id="todoList"></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>🧠 오늘의 행복도</h2>
+      <div class="card" style="padding:14px; display:flex; gap:8px; justify-content:center;" id="moodPicker"></div>
+    </section>
+
+    <section>
+      <h2>📅 이번 주 체크 현황</h2>
+      <div class="card" style="padding:14px;">
+        <div class="week-grid" id="weekGrid"></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>📊 인생 스탯</h2>
+      <div class="stat-grid" id="statGrid"></div>
+    </section>
+
+    <section>
+      <h2>🎯 올해 목표 <span class="count" id="goalCount"></span></h2>
+      <div class="card goal-list"><div id="goalList"></div></div>
+    </section>
+
+    <section>
+      <h2>📜 완료 기록</h2>
+      <div class="card" id="todoLogList"></div>
+    </section>
+
+    <footer class="note">
+      체크는 브라우저에 저장돼 — 이 파일을 그대로 두고 매번 열면 이어짐 (같은 브라우저 기준)<br>
+      <span id="resetPoints" style="text-decoration:underline; cursor:pointer;">포인트만 0으로 초기화</span>
+    </footer>
+  </div>
+
+  <div class="app-page" id="page-budget" hidden>
+    <div class="card marathon-panel" id="budgetPanel"></div>
+  </div>
+
+  <div class="app-page" id="page-board" hidden>
+    <div class="card marathon-panel" id="boardPanel"></div>
+  </div>
+
+  <div class="app-page" id="page-schedule" hidden>
+    <!-- 채널 실적 위젯 2026-09-11 임시 비활성화(안 쓰고 갱신도 안 됨) — CHANNEL_STATS/renderChannelStats()는 코드에 남겨둠, 필요해지면 여기에 div 다시 추가 -->
+    <div class="card marathon-panel" id="weatherPanel"></div>
+    <div class="card marathon-panel" id="marathonPanel" style="margin-top:16px;"></div>
+    <div class="card marathon-panel" id="hikingPanel" style="margin-top:16px;"></div>
+  </div>
 </div>
 
 <div id="undo-toast">
@@ -544,6 +620,18 @@
 </div>
 
 <script>
+// ── 좌측 메뉴 페이지 전환 (홈화면은 추후 추가 예정 — 지금은 "오늘"이 기본값) ──
+const LS_ACTIVE_PAGE = "jh_active_page";
+function activatePage(id) {
+  document.querySelectorAll(".app-page").forEach(p => p.hidden = (p.id !== id));
+  document.querySelectorAll(".leftnav .nav-btn").forEach(b => b.classList.toggle("active", b.dataset.page === id));
+  localStorage.setItem(LS_ACTIVE_PAGE, id);
+}
+(function restoreActivePage() {
+  const saved = localStorage.getItem(LS_ACTIVE_PAGE);
+  if (saved && document.getElementById(saved)) activatePage(saved);
+})();
+
 // ── 카테고리 정의 (고정 순서 — 색상은 슬롯 순서 그대로) ─────────────────
 const CATS = {
   asset:   { name: "자산",      icon: "💰", color: "var(--cat-asset)"   },
@@ -1267,17 +1355,23 @@ const BUDGET_MOM = [
   { label: "카드", amount: 120000, note: "~2027-02" },
   { label: "학자금", amount: 200000, note: "11개월 확정" },
 ];
-const BUDGET_SELF = [
+// 2026-09-11: 계좌 구조(신한=자유자금/카카오뱅크=고정비 자동이체/식비주유비=별도 통장)에 맞춰
+// "직접 쓰는 것"을 어느 통장으로 이체되는지 기준으로 2개 그룹으로 분리함 — 예전엔 한 리스트로
+// 뭉쳐놔서 어느 계좌 지출인지 헷갈렸던 게 매달 반복되던 "미스터리 갭"의 원인이었음([[project_personal_finance]]).
+const BUDGET_KAKAO = [ // 카카오뱅크로 매달 이체 → 여기서 자동이체 나감
   { label: "Claude Code", amount: 33000 },
   { label: "통신비", amount: 30710 },
   { label: "운전자보험", amount: 19790 },
-  { label: "회사 식비", amount: 120000, note: "6천원×20일" },
   { label: "트위터(X)", amount: 12000 },
   { label: "패트리온", amount: 8000 },
-  { label: "기름값", amount: 110000, note: "평균, 주행량에 따라 변동" },
   { label: "복싱", amount: 160000, note: "2026-09-08 추가" },
-  { label: "아스트라(ChatGPT Plus)", amount: 26720, note: "$20, 2026-09-11 추가, 아직 실제 결제 전 — 한도 걸리면 프로($100)로 업그레이드 검토" },
+  { label: "아스트라(ChatGPT Plus)", amount: 26720, note: "$20, 2026-09-11 추가, 오늘 결제 예정 — 한도 걸리면 프로($100)로 업그레이드 검토" },
 ];
+const BUDGET_FOODFUEL = [ // 식비주유비 전용통장으로 매달 이체
+  { label: "회사 식비", amount: 120000, note: "6천원×20일" },
+  { label: "기름값", amount: 110000, note: "평균, 주행량에 따라 변동" },
+];
+const BUDGET_SELF = [...BUDGET_KAKAO, ...BUDGET_FOODFUEL]; // 자유자금 계산용 합계는 그대로 필요해서 유지
 const BUDGET_GAME = 100000; // 게임비 고정 할당(2026-09-08 결정, 가챠 등은 이 안에서만)
 
 const LS_EXPENSES = "jh_expenses";
@@ -1321,14 +1415,7 @@ function deleteExpense(id) {
   renderBudget();
 }
 
-const LS_BUDGET_OPEN = "jh_budget_open";
 let selectedCalDay = null; // "05" 형식 — 달력에서 누른 날짜, 재렌더 사이에도 유지
-
-function toggleBudgetOpen() {
-  const open = localStorage.getItem(LS_BUDGET_OPEN) === "1";
-  localStorage.setItem(LS_BUDGET_OPEN, open ? "0" : "1");
-  renderBudget();
-}
 
 function toggleCalDay(dd) {
   selectedCalDay = selectedCalDay === dd ? null : dd;
@@ -1337,12 +1424,12 @@ function toggleCalDay(dd) {
 
 function renderBudget() {
   const panel = document.getElementById("budgetPanel");
+  if (!panel) return;
   const momTotal = BUDGET_MOM.reduce((s, i) => s + i.amount, 0);
   const selfTotal = BUDGET_SELF.reduce((s, i) => s + i.amount, 0);
   const fixedTotal = momTotal + selfTotal;
   const freeFund = BUDGET_INCOME - fixedTotal - BUDGET_GAME; // 게임비 제외 진짜 자유자금
   const fmt = n => n.toLocaleString("ko-KR") + "원";
-  const isOpen = localStorage.getItem(LS_BUDGET_OPEN) === "1";
 
   const now = new Date();
   const ym = now.toISOString().slice(0, 7); // "2026-09"
@@ -1406,17 +1493,16 @@ function renderBudget() {
     </div>`;
   }
 
+  const kakaoTotal = BUDGET_KAKAO.reduce((s, i) => s + i.amount, 0);
+  const foodfuelTotal = BUDGET_FOODFUEL.reduce((s, i) => s + i.amount, 0);
+
   panel.innerHTML = `
-    <h3 style="cursor:pointer; display:flex; align-items:center; justify-content:space-between;" onclick="toggleBudgetOpen()">
-      <span>💰 이번달 가계부</span>
-      <span style="font-size:11px; font-weight:500; color:var(--text-muted);">${isOpen ? "▲ 접기" : "▼ 펼치기"}</span>
-    </h3>
+    <h3>💰 이번달 가계부</h3>
     <div style="text-align:center; padding:4px 0 8px;">
       <div style="font-size:12px; color:var(--text-muted);">자유자금(게임비 ${fmt(BUDGET_GAME)} 제외) ${fmt(freeFund)} 중</div>
       <div style="font-size:30px; font-weight:800; color:${remain >= 0 ? "var(--good)" : "var(--cat-invest)"}; line-height:1.3;">${fmt(remain)}</div>
       <div style="font-size:12px; color:var(--text-muted);">남음 (이번달 지출 ${fmt(spent)} 반영)</div>
     </div>
-    ${isOpen ? `
     <div style="display:flex; align-items:center; gap:8px; background:var(--bg-alt,rgba(0,0,0,0.04)); border-radius:8px; padding:8px 10px; margin:6px 0;">
       <span style="font-size:20px;">${light}</span>
       <div style="flex:1;">
@@ -1435,12 +1521,18 @@ function renderBudget() {
       ${BUDGET_MOM.map(row).join("")}
     </details>
     <details style="margin-top:8px;">
-      <summary style="cursor:pointer; font-size:12.5px; font-weight:700;">직접 쓰는 것 (${fmt(selfTotal)})</summary>
-      ${BUDGET_SELF.map(row).join("")}
+      <summary style="cursor:pointer; font-size:12.5px; font-weight:700;">카카오뱅크 — 고정비 자동이체 (${fmt(kakaoTotal)})</summary>
+      ${BUDGET_KAKAO.map(row).join("")}
     </details>
-    <div class="marathon-note">매달 이론치랑 실제 잔액 사이에 10만원대 차이가 반복되고 있음(원인 미확인) — 위 지출기록에 없는 카드값이 또 있을 가능성 있음. 날짜별 지출은 위 달력에서 빨간 표시된 날짜를 눌러서 확인.</div>
-    ` : ""}
+    <details style="margin-top:8px;">
+      <summary style="cursor:pointer; font-size:12.5px; font-weight:700;">식비주유비 통장 (${fmt(foodfuelTotal)})</summary>
+      ${BUDGET_FOODFUEL.map(row).join("")}
+    </details>
+    <div class="marathon-note">계좌 3개(신한=자유자금/카카오뱅크=고정비/식비주유비) 기준으로 나눠놓음 — 지출 적을 땐 어느 계좌에서 나갔는지 먼저 확인하고 기록할 것. 날짜별 지출은 위 달력에서 표시된 날짜를 눌러서 확인.</div>
   `;
+
+  const railRemain = document.getElementById("leftRailRemain");
+  if (railRemain) railRemain.textContent = fmt(remain);
 }
 
 // ── 칠판 (클로드가 세션마다 남기는 메모 — git push로만 갱신됨, 로컬 조작 아님) ──
@@ -1517,6 +1609,16 @@ function patExpiryNote() {
   const warn = daysLeft <= 5;
   const color = warn ? "var(--warn, #b23a22)" : "var(--text-muted)";
   return `<div style="font-size:11px; color:${color}; margin-top:4px;">토큰 만료 예정: ${expiry.toISOString().slice(0,10)} (D-${daysLeft})${warn ? " — 곧 새로 발급 필요" : ""}</div>`;
+}
+
+function openReplyModal() {
+  document.getElementById("replyModalBackdrop").style.display = "flex";
+}
+function closeReplyModal() {
+  document.getElementById("replyModalBackdrop").style.display = "none";
+}
+function closeReplyModalOutside(e) {
+  if (e.target.id === "replyModalBackdrop") closeReplyModal();
 }
 
 function renderReply() {
