@@ -1441,7 +1441,7 @@ function updateBalance(key, value) {
     disp.style.color = need > 0 ? "var(--cat-invest)" : "var(--good)";
     disp.textContent = need > 0 ? `${fmt(need)} 이체필요` : "충분함";
   } else if (key === "jh_bal_foodfuel") {
-    const need = Math.max(0, _budgetLiveTargets.foodfuelTotal - n);
+    const need = Math.max(0, _budgetLiveTargets.foodfuelPending - n);
     disp.style.color = need > 0 ? "var(--cat-invest)" : "var(--good)";
     disp.textContent = need > 0 ? `${fmt(need)} 이체필요` : "충분함";
   }
@@ -1574,20 +1574,33 @@ function renderBudget() {
   const kakaoPending = kakaoRealTotal - kakaoWithdrawn;
   const kakaoSkippedNote = BUDGET_KAKAO.filter(i => i.skipMonths && i.skipMonths.includes(ym));
 
+  // 식비주유비는 카카오뱅크처럼 특정일 자동이체가 아니라 매일 조금씩 까먹는 구조라 "오늘(dayOfMonth)까지
+  // 며칠 지났나" 기준으로 일할 계산함. 회사식비는 근무일(월~금)에만 나가는 게 확정이라 정확히 셀 수 있고,
+  // 기름값은 원래 불규칙(memory 확인됨)이라 날짜 비례로 추정치만 냄 — 이 부분만 근사치라 note에 표시함.
+  let workdaysElapsed = 0;
+  for (let d = 1; d <= dayOfMonth; d++) {
+    const dow = new Date(now.getFullYear(), now.getMonth(), d).getDay();
+    if (dow >= 1 && dow <= 5) workdaysElapsed++;
+  }
+  const foodAccrued = workdaysElapsed * 6000;
+  const fuelAccrued = Math.round(110000 * (dayOfMonth / daysInMonth));
+  const foodfuelAccrued = foodAccrued + fuelAccrued;
+  const foodfuelPending = Math.max(0, foodfuelTotal - foodfuelAccrued);
+
   // 실제 이체 필요액 = 목표(이번달 이 계좌에 있어야 하는 돈) - 사장님이 직접 입력한 "지금 이 계좌 실잔액"
   // 은행 API 연동이 없어서 실잔액은 자동으로 못 가져옴 — 앱에서 확인해서 숫자만 넣으면 나머지는 자동 계산됨.
   const balShinhan = localStorage.getItem("jh_bal_shinhan");
   const balKakao = Number(localStorage.getItem("jh_bal_kakao") || 0);
   const balFood = Number(localStorage.getItem("jh_bal_foodfuel") || 0);
   const needKakao = Math.max(0, kakaoPending - balKakao);
-  const needFood = Math.max(0, foodfuelTotal - balFood);
+  const needFood = Math.max(0, foodfuelPending - balFood);
   // 신한은 이체 대상이 아니라 이론치(remain) 검증용 — 실제 잔액 넣으면 이론치랑 차이를 바로 보여줌
   // (매달 반복되던 "미스터리 갭" 재확인용, [[project_personal_finance]])
   const shinhanDiff = balShinhan != null && balShinhan !== "" ? Number(balShinhan) - remain : null;
   // 매 렌더마다 바뀌는 목표값을 updateBalance()에서도 써야 해서 전역에 캐싱해둠 — 이거 안 하면
   // 타이핑할 때마다 renderBudget()을 통째로 다시 불러서 <input>이 새로 그려지고 포커스가 날아감
   // (숫자 한 자리 치면 칸 밖으로 튕겨나가던 버그의 원인). 이제 입력 시엔 결과 텍스트만 직접 갱신함.
-  _budgetLiveTargets = { kakaoPending, foodfuelTotal, remain };
+  _budgetLiveTargets = { kakaoPending, foodfuelPending, remain };
   const balInput = (key, val) => `<input type="number" placeholder="지금 잔액" value="${val || ""}" oninput="updateBalance('${key}', this.value)" style="width:100%; font-size:10.5px; padding:3px 4px; margin-top:4px; text-align:center;" />`;
 
   panel.innerHTML = `
@@ -1612,7 +1625,7 @@ function renderBudget() {
       </div>
       <div style="background:var(--bg-alt,rgba(0,0,0,0.04)); border-radius:8px; padding:8px 4px; text-align:center;">
         <div style="font-size:9.5px; color:var(--text-muted);">식비주유비</div>
-        <div style="font-size:13px; font-weight:800;">목표 ${fmt(foodfuelTotal)}</div>
+        <div style="font-size:13px; font-weight:800;">목표 ${fmt(foodfuelPending)}</div>
         ${balInput("jh_bal_foodfuel", balFood)}
         <div id="balDisplay-jh_bal_foodfuel" style="font-size:11px; font-weight:800; color:${needFood > 0 ? "var(--cat-invest)" : "var(--good)"}; margin-top:3px;">${needFood > 0 ? `${fmt(needFood)} 이체필요` : "충분함"}</div>
       </div>
@@ -1620,6 +1633,7 @@ function renderBudget() {
     <div class="marathon-note" style="margin:0 0 6px;">
       은행 앱 잔액 자동 연동은 안 되니까(API 없음) 위 "지금 잔액" 칸에 은행 앱 보고 숫자만 넣으면 "이체필요" 금액이 자동 계산됨 — 입력 안 하면 0원 있는 걸로 치고 목표금액 전체를 이체필요로 보여줌.
       카카오뱅크 목표(${fmt(kakaoPending)})는 매달 정상 총액(${fmt(kakaoTotal)}) 중 이번달(${ym}) 실제분(${fmt(kakaoRealTotal)})${kakaoSkippedNote.length ? ` (${kakaoSkippedNote.map(i => i.label).join(", ")} 스킵돼서 제외)` : ""}에서 오늘(${dayOfMonth}일)까지 이미 빠진 것 뺀 값. 달력의 📌 표시는 자동이체 예정일.
+      식비주유비는 특정일 이체가 아니라 매일 까먹는 구조라 오늘(${dayOfMonth}일)까지 일할계산으로 목표를 냄 — 회사식비는 근무일(${workdaysElapsed}일 지남)×6,000원=${fmt(foodAccrued)}으로 정확히 계산, 기름값은 원래 불규칙이라 날짜 비례 추정치(${fmt(fuelAccrued)})만 씀. 이번달 전체 배정액은 ${fmt(foodfuelTotal)}.
     </div>
     <div style="display:flex; align-items:center; gap:8px; background:var(--bg-alt,rgba(0,0,0,0.04)); border-radius:8px; padding:8px 10px; margin:6px 0;">
       <span style="font-size:20px;">${light}</span>
