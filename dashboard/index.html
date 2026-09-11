@@ -1364,7 +1364,7 @@ const BUDGET_MOM = [
 // 특정 날짜로 못 박기 힘든 항목은 day 없이 note로만 표기(아래 계좌잔액 계산에서 제외됨).
 const BUDGET_KAKAO = [ // 카카오뱅크로 매달 이체 → 여기서 자동이체 나감
   { label: "트위터(X)", amount: 12000, day: 4, note: "매달 4일" },
-  { label: "운전자보험(DB손해보험)", amount: 19790, note: "매달 토요일 — 특정 날짜 아니라 계좌잔액 계산엔 미포함" },
+  { label: "운전자보험(DB손해보험)", amount: 19710, day: 5, note: "매달 5일" },
   { label: "패트리온", amount: 8000, day: 26, note: "매달 26일, $5 환율따라 변동" },
   { label: "통신비", amount: 30710, day: 26, note: "날짜 미확인 — 26일 근처로 추정" },
   { label: "Claude Code", amount: 33000, day: 29, note: "매달 29일" },
@@ -1573,7 +1573,7 @@ function renderBudget() {
       </div>
     </div>
     <div class="marathon-note" style="margin:0 0 6px;">
-      카카오뱅크: 매달 정상 기준 총액은 ${fmt(kakaoTotal)}이지만, 이번달(${ym}) 실제 반영액은 ${fmt(kakaoRealTotal)}${kakaoSkippedNote.length ? ` (${kakaoSkippedNote.map(i => i.label).join(", ")} 이번달 스킵돼서 제외)` : ""} — 위 "아직 안 빠진 금액"은 이 실제 반영액 기준으로 계산한 거라 이만큼만 이체해두면 됨. 자동이체 날짜(아래 목록) 기준 "오늘(${dayOfMonth}일)까지 안 빠진 금액"이고, 운전자보험(요일 기준이라 날짜 확정 불가)은 계속 '안 빠짐'으로 계산됨. 식비주유비는 일별 실사용 추적이 아직 없어서 배정액만 표시. 달력의 📌 표시는 그 항목의 자동이체 예정일.
+      카카오뱅크: 매달 정상 기준 총액은 ${fmt(kakaoTotal)}이지만, 이번달(${ym}) 실제 반영액은 ${fmt(kakaoRealTotal)}${kakaoSkippedNote.length ? ` (${kakaoSkippedNote.map(i => i.label).join(", ")} 이번달 스킵돼서 제외)` : ""} — 위 "아직 안 빠진 금액"은 이 실제 반영액 기준으로 계산한 거라 이만큼만 이체해두면 됨. 자동이체 날짜(아래 목록) 기준 "오늘(${dayOfMonth}일)까지 안 빠진 금액"임. 식비주유비는 일별 실사용 추적이 아직 없어서 배정액만 표시. 달력의 📌 표시는 그 항목의 자동이체 예정일.
     </div>
     <div style="display:flex; align-items:center; gap:8px; background:var(--bg-alt,rgba(0,0,0,0.04)); border-radius:8px; padding:8px 10px; margin:6px 0;">
       <span style="font-size:20px;">${light}</span>
