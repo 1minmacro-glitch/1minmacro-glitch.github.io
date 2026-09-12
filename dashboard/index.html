@@ -1425,6 +1425,17 @@ if (!load("jh_bal_seed_0912", false)) {
   localStorage.setItem("jh_bal_updated_at", "2026-09-12");
   save("jh_bal_seed_0912", true);
 }
+if (!load("jh_expenses_seed_0913", false)) {
+  // 2배효율 패키지 2개(19,000원+65,000원) 구매 — 9월 게임비 예산(10만원) 이미 초과 상태라 전액 자유자금에서 차감
+  expenses.push({ id: "e0913a", date: "2026-09-13", label: "게임비 예산초과(2배효율 패키지 19,000+65,000)", amount: 84000 });
+  save(LS_EXPENSES, expenses);
+  save("jh_expenses_seed_0913", true);
+}
+if (!load("jh_bal_seed_0913", false)) {
+  localStorage.setItem("jh_bal_shinhan", "100000");
+  localStorage.setItem("jh_bal_updated_at", "2026-09-13");
+  save("jh_bal_seed_0913", true);
+}
 
 function addExpense() {
   const labelEl = document.getElementById("expLabel");
