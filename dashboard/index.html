@@ -2006,16 +2006,29 @@ const LS_TODO_LOG = "jh_todo_log";
 let todos = load(LS_TODOS, null);
 if (todos === null) {
   todos = [
-    { id: "t1", text: "논문 RQ3 pseudo-replication 결함 처리" },
     { id: "t2", text: "논문 참고문헌 [8]~[16] 미인용 처리" },
-    { id: "t3", text: "크몽 심화편 승인 결과 확인" },
     { id: "t4", text: "틱톡 2차 심사 결과 확인" },
     { id: "t5", text: "요청게시판 구글시트 연결 마무리" },
     { id: "t6", text: "산격동 화장실 공사 — 법률구조공단 상담" },
-    { id: "t7", text: "AI 캐릭터 캐스팅 다음 단계" },
+    { id: "t7", text: "[인스타릴스] face_038 설명형 콘텐츠 — 주제 1개 정해서 파일럿 대본 쓰기" },
     { id: "t8", text: "반도체 PMOS 레시피 실제 장비 입력" },
   ];
   save(LS_TODOS, todos);
+}
+// 2026-09-21: 32일 방치 항목 정리 + 인스타릴스 전환, 1회성 추가
+if (!load("jh_todos_seed_0921", false)) {
+  const items0921 = [
+    { id: "s1", text: "완전무료판 전자책 — 가격·상품명 정해서 크몽 등록" },
+    { id: "s2", text: "부동산비상구 구독자 500명 넘었는지 확인(커뮤니티탭 켜지면 광고단가 10만원 전략 바로 적용)" },
+    { id: "s3", text: "나노바나나 크레딧 재충전할지 결정(지금 Pexels 폴백 중)" },
+    { id: "s4", text: "GitHub 대시보드 저장소 비공개(private) 전환 — 계속 미룬 상태" },
+    { id: "s5", text: "[인스타릴스] Gemini/veo_gen.py 크레딧 상태 확인 후 fast 티어로 파일럿 1편 생성" },
+    { id: "s6", text: "광고대행업 — 국세청126 전화로 세액감면 대상 여부 확인" },
+    { id: "s7", text: "아스트라(Codex) 지시할 때 세세한 절차 나열 대신 목표+완료기준만 주는 방식으로 바꾸기" },
+  ];
+  todos = todos.concat(items0921);
+  save(LS_TODOS, todos);
+  save("jh_todos_seed_0921", true);
 }
 // 2026-09-07: X(트위터) 짤 자동포스팅 봇 만들기 — 아파서 정리 안 될 때 대비, 1회성 추가
 if (!load("jh_todos_seed_xbot", false)) {
