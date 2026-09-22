@@ -1,8 +1,45 @@
 [
   {
     "date": "2026-09-22",
-    "checked_at_utc": "2026-09-22T00:10:46.304501+00:00",
+    "checked_at_utc": "2026-09-22T17:00:19.245328+00:00",
     "threshold": 8.0,
-    "hits": []
+    "hits": [
+      {
+        "ticker": "3LPP.L",
+        "name": "PayPal",
+        "latest_vol": 32753,
+        "avg_vol": 1313,
+        "ratio": 24.9,
+        "price": 0.965,
+        "date": "2026-09-22"
+      },
+      {
+        "ticker": "3LFB.L",
+        "name": "Meta",
+        "latest_vol": 8596,
+        "avg_vol": 646,
+        "ratio": 13.3,
+        "price": 51.6,
+        "date": "2026-09-22"
+      },
+      {
+        "ticker": "3LNV.L",
+        "name": "NVIDIA",
+        "latest_vol": 17251,
+        "avg_vol": 1641,
+        "ratio": 10.5,
+        "price": 41.585,
+        "date": "2026-09-22"
+      },
+      {
+        "ticker": "3LCO.L",
+        "name": "Coinbase",
+        "latest_vol": 373228,
+        "avg_vol": 43447,
+        "ratio": 8.6,
+        "price": 0.135,
+        "date": "2026-09-22"
+      }
+    ]
   }
 ]
