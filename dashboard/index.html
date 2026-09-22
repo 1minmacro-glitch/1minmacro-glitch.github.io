@@ -548,6 +548,11 @@
     </section>
 
     <section>
+      <h2>📈 레버리지 거래량 알림 <span class="count" id="leverageAlertCount"></span></h2>
+      <div class="card" id="leverageAlertPanel">불러오는 중...</div>
+    </section>
+
+    <section>
       <h2>🧠 오늘의 행복도</h2>
       <div class="card" style="padding:14px; display:flex; gap:8px; justify-content:center;" id="moodPicker"></div>
     </section>
@@ -1999,6 +2004,42 @@ async function loadWeather() {
   }
 }
 loadWeather();
+
+// ── 레버리지 거래량 알림 (leverage_volume_alert.py가 매일 UK장 마감 후 자동 실행 → dashboard/leverage_alerts.json에 append → git push) ──
+// 판단/매수 신호 아님. "그날 거래량이 20일 평균 대비 몇 배였다"는 사실만 기록. 기록은 절대 안 지움(진입 타이밍 복기용).
+const GH_PATH_LEVERAGE = "dashboard/leverage_alerts.json";
+const GH_API_URL_LEVERAGE = `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_PATH_LEVERAGE}`;
+
+async function loadLeverageAlerts() {
+  const panel = document.getElementById("leverageAlertPanel");
+  if (!panel) return;
+  try {
+    const res = await fetch(GH_API_URL_LEVERAGE, { cache: "no-store", headers: { "Accept": "application/vnd.github.raw+json" } });
+    if (!res.ok) { panel.innerHTML = `<div class="board-item"><div class="board-text" style="color:var(--text-muted);">아직 기록 없음(첫 실행 전)</div></div>`; return; }
+    const days = await res.json();
+    if (!days.length) { panel.innerHTML = `<div class="board-item"><div class="board-text" style="color:var(--text-muted);">아직 기록 없음</div></div>`; return; }
+    const totalHits = days.reduce((s, d) => s + (d.hits ? d.hits.length : 0), 0);
+    document.getElementById("leverageAlertCount").textContent = `누적 ${totalHits}건`;
+    let inner = "";
+    days.slice().reverse().forEach(day => {
+      const hits = day.hits || [];
+      if (hits.length === 0) {
+        inner += `<div class="board-item"><div class="board-date">${day.date} · 기준 ${day.threshold}배</div><div class="board-text" style="color:var(--text-muted);">이상치 없음</div></div>`;
+      } else {
+        hits.slice().sort((a,b)=>b.ratio-a.ratio).forEach(h => {
+          inner += `<div class="board-item">
+            <div class="board-date">${day.date} · 기준 ${day.threshold}배</div>
+            <div class="board-text"><b>${h.ticker}</b>(${h.name}): 평균 대비 <b style="color:var(--cat-asset);">${h.ratio}배</b> (${h.latest_vol.toLocaleString()} vs 20일평균 ${h.avg_vol.toLocaleString()}), 종가 ${h.price}</div>
+          </div>`;
+        });
+      }
+    });
+    panel.innerHTML = `<div class="board-scroll" style="max-height:420px; overflow-y:auto;">${inner}</div>`;
+  } catch (e) {
+    panel.innerHTML = `<div class="board-item"><div class="board-text" style="color:var(--text-muted);">불러오기 실패</div></div>`;
+  }
+}
+loadLeverageAlerts();
 
 // ── 할 일 트래커 (자유 텍스트 추가/삭제, 완료 즉시 목록에서 빠지고 완료기록에 누적) ──
 const LS_TODOS = "jh_todos";
