@@ -93,8 +93,11 @@
     }
     #page-today > header,
     #page-today > .points-bar,
-    #page-today > .date-nav {
-      grid-column: 1 / -1; /* 상단 요소들은 화면 전체 폭 그대로 */
+    #page-today > .date-nav,
+    #page-today > #moodSection,
+    #page-today > #weekGridSection,
+    #page-today > details {
+      grid-column: 1 / -1; /* 전체 폭으로 펼쳐지는 요소들 — 퀘스트/할일만 좌우 2칼럼으로 나란히 배치됨 */
     }
   }
 
@@ -543,17 +546,17 @@
       <div class="label">누적 포인트 · 총 <span id="totalDone">0</span>개 퀘스트 완료</div>
     </div>
 
+    <section id="moodSection">
+      <h2>🧠 오늘의 행복도</h2>
+      <div class="card" style="padding:14px; display:flex; gap:8px; justify-content:center;" id="moodPicker"></div>
+    </section>
+
     <div class="date-nav">
       <button id="prevDay">◀ 어제</button>
       <div class="today-label" id="dateLabel"></div>
       <button id="nextDay">내일 ▶</button>
       <button id="gotoToday">오늘로</button>
     </div>
-
-    <section>
-      <h2>🧠 오늘의 행복도</h2>
-      <div class="card" style="padding:14px; display:flex; gap:8px; justify-content:center;" id="moodPicker"></div>
-    </section>
 
     <section>
       <h2>📋 오늘의 퀘스트 <span class="count" id="questCount"></span></h2>
@@ -571,16 +574,16 @@
       </div>
     </section>
 
-    <details class="card" style="padding:10px 14px; margin-top:16px;">
-      <summary style="cursor:pointer; font-weight:700; padding:4px 0;">📅 이번 주 체크 현황 · 📊 인생 스탯 · 🎯 올해 목표 · 📜 완료 기록 (펼치기)</summary>
-      <section style="margin-top:12px;">
-        <h2>📅 이번 주 체크 현황</h2>
-        <div class="card" style="padding:14px;">
-          <div class="week-grid" id="weekGrid"></div>
-        </div>
-      </section>
+    <section id="weekGridSection" style="margin-top:8px;">
+      <h2 style="text-align:center;">📅 이번 주 체크 현황</h2>
+      <div class="card" style="padding:14px; max-width:480px; margin:0 auto;">
+        <div class="week-grid" id="weekGrid"></div>
+      </div>
+    </section>
 
-      <section>
+    <details class="card" style="padding:10px 14px; margin-top:16px;">
+      <summary style="cursor:pointer; font-weight:700; padding:4px 0;">📊 인생 스탯 · 🎯 올해 목표 · 📜 완료 기록 (펼치기)</summary>
+      <section style="margin-top:12px;">
         <h2>📊 인생 스탯</h2>
         <div class="stat-grid" id="statGrid"></div>
       </section>
