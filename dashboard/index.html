@@ -499,6 +499,9 @@
   <button class="nav-btn" data-page="page-schedule" onclick="activatePage('page-schedule')">
     <span class="nav-icon">🏃</span><span class="nav-label">일정</span>
   </button>
+  <button class="nav-btn" data-page="page-leverage" onclick="activatePage('page-leverage')">
+    <span class="nav-icon">📈</span><span class="nav-label">레버리지</span>
+  </button>
 </nav>
 
 <!-- 우측 하단 고정 — 답변 남기기(챗봇처럼 항상 떠있음, 어느 페이지든 안 사라짐) -->
@@ -532,6 +535,11 @@
     </div>
 
     <section>
+      <h2>🧠 오늘의 행복도</h2>
+      <div class="card" style="padding:14px; display:flex; gap:8px; justify-content:center;" id="moodPicker"></div>
+    </section>
+
+    <section>
       <h2>📋 오늘의 퀘스트 <span class="count" id="questCount"></span></h2>
       <div class="card"><div id="catNav" class="cat-nav"></div><div id="questList"></div></div>
     </section>
@@ -547,37 +555,30 @@
       </div>
     </section>
 
-    <section>
-      <h2>📈 레버리지 거래량 알림 <span class="count" id="leverageAlertCount"></span></h2>
-      <div class="card" id="leverageAlertPanel">불러오는 중...</div>
-    </section>
+    <details class="card" style="padding:10px 14px; margin-top:16px;">
+      <summary style="cursor:pointer; font-weight:700; padding:4px 0;">📅 이번 주 체크 현황 · 📊 인생 스탯 · 🎯 올해 목표 · 📜 완료 기록 (펼치기)</summary>
+      <section style="margin-top:12px;">
+        <h2>📅 이번 주 체크 현황</h2>
+        <div class="card" style="padding:14px;">
+          <div class="week-grid" id="weekGrid"></div>
+        </div>
+      </section>
 
-    <section>
-      <h2>🧠 오늘의 행복도</h2>
-      <div class="card" style="padding:14px; display:flex; gap:8px; justify-content:center;" id="moodPicker"></div>
-    </section>
+      <section>
+        <h2>📊 인생 스탯</h2>
+        <div class="stat-grid" id="statGrid"></div>
+      </section>
 
-    <section>
-      <h2>📅 이번 주 체크 현황</h2>
-      <div class="card" style="padding:14px;">
-        <div class="week-grid" id="weekGrid"></div>
-      </div>
-    </section>
+      <section>
+        <h2>🎯 올해 목표 <span class="count" id="goalCount"></span></h2>
+        <div class="card goal-list"><div id="goalList"></div></div>
+      </section>
 
-    <section>
-      <h2>📊 인생 스탯</h2>
-      <div class="stat-grid" id="statGrid"></div>
-    </section>
-
-    <section>
-      <h2>🎯 올해 목표 <span class="count" id="goalCount"></span></h2>
-      <div class="card goal-list"><div id="goalList"></div></div>
-    </section>
-
-    <section>
-      <h2>📜 완료 기록</h2>
-      <div class="card" id="todoLogList"></div>
-    </section>
+      <section>
+        <h2>📜 완료 기록</h2>
+        <div class="card" id="todoLogList"></div>
+      </section>
+    </details>
 
     <footer class="note">
       체크는 브라우저에 저장돼 — 이 파일을 그대로 두고 매번 열면 이어짐 (같은 브라우저 기준)<br>
@@ -598,6 +599,14 @@
     <div class="card marathon-panel" id="weatherPanel"></div>
     <div class="card marathon-panel" id="marathonPanel" style="margin-top:16px;"></div>
     <div class="card marathon-panel" id="hikingPanel" style="margin-top:16px;"></div>
+  </div>
+
+  <div class="app-page" id="page-leverage" hidden>
+    <header>
+      <h1>📈 레버리지 거래량 알림</h1>
+      <div class="sub">단일종목 3배 ETP 56개 · 판단 아님, 사실만 기록</div>
+    </header>
+    <div class="card" id="leverageAlertPanel">불러오는 중...</div>
   </div>
 </div>
 
@@ -2034,7 +2043,7 @@ async function loadLeverageAlerts() {
         });
       }
     });
-    panel.innerHTML = `<div class="board-scroll" style="max-height:420px; overflow-y:auto;">${inner}</div>`;
+    panel.innerHTML = `<div class="board-scroll" style="max-height:calc(100vh - 220px); overflow-y:auto;">${inner}</div>`;
   } catch (e) {
     panel.innerHTML = `<div class="board-item"><div class="board-text" style="color:var(--text-muted);">불러오기 실패</div></div>`;
   }
