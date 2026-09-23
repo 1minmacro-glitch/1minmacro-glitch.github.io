@@ -41,5 +41,30 @@
         "date": "2026-09-22"
       }
     ]
+  },
+  {
+    "date": "2026-09-23",
+    "checked_at_utc": "2026-09-23T17:00:19.737697+00:00",
+    "threshold": 8.0,
+    "hits": [
+      {
+        "ticker": "3LCO.L",
+        "name": "Coinbase",
+        "latest_vol": 11740155,
+        "avg_vol": 43447,
+        "ratio": 270.2,
+        "price": 0.1375,
+        "date": "2026-09-23"
+      },
+      {
+        "ticker": "3SPA.L",
+        "name": "Palantir(숏)",
+        "latest_vol": 2178538,
+        "avg_vol": 34112,
+        "ratio": 63.9,
+        "price": 0.4075,
+        "date": "2026-09-23"
+      }
+    ]
   }
 ]
