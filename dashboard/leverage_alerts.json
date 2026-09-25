@@ -91,5 +91,30 @@
         "date": "2026-09-24"
       }
     ]
+  },
+  {
+    "date": "2026-09-25",
+    "checked_at_utc": "2026-09-25T17:00:21.415700+00:00",
+    "threshold": 8.0,
+    "hits": [
+      {
+        "ticker": "3LPP.L",
+        "name": "PayPal",
+        "latest_vol": 13171,
+        "avg_vol": 600,
+        "ratio": 22.0,
+        "price": 1.0,
+        "date": "2026-09-25"
+      },
+      {
+        "ticker": "3SRD.L",
+        "name": "Shell(숏)",
+        "latest_vol": 7495,
+        "avg_vol": 555,
+        "ratio": 13.5,
+        "price": 364.2,
+        "date": "2026-09-25"
+      }
+    ]
   }
 ]
