@@ -166,5 +166,39 @@
         "date": "2026-09-25"
       }
     ]
+  },
+  {
+    "date": "2026-09-28",
+    "checked_at_utc": "2026-09-28T17:00:18.261048+00:00",
+    "threshold": 8.0,
+    "hits": [
+      {
+        "ticker": "3SPA.L",
+        "name": "Palantir(숏)",
+        "latest_vol": 2643844,
+        "avg_vol": 47288,
+        "ratio": 55.9,
+        "price": 0.4235,
+        "date": "2026-09-28"
+      },
+      {
+        "ticker": "3LUB.L",
+        "name": "Uber",
+        "latest_vol": 12387,
+        "avg_vol": 559,
+        "ratio": 22.2,
+        "price": 10.2,
+        "date": "2026-09-28"
+      },
+      {
+        "ticker": "3LPP.L",
+        "name": "PayPal",
+        "latest_vol": 11739,
+        "avg_vol": 559,
+        "ratio": 21.0,
+        "price": 0.9575,
+        "date": "2026-09-28"
+      }
+    ]
   }
 ]
