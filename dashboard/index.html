@@ -1502,6 +1502,13 @@ if (!load("jh_expenses_seed_0930c", false)) {
   save(LS_EXPENSES, expenses);
   save("jh_expenses_seed_0930c", true);
 }
+// 2026-09-30: 명조 119,000원 실제 결제로 신한 잔액 갱신(696,580 -> 577,580). 이론상 remain과 별개로
+// 진짜 통장 잔액을 항상 최신으로 유지해야 위 leftRailRemain(실제잔액 우선 표시)이 의미가 있음.
+if (!load("jh_bal_seed_0930d", false)) {
+  localStorage.setItem("jh_bal_shinhan", "577580");
+  localStorage.setItem("jh_bal_updated_at", "2026-09-30");
+  save("jh_bal_seed_0930d", true);
+}
 
 function addExpense() {
   const labelEl = document.getElementById("expLabel");
@@ -1776,8 +1783,11 @@ function renderBudget() {
     <div class="marathon-note">계좌 3개(신한=자유자금/카카오뱅크=고정비/식비주유비) 기준으로 나눠놓음 — 지출 적을 땐 어느 계좌에서 나갔는지 먼저 확인하고 기록할 것. 날짜별 지출은 위 달력에서 표시된 날짜를 눌러서 확인.</div>
   `;
 
+  // 2026-09-30: 좌측 메뉴 "가계부" 밑 숫자는 그동안 이론상 remain(실제 잔액과 무관한 페이스 계산치)만 보여줘서
+  // "잔액이 얼마 안 남았는데 왜 다르게 뜨냐"는 혼란이 반복됐음 — 실제 잔액(jh_bal_shinhan) 입력돼있으면 그걸
+  // 우선 보여주고, 아직 입력 안 했을 때만 이론치로 폴백. 이론상 계산 엔진(remain, panel 안 "이론상" 표시)은 그대로 유지.
   const railRemain = document.getElementById("leftRailRemain");
-  if (railRemain) railRemain.textContent = fmt(remain);
+  if (railRemain) railRemain.textContent = (balShinhan != null && balShinhan !== "") ? fmt(Number(balShinhan)) : fmt(remain);
 }
 
 // ── 칠판 (클로드가 세션마다 남기는 메모 — git push로만 갱신됨, 로컬 조작 아님) ──
