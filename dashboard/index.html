@@ -1490,6 +1490,14 @@ if (!load("jh_expenses_seed_0930", false)) {
   save(LS_EXPENSES, expenses);
   save("jh_expenses_seed_0930", true);
 }
+// 2026-09-30: 복싱비 16만원 실제 지출 — 9월은 skipMonths에 들어있어서(부상으로 스킵 예정이었음)
+// BUDGET_KAKAO 이론값엔 안 잡히는데 실제로는 나갔음. 9/10에 이미 -160000 환급 처리를 해놔서
+// 그거랑 상쇄되게 여기서 다시 +160000 지출로 기록함(순계산 0으로 맞춤, 실제로 9월에 나간 돈이니).
+if (!load("jh_expenses_seed_0930b", false)) {
+  expenses.push({ id: "e0930b", date: "2026-09-30", label: "복싱비", amount: 160000 });
+  save(LS_EXPENSES, expenses);
+  save("jh_expenses_seed_0930b", true);
+}
 
 function addExpense() {
   const labelEl = document.getElementById("expLabel");
