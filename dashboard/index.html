@@ -1469,6 +1469,20 @@ if (!load("jh_bal_seed_0913", false)) {
   localStorage.setItem("jh_bal_updated_at", "2026-09-13");
   save("jh_bal_seed_0913", true);
 }
+// 2026-09-30: 이번달 월급 받아서 엄마 드리고 남은 실수령액(88만원) 기준으로 3계좌 재세팅.
+// 주의: 엄마 드린 실제 금액은 사장님 말로는 200만원인데 BUDGET_MOM 배열 합계는 207만원(위 상수) —
+// 7만원 차이 미해결 상태(어느 항목이 바뀐 건지 아직 확인 안 됨). 지금은 실측 잔액(88만원)을
+// 그대로 믿고 3계좌에 나눠 넣은 것뿐이라, BUDGET_MOM 배열 자체는 안 건드림 — 다음에 학자금/할부
+// 중 뭐가 줄었는지 확인되면 그 배열도 같이 고칠 것.
+// 카뱅/식비주유비는 고정비 자동이체 전용이라 그대로, 신한은 (88만 - 고정비 두 개) + 이전 잔여비용
+// 15만원(원래 24.9만원이었는데 커피/식사로 줄어듦, 가계부엔 지출로 안 찍혀있던 돈이라 합쳐서 반영)까지 더함.
+if (!load("jh_bal_seed_0930", false)) {
+  localStorage.setItem("jh_bal_kakao", "103420");     // 카카오뱅크: 자동이체 총액(복싱 9~10월 스킵 중이라 제외)
+  localStorage.setItem("jh_bal_foodfuel", "230000");  // 식비주유비: 회사식비12만+기름값11만
+  localStorage.setItem("jh_bal_shinhan", "696580");   // 신한: (88만-10.342만-23만)=54.658만 + 이전잔여 15만
+  localStorage.setItem("jh_bal_updated_at", "2026-09-30");
+  save("jh_bal_seed_0930", true);
+}
 
 function addExpense() {
   const labelEl = document.getElementById("expLabel");
