@@ -1483,6 +1483,13 @@ if (!load("jh_bal_seed_0930", false)) {
   localStorage.setItem("jh_bal_updated_at", "2026-09-30");
   save("jh_bal_seed_0930", true);
 }
+// 2026-09-30: Anthropic API 크레딧 소진으로 월가비상구/부동산비상구 대본생성이 전부 막혀서
+// 사장님이 충전 예정 — 아직 실제 결제 전이지만 예정 지출로 미리 기록해둠(나중에 실결제액 다르면 수정).
+if (!load("jh_expenses_seed_0930", false)) {
+  expenses.push({ id: "e0930a", date: "2026-09-30", label: "Claude API 크레딧 충전(예정, 환전)", amount: 50000 });
+  save(LS_EXPENSES, expenses);
+  save("jh_expenses_seed_0930", true);
+}
 
 function addExpense() {
   const labelEl = document.getElementById("expLabel");
