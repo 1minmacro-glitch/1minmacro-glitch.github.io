@@ -85,7 +85,7 @@
      — "오늘" 페이지는 두 칼럼으로 나눠서 화면을 옆으로 채우게 함(스크롤 줄이기). */
   @media (min-width: 1100px) {
     .page-layout { max-width: 1400px; }
-    #page-today {
+    #page-today:not([hidden]) {
       display: grid;
       grid-template-columns: 1fr 1fr;
       column-gap: 28px;
