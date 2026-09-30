@@ -1495,6 +1495,13 @@ if (!load("jh_expenses_seed_0930b", false)) {
   save(LS_EXPENSES, expenses);
   save("jh_expenses_seed_0930b", true);
 }
+// 2026-09-30: 명조(워더링웨이브) 119,000원 충전 — 사장님이 "월급 받았으니 10월로 퉁치자"고 해서
+// 이번 건은 새 게임비 10만원 한도 안에서 쓰는 걸로 처리, 초과분 19,000원만 자유자금에서 차감.
+if (!load("jh_expenses_seed_0930c", false)) {
+  expenses.push({ id: "e0930c", date: "2026-09-30", label: "게임비 예산초과(명조 충전 119,000원, 10월 사이클 조기적용)", amount: 19000 });
+  save(LS_EXPENSES, expenses);
+  save("jh_expenses_seed_0930c", true);
+}
 
 function addExpense() {
   const labelEl = document.getElementById("expLabel");
