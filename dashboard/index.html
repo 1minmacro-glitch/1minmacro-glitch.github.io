@@ -1484,9 +1484,9 @@ if (!load("jh_bal_seed_0930", false)) {
   save("jh_bal_seed_0930", true);
 }
 // 2026-09-30: Anthropic API 크레딧 소진으로 월가비상구/부동산비상구 대본생성이 전부 막혀서
-// 사장님이 충전 예정 — 아직 실제 결제 전이지만 예정 지출로 미리 기록해둠(나중에 실결제액 다르면 수정).
+// 사장님이 실제로 $25 충전 완료. 환율은 같은 날 부동산비상구 로그에 찍힌 실제 USD/KRW(1,355.09)로 환산.
 if (!load("jh_expenses_seed_0930", false)) {
-  expenses.push({ id: "e0930a", date: "2026-09-30", label: "Claude API 크레딧 충전(예정, 환전)", amount: 50000 });
+  expenses.push({ id: "e0930a", date: "2026-09-30", label: "Claude API 크레딧 충전($25)", amount: 33877 });
   save(LS_EXPENSES, expenses);
   save("jh_expenses_seed_0930", true);
 }
