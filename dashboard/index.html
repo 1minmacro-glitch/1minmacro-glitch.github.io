@@ -1509,6 +1509,20 @@ if (!load("jh_bal_seed_0930d", false)) {
   localStorage.setItem("jh_bal_updated_at", "2026-09-30");
   save("jh_bal_seed_0930d", true);
 }
+// 2026-10-01: 엄마가 2시간 졸라서 추가로 10만원 드림 — 이미 합의된 월 200만원 고정 밖의
+// 진짜 추가지출이라 자유자금에서 바로 차감. (같은 날 던파 3만원 가챠는 10월 게임비 10만원
+// 한도 안에서 처음 쓴 거라 아직 한도 안 넘어서 별도 기록 안 함 — 정산엔 영향 없음)
+if (!load("jh_expenses_seed_1001", false)) {
+  expenses.push({ id: "e1001a", date: "2026-10-01", label: "엄마 추가 요청(생활비 200만원 외)", amount: 100000 });
+  save(LS_EXPENSES, expenses);
+  save("jh_expenses_seed_1001", true);
+}
+// 실제 신한 잔액도 같이 갱신: 577,580 - 엄마10만 - 던파3만 = 447,580
+if (!load("jh_bal_seed_1001", false)) {
+  localStorage.setItem("jh_bal_shinhan", "447580");
+  localStorage.setItem("jh_bal_updated_at", "2026-10-01");
+  save("jh_bal_seed_1001", true);
+}
 
 function addExpense() {
   const labelEl = document.getElementById("expLabel");
