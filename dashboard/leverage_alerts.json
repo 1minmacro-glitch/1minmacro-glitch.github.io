@@ -241,5 +241,30 @@
         "date": "2026-09-30"
       }
     ]
+  },
+  {
+    "date": "2026-10-01",
+    "checked_at_utc": "2026-10-01T17:00:15.014297+00:00",
+    "threshold": 8.0,
+    "hits": [
+      {
+        "ticker": "3SPA.L",
+        "name": "Palantir(숏)",
+        "latest_vol": 2195133,
+        "avg_vol": 30186,
+        "ratio": 72.7,
+        "price": 0.4338,
+        "date": "2026-10-01"
+      },
+      {
+        "ticker": "3SLL.L",
+        "name": "Lloyds(숏)",
+        "latest_vol": 33848,
+        "avg_vol": 803,
+        "ratio": 42.2,
+        "price": 66.55,
+        "date": "2026-10-01"
+      }
+    ]
   }
 ]
