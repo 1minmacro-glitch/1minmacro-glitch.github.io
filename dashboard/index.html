@@ -1413,6 +1413,7 @@ const BUDGET_KAKAO = [ // 카카오뱅크로 매달 이체 → 여기서 자동�
   { label: "통신비", amount: 30710, day: 26, note: "날짜 미확인 — 26일 근처로 추정" },
   { label: "Claude Code", amount: 33000, day: 29, note: "매달 29일" },
   { label: "복싱", amount: 160000, day: 24, skipMonths: ["2026-09", "2026-10"], note: "원래 24일 선납(다음달분 미리 냄), 9~10월은 부상으로 스킵, 11월 재개" },
+  { label: "Anthropic API(크롤링사이트 정식브리핑)", amount: 50000, note: "2026-10-02 결정 — auto_collector.py 09/12/18/22시 자동실행 토큰비용, 실측 추정 월 2~2.7만원인데 여유있게 5만원 고정으로 책정. 결제일 고정 안 돼있고 잔액 떨어지면 그때그때 충전." },
 ];
 const BUDGET_FOODFUEL = [ // 식비주유비 전용통장으로 매달 이체
   { label: "회사 식비", amount: 120000, note: "6천원×20일" },
