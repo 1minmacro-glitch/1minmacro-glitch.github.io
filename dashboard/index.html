@@ -1524,6 +1524,14 @@ if (!load("jh_bal_seed_1001", false)) {
   localStorage.setItem("jh_bal_updated_at", "2026-10-01");
   save("jh_bal_seed_1001", true);
 }
+// 2026-10-04: 명조(워더링웨이브) 파수인 캐릭터 뽑기 6만원 추가 지출. 10월 누적 게임비 =
+// 던파 3만(10/1) + 이번 6만 = 9만원, 아직 월 게임비 한도(10만원) 안 넘어서 별도 자유자금
+// 차감 기록은 안 함(던파 3만 때와 동일 원칙) — 단, 통장 실잔액은 실제로 빠져나갔으니 갱신.
+if (!load("jh_bal_seed_1004", false)) {
+  localStorage.setItem("jh_bal_shinhan", "387580");
+  localStorage.setItem("jh_bal_updated_at", "2026-10-04");
+  save("jh_bal_seed_1004", true);
+}
 
 function addExpense() {
   const labelEl = document.getElementById("expLabel");
