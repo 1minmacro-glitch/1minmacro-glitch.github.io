@@ -384,5 +384,30 @@
         "date": "2026-10-06"
       }
     ]
+  },
+  {
+    "date": "2026-10-07",
+    "checked_at_utc": "2026-10-07T17:00:16.329525+00:00",
+    "threshold": 8.0,
+    "hits": [
+      {
+        "ticker": "3SNV.L",
+        "name": "NVIDIA(숏)",
+        "latest_vol": 1176220,
+        "avg_vol": 63994,
+        "ratio": 18.4,
+        "price": 0.2015,
+        "date": "2026-10-07"
+      },
+      {
+        "ticker": "3SLL.L",
+        "name": "Lloyds(숏)",
+        "latest_vol": 16500,
+        "avg_vol": 1266,
+        "ratio": 13.0,
+        "price": 64.35,
+        "date": "2026-10-07"
+      }
+    ]
   }
 ]
