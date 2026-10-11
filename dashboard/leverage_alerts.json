@@ -459,5 +459,30 @@
         "date": "2026-10-09"
       }
     ]
+  },
+  {
+    "date": "2026-10-11",
+    "checked_at_utc": "2026-10-11T17:00:15.342031+00:00",
+    "threshold": 8.0,
+    "hits": [
+      {
+        "ticker": "3SNV.L",
+        "name": "NVIDIA(숏)",
+        "latest_vol": 540640,
+        "avg_vol": 55917,
+        "ratio": 9.7,
+        "price": 0.216,
+        "date": "2026-10-09"
+      },
+      {
+        "ticker": "3LNI.L",
+        "name": "NIO",
+        "latest_vol": 9503,
+        "avg_vol": 1022,
+        "ratio": 9.3,
+        "price": 3.1709,
+        "date": "2026-10-09"
+      }
+    ]
   }
 ]
