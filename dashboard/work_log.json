@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-12T22:24:57.567138",
+  "generated_at": "2026-10-12T22:59:17.299839",
   "groups": [
     "자동화 채널",
     "AI겨냥 사업",
@@ -473,8 +473,14 @@
       "group": "인프라·도구",
       "status_note": null,
       "last_activity": "2026-10-12",
-      "entry_count": 37,
+      "entry_count": 38,
       "entries": [
+        {
+          "date": "2026-10-12",
+          "hash": "301d9a4",
+          "msg": "work_log: Philos 미스터리를 유튜브/인스타 릴스 별개 항목으로 분리",
+          "src": "git"
+        },
         {
           "date": "2026-10-12",
           "hash": "83b2863",
@@ -534,6 +540,12 @@
           "hash": "21553bb",
           "msg": "Auto-update leverage volume alerts",
           "src": "git"
+        },
+        {
+          "date": "2026-10-12",
+          "hash": null,
+          "msg": "RTK(토큰절약 CLI) 설치 시도, FilmCraft/Video Use 도구 평가",
+          "src": "memory"
         },
         {
           "date": "2026-10-11",
@@ -647,12 +659,6 @@
           "date": "2026-09-30",
           "hash": "ea059a1",
           "msg": "가계부: 명조 119,000원 충전, 10월 게임비 사이클 조기적용(초과분 19,000원만 반영)",
-          "src": "git"
-        },
-        {
-          "date": "2026-09-30",
-          "hash": "98d6f2f",
-          "msg": "가계부: 엄마 생활비 207만원->200만원 퉁쳐서로 정정(엄마와 합의)",
           "src": "git"
         },
         {
