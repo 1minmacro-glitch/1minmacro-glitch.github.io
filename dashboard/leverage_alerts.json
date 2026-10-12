@@ -484,5 +484,30 @@
         "date": "2026-10-09"
       }
     ]
+  },
+  {
+    "date": "2026-10-12",
+    "checked_at_utc": "2026-10-12T17:00:15.870312+00:00",
+    "threshold": 8.0,
+    "hits": [
+      {
+        "ticker": "3SPA.L",
+        "name": "Palantir(숏)",
+        "latest_vol": 516034,
+        "avg_vol": 56537,
+        "ratio": 9.1,
+        "price": 0.3108,
+        "date": "2026-10-12"
+      },
+      {
+        "ticker": "3SAP.L",
+        "name": "Apple(숏)",
+        "latest_vol": 4391,
+        "avg_vol": 507,
+        "ratio": 8.7,
+        "price": 1.4425,
+        "date": "2026-10-12"
+      }
+    ]
   }
 ]
