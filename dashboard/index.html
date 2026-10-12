@@ -1455,6 +1455,12 @@ if (!load("jh_expenses_seed_1001", false)) {
   save(LS_EXPENSES, expenses);
   save("jh_expenses_seed_1001", true);
 }
+// 2026-10-08: 타이어 교체 30만원 — 사장님이 직접 알려준 실지출, 자유자금에서 차감
+if (!load("jh_expenses_seed_1008", false)) {
+  expenses.push({ id: "e1008a", date: "2026-10-08", label: "타이어 교체", amount: 300000 });
+  save(LS_EXPENSES, expenses);
+  save("jh_expenses_seed_1008", true);
+}
 // 실제 신한 잔액도 같이 갱신: 577,580 - 엄마10만 - 던파3만 = 447,580
 if (!load("jh_bal_seed_1001", false)) {
   localStorage.setItem("jh_bal_shinhan", "447580");
