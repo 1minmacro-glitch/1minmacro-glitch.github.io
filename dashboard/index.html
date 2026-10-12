@@ -7,625 +7,536 @@
 <style>
   :root {
     color-scheme: light;
-    --surface-1:      #fcfcfb;
-    --page:           #f9f9f7;
-    --card:           #ffffff;
-    --text-primary:   #0b0b0b;
-    --text-secondary: #52514e;
-    --text-muted:     #898781;
-    --gridline:       #e1e0d9;
-    --border:         rgba(11,11,11,0.10);
-    --good:           #0ca30c;
+    --sidebar-bg: #1a2030;
+    --sidebar-bg-2: #141924;
+    --sidebar-active: #262e42;
+    --accent: #1f4e9c;
+    --accent-dark: #173b78;
+    --danger: #d64545;
+    --success: #2f9e5b;
+    --border: #e6e8ee;
+    --text: #2b2f38;
+    --text-dim: #6b7280;
+    --page: #f5f6f9;
+    --card: #ffffff;
+    --text-primary: #2b2f38;
+    --text-secondary: #565c6b;
+    --text-muted: #8a90a0;
+    --gridline: #eef0f4;
+    --good: #2f9e5b;
 
-    --cat-asset:   #2a78d6; /* 자산 */
-    --cat-workout: #1baf7a; /* 운동 */
-    --cat-dn8:     #eda100; /* DN8 */
-    --cat-study:   #008300; /* 공부 */
-    --cat-ai:      #4a3aa7; /* AI프로젝트 */
-    --cat-invest:  #e34948; /* 투자 */
-    --cat-love:    #e87ba4; /* 연애 */
-    --cat-happy:   #eb6834; /* 행복도 */
+    --cat-asset:   #2a78d6;
+    --cat-workout: #1baf7a;
+    --cat-dn8:     #c98500;
+    --cat-study:   #1a8f1a;
+    --cat-ai:      #5b4fc4;
+    --cat-invest:  #d64545;
+    --cat-love:    #d1548b;
+    --cat-happy:   #e06a2f;
   }
   @media (prefers-color-scheme: dark) {
     :root:where(:not([data-theme="light"])) {
       color-scheme: dark;
-      --surface-1:      #1a1a19;
-      --page:           #0d0d0d;
-      --card:           #232322;
-      --text-primary:   #ffffff;
-      --text-secondary: #c3c2b7;
-      --text-muted:     #898781;
-      --gridline:       #2c2c2a;
-      --border:         rgba(255,255,255,0.10);
-      --good:           #0ca30c;
-      --cat-asset:   #3987e5;
-      --cat-workout: #199e70;
-      --cat-dn8:     #c98500;
-      --cat-study:   #008300;
-      --cat-ai:      #9085e9;
-      --cat-invest:  #e66767;
-      --cat-love:    #d55181;
-      --cat-happy:   #d95926;
+      --page: #0e1016; --card: #171a23; --text-primary: #eef0f4; --text-secondary: #b7bcc8;
+      --text-muted: #80869a; --gridline: #262b38; --border: rgba(255,255,255,0.10);
+      --cat-asset:#3987e5; --cat-workout:#1fc088; --cat-dn8:#e0a000; --cat-study:#2ecc40;
+      --cat-ai:#9085e9; --cat-invest:#e66767; --cat-love:#e07aac; --cat-happy:#f0893f;
     }
   }
   :root[data-theme="dark"] {
     color-scheme: dark;
-    --surface-1:      #1a1a19;
-    --page:           #0d0d0d;
-    --card:           #232322;
-    --text-primary:   #ffffff;
-    --text-secondary: #c3c2b7;
-    --text-muted:     #898781;
-    --gridline:       #2c2c2a;
-    --border:         rgba(255,255,255,0.10);
-    --cat-asset:   #3987e5;
-    --cat-workout: #199e70;
-    --cat-dn8:     #c98500;
-    --cat-study:   #008300;
-    --cat-ai:      #9085e9;
-    --cat-invest:  #e66767;
-    --cat-love:    #d55181;
-    --cat-happy:   #d95926;
+    --page: #0e1016; --card: #171a23; --text-primary: #eef0f4; --text-secondary: #b7bcc8;
+    --text-muted: #80869a; --gridline: #262b38; --border: rgba(255,255,255,0.10);
+    --cat-asset:#3987e5; --cat-workout:#1fc088; --cat-dn8:#e0a000; --cat-study:#2ecc40;
+    --cat-ai:#9085e9; --cat-invest:#e66767; --cat-love:#e07aac; --cat-happy:#f0893f;
   }
 
   * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
   body {
-    margin: 0;
-    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
-    background: var(--page);
-    color: var(--text-primary);
-    padding: 24px 16px 80px 108px; /* 좌측 고정 메뉴 폭만큼 여백 */
+    font-family: "Segoe UI", "Malgun Gothic", -apple-system, system-ui, sans-serif;
+    background: var(--page); color: var(--text-primary); font-size: 13px;
   }
-  .page-layout { max-width: 720px; margin: 0 auto; }
-  .app-page[hidden] { display: none; }
-  @media (max-width: 900px) {
-    body { padding: 20px 16px 96px; } /* 좁은 화면은 메뉴가 하단으로 내려가서 좌측 여백 불필요, 대신 하단 여백 */
-  }
-  /* 2026-09-22: 넓은 데스크탑 화면에서 좁은 가운데 칸 하나에 다 몰아넣던 걸 지적받음
-     — "오늘" 페이지는 두 칼럼으로 나눠서 화면을 옆으로 채우게 함(스크롤 줄이기). */
-  @media (min-width: 1100px) {
-    .page-layout { max-width: 1400px; }
-    #page-today:not([hidden]) {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      column-gap: 28px;
-      align-items: start;
-    }
-    #page-today > header,
-    #page-today > .points-bar,
-    #page-today > .date-nav,
-    #page-today > #moodSection,
-    #page-today > #weekGridSection,
-    #page-today > details {
-      grid-column: 1 / -1; /* 전체 폭으로 펼쳐지는 요소들 — 퀘스트/할일만 좌우 2칼럼으로 나란히 배치됨 */
-    }
-  }
+  a { color: inherit; }
+  button { font-family: inherit; cursor: pointer; }
 
-  .marathon-panel h3 {
-    font-size: 13px; font-weight: 700; margin: 18px 0 8px; color: var(--text-secondary);
-    display: flex; align-items: center; gap: 5px;
-  }
-  .marathon-panel h3:first-child { margin-top: 4px; }
-  .race-item {
-    padding: 10px 12px; border-bottom: 1px solid var(--gridline); font-size: 12.5px;
-  }
-  .race-item:last-child { border-bottom: none; }
-  .race-item .race-name { font-weight: 700; color: var(--text-primary); }
-  .race-item .race-date { color: var(--cat-dn8); font-weight: 600; margin-top: 2px; }
-  .race-item .race-reg { color: var(--text-muted); margin-top: 2px; }
-  .race-item .race-warn { color: var(--cat-invest); font-size: 11px; margin-top: 2px; }
-  .race-item a { color: var(--cat-asset); font-size: 11px; text-decoration: none; }
-  .race-item a:hover { text-decoration: underline; }
-  .marathon-note {
-    font-size: 11px; color: var(--text-muted); padding: 10px 12px 4px; line-height: 1.5;
-  }
-  .marathon-note a { color: var(--cat-asset); }
+  .shell { display: flex; min-height: 100vh; }
 
-  .region-tabs {
-    display: flex; flex-wrap: wrap; gap: 6px; padding: 0 12px 10px;
-  }
-  .region-tab {
-    font-size: 12px; color: var(--text-secondary); background: rgba(127,127,127,0.10);
-    border: 1px solid transparent; border-radius: 999px; padding: 5px 11px; cursor: pointer;
-  }
-  .region-tab:hover { background: rgba(127,127,127,0.18); }
-  .region-tab.active {
-    background: var(--cat-dn8); color: #fff; font-weight: 700;
-  }
-
-  header { text-align: center; margin-bottom: 24px; }
-  header h1 { font-size: 22px; margin: 0 0 4px; }
-  header .sub { color: var(--text-secondary); font-size: 14px; }
-  .theme-toggle {
-    position: fixed; top: 16px; right: 16px;
-    background: var(--card); border: 1px solid var(--border);
-    border-radius: 999px; padding: 6px 12px; font-size: 13px;
-    cursor: pointer; color: var(--text-secondary);
-  }
-
-  .points-bar {
-    display: flex; justify-content: center; align-items: baseline; gap: 8px;
-    margin-bottom: 20px;
-  }
-  .points-bar .num { font-size: 32px; font-weight: 700; font-variant-numeric: normal; }
-  .points-bar .label { color: var(--text-secondary); font-size: 14px; }
-
-  .date-nav {
-    display: flex; align-items: center; justify-content: center; gap: 12px;
-    margin-bottom: 12px; font-size: 14px; color: var(--text-secondary);
-  }
-  .date-nav button {
-    background: var(--card); border: 1px solid var(--border); border-radius: 8px;
-    padding: 4px 10px; cursor: pointer; color: var(--text-primary); font-size: 13px;
-  }
-  .date-nav .today-label { font-weight: 600; color: var(--text-primary); min-width: 150px; text-align: center; }
-
-  section { margin-bottom: 28px; }
-  section > h2 {
-    font-size: 15px; font-weight: 700; margin: 0 0 10px;
-    display: flex; align-items: center; gap: 6px;
-  }
-  section > h2 .count { color: var(--text-muted); font-weight: 500; font-size: 13px; }
-
-  .card {
-    background: var(--card); border: 1px solid var(--border); border-radius: 12px;
-    padding: 4px;
-  }
-
-  .quest {
-    display: flex; align-items: center; gap: 12px;
-    padding: 12px 14px; border-bottom: 1px solid var(--gridline);
-    cursor: pointer; user-select: none;
-    transition: opacity .15s;
-  }
-  .quest:last-child { border-bottom: none; }
-  .quest:hover { background: rgba(127,127,127,0.06); }
-  .quest .box {
-    width: 22px; height: 22px; border-radius: 6px; flex-shrink: 0;
-    border: 2px solid var(--cat-color, var(--text-muted));
-    display: flex; align-items: center; justify-content: center;
-    font-size: 13px; color: var(--card);
-    transition: background .15s;
-  }
-  .quest.done .box { background: var(--cat-color, var(--good)); }
-  .quest .icon { font-size: 16px; }
-  .quest .label { flex: 1; font-size: 14px; }
-  .quest.done .label { color: var(--text-muted); text-decoration: line-through; }
-  .quest .tag {
-    font-size: 11px; color: var(--card); background: var(--cat-color, var(--text-muted));
-    padding: 2px 8px; border-radius: 999px; flex-shrink: 0;
-  }
-  .quest-group-header {
-    font-size: 11px; font-weight: 700; color: var(--text-muted);
-    padding: 12px 14px 4px; letter-spacing: .2px;
-  }
-  .quest-group-header:first-child { padding-top: 8px; }
-
-  /* 카테고리 퀵네비 — 옆 여백은 1100px 밑에서 사라져서(반응형) 카드 안 상단 sticky bar로 구현 */
-  .cat-nav {
-    display: flex; flex-wrap: wrap; gap: 6px;
-    position: sticky; top: 0; z-index: 3;
-    background: var(--card); padding: 8px 6px; margin-bottom: 2px;
-    border-bottom: 1px solid var(--gridline);
-  }
-  .cat-nav button {
-    display: flex; align-items: center; gap: 4px;
-    font-size: 11.5px; font-weight: 700; border: none; border-radius: 999px;
-    padding: 5px 10px; cursor: pointer; color: #fff; opacity: .85;
-    transition: opacity .15s, transform .1s; font-family: inherit;
-  }
-  .cat-nav button:hover { opacity: 1; transform: translateY(-1px); }
-
-  .board-scroll { max-height: 320px; overflow-y: auto; border: 1px solid var(--border); border-radius: 8px; }
-
-  /* 가계부 월별 달력 */
-  .budget-cal { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; margin: 10px 0 4px; }
-  .cal-dow { font-size: 10px; color: var(--text-muted); text-align: center; font-weight: 700; padding-bottom: 2px; }
-  .cal-cell { min-height: 38px; border-radius: 7px; padding: 3px 2px; text-align: center; cursor: pointer; border: 1px solid transparent; }
-  .cal-cell.empty { cursor: default; }
-  .cal-cell:not(.empty):hover { background: rgba(127,127,127,0.08); }
-  .cal-cell.today { border-color: var(--cat-invest); }
-  .cal-cell.has-exp { background: rgba(227,73,72,0.09); }
-  .cal-cell.has-fixed { box-shadow: inset 0 0 0 1px rgba(237,161,0,0.5); }
-  .cal-cell.selected { background: rgba(42,120,214,0.14); border-color: var(--cat-asset); }
-  .cal-daynum { font-size: 11px; color: var(--text-secondary); }
-  .cal-cell.holiday .cal-daynum { color: var(--cat-invest); font-weight: 800; }
-  .cal-amt { font-size: 9px; font-weight: 700; color: var(--cat-invest); margin-top: 1px; line-height: 1.2; }
-  .cal-amt.neg { color: var(--good); }
-  .cal-fixed-dot { font-size: 8px; line-height: 1; margin-top: 1px; }
-
-  /* 좌측 고정 메뉴 — 페이지 전환용, 창 폭 상관없이 항상 왼쪽 가장자리에 붙어있음 */
+  /* ---------- 사이드바 (leftnav 클래스/구조는 JS activatePage()가 그대로 참조함 — 손대지 말 것) ---------- */
   .leftnav {
-    position: fixed; left: 10px; top: 50%; transform: translateY(-50%); z-index: 20;
-    display: flex; flex-direction: column; gap: 8px;
+    width: 188px; flex-shrink: 0; background: var(--sidebar-bg); color: #c6ccda;
+    display: flex; flex-direction: column; position: fixed; left: 0; top: 0; bottom: 0; z-index: 20;
   }
-  .leftnav button {
-    display: flex; flex-direction: column; align-items: center; gap: 2px;
-    background: var(--card); border: 1px solid var(--border); border-radius: 14px;
-    padding: 10px 8px; cursor: pointer; box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-    font-family: inherit; color: var(--text-primary); width: 68px;
+  .leftnav .brand {
+    display: flex; align-items: center; gap: 8px; padding: 16px 16px; background: var(--sidebar-bg-2);
+    font-weight: 700; font-size: 13.5px; color: #fff; border-bottom: 1px solid #262c3e;
   }
-  .leftnav button:hover { border-color: var(--cat-asset); }
-  .leftnav button.active { border-color: var(--cat-asset); background: rgba(42,120,214,0.08); }
-  .nav-icon { font-size: 19px; }
-  .nav-label { font-size: 10px; font-weight: 700; }
-  .nav-sub { font-size: 9px; color: var(--text-muted); font-variant-numeric: tabular-nums; }
+  .leftnav .nav-scroll { flex: 1; padding: 10px 0; }
+  .leftnav button.nav-btn {
+    width: 100%; display: flex; align-items: center; gap: 10px; padding: 11px 16px;
+    background: none; border: none; border-left: 3px solid transparent; color: #a9b0c2;
+    font-size: 13px; font-weight: 600; text-align: left; transition: background .15s, color .15s;
+  }
+  .leftnav button.nav-btn:hover { background: #20263a; color: #fff; }
+  .leftnav button.nav-btn.active { background: var(--sidebar-active); color: #fff; border-left-color: #5b8def; }
+  .leftnav .nav-icon { font-size: 15px; width: 18px; text-align: center; }
+  .leftnav .nav-label { flex: 1; }
+  .leftnav .nav-sub { font-size: 10.5px; color: #7f87a0; font-variant-numeric: tabular-nums; }
+  .leftnav button.nav-btn.active .nav-sub { color: #cdd6ee; }
+
   @media (max-width: 900px) {
     .leftnav {
-      left: 0; right: 0; top: auto; bottom: 0; transform: none;
-      flex-direction: row; justify-content: center; gap: 4px;
-      background: var(--card); border-top: 1px solid var(--border); padding: 6px 8px;
+      position: fixed; left: 0; right: 0; top: auto; bottom: 0; width: auto; height: auto;
+      flex-direction: row; border-top: 1px solid #262c3e;
     }
-    .leftnav button { box-shadow: none; border: none; width: auto; flex: 1; max-width: 90px; }
+    .leftnav .brand { display: none; }
+    .leftnav .nav-scroll { flex: 1; display: flex; padding: 0; }
+    .leftnav button.nav-btn {
+      flex: 1; flex-direction: column; gap: 2px; padding: 8px 2px; border-left: none;
+      border-top: 3px solid transparent; text-align: center; font-size: 10px;
+    }
+    .leftnav button.nav-btn.active { border-top-color: #5b8def; }
+    .leftnav .nav-icon { font-size: 17px; width: auto; }
+    body { padding-bottom: 60px; }
   }
 
-  /* 우측 하단 고정 채팅 버튼 — 답변 남기기, 어느 페이지에 있든 계속 보임 */
+  /* ---------- 메인 ---------- */
+  .main { flex: 1; margin-left: 188px; min-width: 0; display: flex; flex-direction: column; }
+  @media (max-width: 900px) { .main { margin-left: 0; } }
+
+  .topbar {
+    height: 48px; background: var(--card); border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between; padding: 0 18px; flex-shrink: 0;
+    position: sticky; top: 0; z-index: 15;
+  }
+  .topbar .title { font-size: 14.5px; font-weight: 700; }
+  .theme-toggle {
+    background: var(--page); border: 1px solid var(--border); border-radius: 999px;
+    padding: 5px 11px; font-size: 12px; color: var(--text-secondary);
+  }
+
+  .content { flex: 1; padding: 16px 18px 70px; }
+  .page-layout { max-width: 1100px; margin: 0 auto; }
+  .app-page[hidden] { display: none; }
+  @media (min-width: 1100px) {
+    .page-layout { max-width: 1300px; }
+    #page-today:not([hidden]) {
+      display: grid; grid-template-columns: 1fr 1fr; column-gap: 16px; align-items: start;
+    }
+    #page-today > header, #page-today > .points-bar, #page-today > .date-nav,
+    #page-today > #moodSection, #page-today > #weekGridSection, #page-today > details {
+      grid-column: 1 / -1;
+    }
+  }
+
+  /* ---------- 패널/카드 (장비포털 .panel 스타일 채용) ---------- */
+  .card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 4px;
+  }
+  .marathon-panel h3 {
+    font-size: 12.5px; font-weight: 700; margin: 14px 0 6px; color: var(--text-secondary);
+    display: flex; align-items: center; gap: 5px; padding: 0 10px;
+  }
+  .marathon-panel h3:first-child { margin-top: 2px; }
+  .race-item { padding: 8px 10px; border-bottom: 1px solid var(--gridline); font-size: 12px; }
+  .race-item:last-child { border-bottom: none; }
+  .race-item .race-name { font-weight: 700; }
+  .race-item .race-date { color: var(--cat-dn8); font-weight: 600; margin-top: 1px; }
+  .race-item .race-reg { color: var(--text-muted); margin-top: 1px; }
+  .race-item .race-warn { color: var(--cat-invest); font-size: 10.5px; margin-top: 1px; }
+  .race-item a { color: var(--accent); font-size: 10.5px; }
+  .marathon-note { font-size: 10.5px; color: var(--text-muted); padding: 8px 10px 2px; line-height: 1.5; }
+  .marathon-note a { color: var(--accent); }
+
+  .region-tabs { display: flex; flex-wrap: wrap; gap: 5px; padding: 0 10px 8px; }
+  .region-tab {
+    font-size: 11px; color: var(--text-secondary); background: var(--page);
+    border: 1px solid var(--border); border-radius: 5px; padding: 4px 9px;
+  }
+  .region-tab.active { background: var(--accent); color: #fff; border-color: var(--accent); font-weight: 700; }
+
+  header { text-align: left; margin-bottom: 12px; padding: 2px 2px 0; }
+  header h1 { font-size: 17px; margin: 0 0 2px; font-weight: 800; }
+  header .sub { color: var(--text-secondary); font-size: 12px; }
+
+  .points-bar {
+    display: flex; align-items: baseline; gap: 8px; margin-bottom: 12px;
+    background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px;
+  }
+  .points-bar .num { font-size: 22px; font-weight: 800; color: var(--accent); }
+  .points-bar .label { font-size: 11.5px; color: var(--text-secondary); }
+
+  .date-nav {
+    display: flex; align-items: center; justify-content: center; gap: 8px; margin: 10px 0;
+  }
+  .date-nav button {
+    background: var(--card); border: 1px solid var(--border); border-radius: 5px;
+    padding: 5px 10px; font-size: 11.5px; color: var(--text-primary);
+  }
+  .date-nav .today-label { font-weight: 700; min-width: 130px; text-align: center; font-size: 12px; }
+
+  section { margin-bottom: 14px; }
+  section > h2 {
+    font-size: 12.5px; font-weight: 700; margin: 0 0 6px; padding: 0 2px;
+    display: flex; align-items: center; gap: 5px; color: var(--text-primary);
+  }
+  section > h2 .count { color: var(--text-muted); font-weight: 500; font-size: 11px; }
+
+  .quest {
+    display: flex; align-items: center; gap: 10px; padding: 9px 12px;
+    border-bottom: 1px solid var(--gridline); cursor: pointer; user-select: none;
+  }
+  .quest:last-child { border-bottom: none; }
+  .quest:hover { background: var(--page); }
+  .quest .box {
+    width: 19px; height: 19px; border-radius: 5px; flex-shrink: 0;
+    border: 2px solid var(--cat-color, var(--text-muted));
+    display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--card);
+  }
+  .quest.done .box { background: var(--cat-color, var(--good)); }
+  .quest .icon { font-size: 14px; }
+  .quest .label { flex: 1; font-size: 12.5px; }
+  .quest.done .label { color: var(--text-muted); text-decoration: line-through; }
+  .quest .tag {
+    font-size: 10px; color: #fff; background: var(--cat-color, var(--text-muted));
+    padding: 2px 7px; border-radius: 4px; flex-shrink: 0; font-weight: 700;
+  }
+  .quest-group-header {
+    font-size: 10px; font-weight: 700; color: var(--text-muted); padding: 10px 12px 3px; letter-spacing: .3px;
+    text-transform: uppercase;
+  }
+  .quest-group-header:first-child { padding-top: 6px; }
+
+  .cat-nav {
+    display: flex; flex-wrap: wrap; gap: 5px; position: sticky; top: 0; z-index: 3;
+    background: var(--card); padding: 7px 6px; border-bottom: 1px solid var(--gridline);
+  }
+  .cat-nav button {
+    display: flex; align-items: center; gap: 3px; font-size: 10.5px; font-weight: 700;
+    border: none; border-radius: 4px; padding: 4px 9px; color: #fff; opacity: .9; font-family: inherit;
+  }
+  .cat-nav button:hover { opacity: 1; }
+
+  .board-scroll { max-height: 320px; overflow-y: auto; border: 1px solid var(--border); border-radius: 6px; }
+
+  .budget-cal { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; margin: 8px 0 4px; }
+  .cal-dow { font-size: 9.5px; color: var(--text-muted); text-align: center; font-weight: 700; padding-bottom: 2px; }
+  .cal-cell { min-height: 34px; border-radius: 5px; padding: 2px; text-align: center; cursor: pointer; border: 1px solid transparent; }
+  .cal-cell.empty { cursor: default; }
+  .cal-cell:not(.empty):hover { background: var(--page); }
+  .cal-cell.today { border-color: var(--cat-invest); }
+  .cal-cell.has-exp { background: rgba(214,69,69,0.08); }
+  .cal-cell.has-fixed { box-shadow: inset 0 0 0 1px rgba(201,133,0,0.5); }
+  .cal-cell.selected { background: rgba(31,78,156,0.12); border-color: var(--accent); }
+  .cal-daynum { font-size: 10px; color: var(--text-secondary); }
+  .cal-cell.holiday .cal-daynum { color: var(--cat-invest); font-weight: 800; }
+  .cal-amt { font-size: 8.5px; font-weight: 700; color: var(--cat-invest); line-height: 1.2; }
+  .cal-amt.neg { color: var(--good); }
+  .cal-fixed-dot { font-size: 7px; line-height: 1; }
+
   .floating-chat {
-    position: fixed; right: 18px; bottom: 18px; z-index: 20;
-    width: 52px; height: 52px; border-radius: 50%; border: none;
-    background: var(--cat-asset); color: #fff; font-size: 22px; cursor: pointer;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+    position: fixed; right: 16px; bottom: 16px; z-index: 20; width: 46px; height: 46px; border-radius: 50%;
+    border: none; background: var(--accent); color: #fff; font-size: 19px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.25);
   }
-  @media (max-width: 900px) { .floating-chat { bottom: 74px; } }
+  @media (max-width: 900px) { .floating-chat { bottom: 70px; } }
 
-  /* 모달 — 좌측 메뉴 눌러야 뜨는 별도 화면 */
   .modal-backdrop {
-    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45);
-    z-index: 30; align-items: center; justify-content: center; padding: 16px;
+    display: none; position: fixed; inset: 0; background: rgba(20,24,34,.55); z-index: 30;
+    align-items: center; justify-content: center; padding: 16px;
   }
+  .modal-backdrop.show, #replyModalBackdrop[style*="flex"] { display: flex; }
   .modal-card {
-    position: relative; background: var(--card); border-radius: 16px;
-    max-width: 420px; width: 100%; max-height: 88vh; overflow-y: auto;
-    padding: 18px; box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+    position: relative; background: var(--card); border-radius: 10px; max-width: 420px; width: 100%;
+    max-height: 88vh; overflow-y: auto; padding: 16px; box-shadow: 0 20px 60px rgba(0,0,0,0.3);
   }
   .modal-close {
-    position: absolute; top: 10px; right: 10px; border: none; background: var(--track, rgba(127,127,127,0.15));
-    color: var(--text-primary); width: 28px; height: 28px; border-radius: 50%; cursor: pointer; font-size: 14px;
+    position: absolute; top: 9px; right: 9px; border: none; background: var(--page);
+    color: var(--text-primary); width: 26px; height: 26px; border-radius: 50%; font-size: 13px;
   }
 
-  /* 주간 카운터 항목(러닝/등산 등 — 주에 여러 번 체크 가능) */
-  .counter-controls { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+  .counter-controls { display: flex; align-items: center; gap: 5px; flex-shrink: 0; }
   .ctr-btn {
-    width: 26px; height: 26px; border-radius: 999px; border: 1px solid var(--border);
-    background: var(--card); color: var(--text-primary); font-size: 16px; font-weight: 700;
-    cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-    line-height: 1;
+    width: 24px; height: 24px; border-radius: 5px; border: 1px solid var(--border);
+    background: var(--card); color: var(--text-primary); font-size: 14px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0; line-height: 1;
   }
-  .ctr-btn:hover { background: rgba(127,127,127,0.14); }
-  .ctr-num { font-size: 13px; font-weight: 700; min-width: 30px; text-align: center; color: var(--text-primary); }
+  .ctr-num { font-size: 12px; font-weight: 700; min-width: 26px; text-align: center; }
 
-  .stat-grid {
-    display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
-  }
+  .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
   @media (max-width: 560px) { .stat-grid { grid-template-columns: repeat(2, 1fr); } }
   .stat-tile {
-    background: var(--card); border: 1px solid var(--border); border-radius: 12px;
-    padding: 12px; text-align: center;
+    background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 10px; text-align: center;
   }
-  .stat-tile .icon { font-size: 20px; }
-  .stat-tile .name { font-size: 12px; color: var(--text-secondary); margin: 4px 0 6px; }
-  .stat-tile .val { font-size: 18px; font-weight: 700; font-variant-numeric: tabular-nums; }
-  .stat-tile .bar { height: 4px; border-radius: 2px; background: var(--gridline); margin-top: 8px; overflow: hidden; }
+  .stat-tile .icon { font-size: 17px; }
+  .stat-tile .name { font-size: 10.5px; color: var(--text-secondary); margin: 3px 0 5px; }
+  .stat-tile .val { font-size: 15px; font-weight: 800; font-variant-numeric: tabular-nums; }
+  .stat-tile .bar { height: 4px; border-radius: 2px; background: var(--gridline); margin-top: 7px; overflow: hidden; }
   .stat-tile .bar > i { display: block; height: 100%; border-radius: 2px; }
-  .stat-delta-row { margin-top: 6px; }
-  .stat-delta { font-size: 10.5px; font-weight: 700; }
+  .stat-delta-row { margin-top: 5px; }
+  .stat-delta { font-size: 9.5px; font-weight: 700; }
   .stat-delta.up { color: var(--good); }
   .stat-delta.down { color: var(--cat-invest); }
   .stat-delta.flat { color: var(--text-muted); }
 
-  .week-grid {
-    display: grid; grid-template-columns: 90px repeat(7, 1fr); gap: 4px; font-size: 12px;
-  }
-  .week-grid .cat-name {
-    display: flex; align-items: center; gap: 4px; color: var(--text-secondary);
-    padding: 4px 2px;
-  }
-  .week-grid .day-head {
-    text-align: center; color: var(--text-muted); padding-bottom: 4px; font-weight: 600;
-  }
-  .week-grid .cell {
-    aspect-ratio: 1; border-radius: 4px; background: var(--gridline);
-  }
+  .week-grid { display: grid; grid-template-columns: 82px repeat(7, 1fr); gap: 3px; font-size: 11px; }
+  .week-grid .cat-name { display: flex; align-items: center; gap: 4px; color: var(--text-secondary); padding: 3px 2px; }
+  .week-grid .day-head { text-align: center; color: var(--text-muted); padding-bottom: 3px; font-weight: 600; }
+  .week-grid .cell { aspect-ratio: 1; border-radius: 3px; background: var(--gridline); }
   .week-grid .cell.on { background: var(--dot-color, var(--good)); }
   .week-grid .cell.today { box-shadow: 0 0 0 2px var(--text-primary) inset; }
 
   .goal-list .quest .box { border-radius: 999px; }
 
-  footer.note {
-    text-align: center; color: var(--text-muted); font-size: 12px; margin-top: 32px;
-  }
+  footer.note { text-align: center; color: var(--text-muted); font-size: 11px; margin-top: 20px; }
 
-  /* 보상 팝업 */
-  #reward-overlay {
-    position: fixed; inset: 0; background: rgba(0,0,0,0.45);
-    display: none; align-items: center; justify-content: center; z-index: 100;
+  #reward-overlay, #lootbox-overlay {
+    position: fixed; inset: 0; background: rgba(20,24,34,.5); display: none;
+    align-items: center; justify-content: center; z-index: 100;
   }
-  #reward-overlay.show { display: flex; }
-  #reward-card {
-    background: var(--card); border-radius: 16px; padding: 32px 28px; text-align: center;
-    max-width: 300px; box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-    animation: pop .25s ease;
+  #reward-overlay.show, #lootbox-overlay.show { display: flex; }
+  #reward-card, #lootbox-card {
+    background: var(--card); border-radius: 12px; padding: 24px 22px; text-align: center;
+    max-width: 280px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); animation: pop .22s ease;
   }
-  @keyframes pop { from { transform: scale(.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-  #reward-card .emoji { font-size: 44px; margin-bottom: 8px; }
-  #reward-card .title { font-size: 17px; font-weight: 700; margin-bottom: 6px; }
-  #reward-card .desc { font-size: 13px; color: var(--text-secondary); margin-bottom: 16px; }
-  #reward-card .pts { font-size: 20px; font-weight: 700; color: var(--good); margin-bottom: 18px; }
-  #reward-card button {
-    background: var(--text-primary); color: var(--card); border: none;
-    border-radius: 999px; padding: 8px 22px; font-size: 14px; cursor: pointer;
-  }
-
-  /* 운동 항목 자세보기 아코디언 */
-  .quest .expand-btn {
-    flex-shrink: 0; font-size: 12px; font-weight: 700; color: var(--cat-workout);
-    background: rgba(27,175,122,0.14); border: 1px solid var(--cat-workout);
-    border-radius: 8px; padding: 6px 10px; cursor: pointer; white-space: nowrap;
-  }
-  .quest .expand-btn:hover { background: rgba(27,175,122,0.24); }
-  .exercise-panel {
-    max-height: 0; overflow: hidden; transition: max-height .28s ease;
-    border-bottom: 0 solid var(--gridline);
-    background: rgba(127,127,127,0.04);
-  }
-  .exercise-panel.open { max-height: 600px; border-bottom-width: 1px; }
-  .exercise-panel .inner { padding: 6px 14px 14px 48px; }
-  .exercise-item {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 7px 0; border-bottom: 1px dashed var(--gridline); font-size: 13px;
-  }
-  .exercise-item:last-child { border-bottom: none; }
-  .exercise-item .ex-name { color: var(--text-primary); }
-  .exercise-item .ex-reps { color: var(--text-muted); font-size: 12px; margin-left: 8px; }
-  .exercise-item a {
-    color: var(--cat-workout); text-decoration: none; font-size: 12px;
-    background: rgba(27,175,122,0.12); padding: 4px 9px; border-radius: 999px;
-    flex-shrink: 0; margin-left: 10px;
-  }
-  .exercise-item a:hover { text-decoration: underline; }
-
-  /* 보너스 박스 */
-  #lootbox-btn {
-    position: fixed; right: 18px; bottom: 18px; z-index: 90;
-    background: linear-gradient(135deg, #eda100, #eb6834);
-    color: #fff; border: none; border-radius: 999px;
-    padding: 14px 20px; font-size: 14px; font-weight: 700; cursor: pointer;
-    box-shadow: 0 8px 24px rgba(235,104,52,0.4);
-    display: none; animation: floatBounce 1.4s ease-in-out infinite;
-  }
-  #lootbox-btn.show { display: block; }
-  @keyframes floatBounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
-
-  #lootbox-overlay {
-    position: fixed; inset: 0; background: rgba(0,0,0,0.55);
-    display: none; align-items: center; justify-content: center; z-index: 110;
-  }
-  #lootbox-overlay.show { display: flex; }
-  #lootbox-card {
-    background: var(--card); border-radius: 16px; padding: 32px 28px; text-align: center;
-    max-width: 300px; box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-    animation: pop .25s ease;
-  }
-  #lootbox-card .emoji { font-size: 52px; margin-bottom: 8px; }
-  #lootbox-card .title { font-size: 17px; font-weight: 700; margin-bottom: 6px; }
-  #lootbox-card .desc { font-size: 13px; color: var(--text-secondary); margin-bottom: 16px; }
-  #lootbox-card .pts { font-size: 22px; font-weight: 700; color: var(--cat-dn8); margin-bottom: 18px; min-height: 27px; }
-  #lootbox-card button {
-    background: linear-gradient(135deg, #eda100, #eb6834); color: #fff; border: none;
-    border-radius: 999px; padding: 9px 24px; font-size: 14px; cursor: pointer; font-weight: 700;
+  @keyframes pop { from { transform: scale(.88); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  #reward-card .emoji { font-size: 32px; margin-bottom: 6px; }
+  #lootbox-card .emoji { font-size: 36px; margin-bottom: 6px; }
+  #reward-card .title, #lootbox-card .title { font-size: 15.5px; font-weight: 700; margin-bottom: 5px; }
+  #reward-card .desc, #lootbox-card .desc { font-size: 12px; color: var(--text-secondary); margin-bottom: 13px; }
+  #reward-card .pts { font-size: 17px; font-weight: 700; color: var(--good); margin-bottom: 14px; }
+  #lootbox-card .pts { font-size: 18px; font-weight: 700; color: var(--cat-dn8); margin-bottom: 14px; min-height: 23px; }
+  #reward-card button, #lootbox-card button {
+    background: var(--accent); color: #fff; border: none; border-radius: 999px; padding: 7px 20px; font-size: 13px;
   }
   #lootbox-card.opening .emoji { animation: shake .5s ease; }
   @keyframes shake {
-    0%,100% { transform: rotate(0); }
-    20% { transform: rotate(-12deg); }
-    40% { transform: rotate(10deg); }
-    60% { transform: rotate(-8deg); }
-    80% { transform: rotate(6deg); }
+    0%,100% { transform: rotate(0); } 20% { transform: rotate(-12deg); } 40% { transform: rotate(10deg); }
+    60% { transform: rotate(-8deg); } 80% { transform: rotate(6deg); }
   }
 
-  /* 칠판 / 완료기록 공용 아이템 */
-  .board-item { padding: 10px 12px; border-bottom: 1px solid var(--gridline); font-size: 12.5px; }
-  .board-item:last-child { border-bottom: none; }
-  .board-item .board-date { color: var(--text-muted); font-size: 11px; margin-bottom: 2px; display: flex; align-items: center; gap: 6px; }
-  .board-item .board-text { color: var(--text-primary); line-height: 1.5; }
-  .board-item .board-src {
-    color: #fff; font-size: 10px; font-weight: 700; padding: 1px 7px; border-radius: 999px;
+  #lootbox-btn {
+    position: fixed; right: 16px; bottom: 16px; z-index: 90;
+    background: linear-gradient(135deg, var(--cat-dn8), var(--cat-happy)); color: #fff; border: none;
+    border-radius: 999px; padding: 12px 18px; font-size: 13px; font-weight: 700;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3); display: none; animation: floatBounce 1.4s ease-in-out infinite;
   }
-  /* 칠판이 <details>로 접혀있을 때 — 한 줄 요약만, 화살표 마커 제거 */
-  details.board-item summary { list-style: none; }
-  details.board-item summary::-webkit-details-marker { display: none; }
-  details.board-item summary:hover { opacity: .8; }
-  .board-preview { font-size: 12px; color: var(--text-secondary); margin-top: 1px; }
-  details.board-item[open] .board-preview { display: none; }
-  details.board-item[open] .board-text { margin-top: 4px; }
+  #lootbox-btn.show { display: block; }
+  @keyframes floatBounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
 
-  /* 날씨 위젯 */
-  .weather-summary { padding: 10px 12px; font-size: 12.5px; color: var(--cat-workout); font-weight: 700; }
-  .weather-grid { display: flex; overflow-x: auto; gap: 6px; padding: 0 12px 12px; }
+  .quest .expand-btn {
+    flex-shrink: 0; font-size: 11px; font-weight: 700; color: var(--cat-workout);
+    background: rgba(27,175,122,0.14); border: 1px solid var(--cat-workout); border-radius: 6px;
+    padding: 5px 9px; white-space: nowrap;
+  }
+  .exercise-panel { max-height: 0; overflow: hidden; transition: max-height .25s ease; background: var(--page); }
+  .exercise-panel.open { max-height: 600px; border-bottom: 1px solid var(--gridline); }
+  .exercise-panel .inner { padding: 5px 12px 12px 44px; }
+  .exercise-item { display: flex; align-items: center; justify-content: space-between; padding: 6px 0; border-bottom: 1px dashed var(--gridline); font-size: 12px; }
+  .exercise-item:last-child { border-bottom: none; }
+  .exercise-item .ex-reps { color: var(--text-muted); font-size: 11px; margin-left: 6px; }
+  .exercise-item a {
+    color: var(--cat-workout); text-decoration: none; font-size: 11px; background: rgba(27,175,122,0.12);
+    padding: 3px 8px; border-radius: 999px; flex-shrink: 0; margin-left: 8px;
+  }
+
+  #lootbox-btn.show ~ * {} /* noop spacer keep */
+
+  .weather-summary { padding: 8px 10px; font-size: 11.5px; color: var(--cat-workout); font-weight: 700; }
+  .weather-grid { display: flex; overflow-x: auto; gap: 5px; padding: 0 10px 10px; }
   .weather-hour {
-    flex-shrink: 0; text-align: center; font-size: 11px; padding: 8px 6px; border-radius: 8px;
-    background: rgba(127,127,127,0.06); min-width: 44px;
+    flex-shrink: 0; text-align: center; font-size: 10px; padding: 6px 5px; border-radius: 6px;
+    background: var(--page); min-width: 40px;
   }
-  .weather-hour.rec { background: rgba(27,175,122,0.18); border: 1px solid var(--cat-workout); }
+  .weather-hour.rec { background: rgba(27,175,122,0.16); border: 1px solid var(--cat-workout); }
   .weather-hour .wh-time { color: var(--text-muted); }
-  .weather-hour .wh-temp { font-weight: 700; margin: 4px 0; }
-  .weather-hour .wh-pop { color: var(--cat-asset); }
+  .weather-hour .wh-temp { font-weight: 700; margin: 3px 0; }
+  .weather-hour .wh-pop { color: var(--accent); }
 
-  /* 할 일 트래커 */
-  .todo-input-row { display: flex; gap: 8px; padding: 10px 12px; }
+  .todo-input-row { display: flex; gap: 6px; padding: 8px 10px; }
   .todo-input-row input {
-    flex: 1; border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px;
-    background: var(--card); color: var(--text-primary); font-size: 14px;
+    flex: 1; border: 1px solid var(--border); border-radius: 6px; padding: 7px 9px;
+    background: var(--card); color: var(--text-primary); font-size: 12.5px;
   }
   .todo-input-row button {
-    background: var(--text-primary); color: var(--card); border: none; border-radius: 8px;
-    padding: 8px 14px; cursor: pointer; font-size: 14px;
+    background: var(--accent); color: #fff; border: none; border-radius: 6px; padding: 7px 12px; font-size: 12.5px;
   }
-  .todo-item {
-    display: flex; align-items: center; gap: 10px; padding: 10px 14px;
-    border-bottom: 1px solid var(--gridline); cursor: pointer;
-  }
+  .todo-item { display: flex; align-items: center; gap: 9px; padding: 9px 12px; border-bottom: 1px solid var(--gridline); cursor: pointer; }
   .todo-item:last-child { border-bottom: none; }
-  .todo-item:hover { background: rgba(127,127,127,0.06); }
-  .todo-item .box { width: 20px; height: 20px; border-radius: 6px; border: 2px solid var(--text-muted); flex-shrink: 0; }
-  .todo-item .label { flex: 1; font-size: 14px; }
-  .todo-log-item { padding: 10px 14px; border-bottom: 1px solid var(--gridline); font-size: 12.5px; }
-
-  /* 답변 남기기 */
-  .reply-box { padding: 10px 12px; }
-  .reply-box textarea {
-    width: 100%; min-height: 84px; resize: vertical; box-sizing: border-box;
-    border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px;
-    background: var(--card); color: var(--text-primary); font-size: 13.5px; font-family: inherit;
-  }
-  .reply-btn-row { display: flex; gap: 8px; margin-top: 8px; }
-  .reply-btn-row button {
-    border: none; border-radius: 8px; padding: 7px 12px; cursor: pointer; font-size: 12.5px;
-  }
-  .reply-btn-row .copy-btn { background: var(--text-primary); color: var(--card); flex: 1; }
-  .reply-btn-row .clear-btn { background: rgba(127,127,127,0.15); color: var(--text-primary); }
-  .reply-status { font-size: 11.5px; color: var(--cat-workout); margin-top: 6px; min-height: 14px; }
+  .todo-item:hover { background: var(--page); }
+  .todo-item .box { width: 18px; height: 18px; border-radius: 5px; border: 2px solid var(--text-muted); flex-shrink: 0; }
+  .todo-item .label { flex: 1; font-size: 12.5px; }
+  .todo-log-item { padding: 9px 12px; border-bottom: 1px solid var(--gridline); font-size: 11.5px; }
   .todo-log-item:last-child { border-bottom: none; }
-  .todo-log-item .log-date { color: var(--text-muted); font-size: 11px; }
+  .todo-log-item .log-date { color: var(--text-muted); font-size: 10px; }
   .todo-log-item .log-title { font-weight: 700; margin: 2px 0; }
   .todo-log-item .log-memo { color: var(--text-secondary); }
 
+  .reply-box { padding: 8px 10px; }
+  .reply-box textarea {
+    width: 100%; min-height: 78px; resize: vertical; border: 1px solid var(--border); border-radius: 6px;
+    padding: 7px 9px; background: var(--card); color: var(--text-primary); font-size: 12.5px; font-family: inherit;
+  }
+  .reply-btn-row { display: flex; gap: 6px; margin-top: 6px; }
+  .reply-btn-row button { border: none; border-radius: 6px; padding: 6px 10px; font-size: 11.5px; }
+  .reply-btn-row .copy-btn { background: var(--accent); color: #fff; flex: 1; }
+  .reply-btn-row .clear-btn { background: var(--page); color: var(--text-primary); }
+  .reply-status { font-size: 10.5px; color: var(--cat-workout); margin-top: 5px; min-height: 13px; }
+
+  .board-item { padding: 8px 10px; border-bottom: 1px solid var(--gridline); font-size: 11.5px; }
+  .board-item:last-child { border-bottom: none; }
+  .board-item .board-date { color: var(--text-muted); font-size: 10px; margin-bottom: 1px; display: flex; align-items: center; gap: 5px; }
+  .board-item .board-text { color: var(--text-primary); line-height: 1.5; }
+  .board-item .board-src { color: #fff; font-size: 9px; font-weight: 700; padding: 1px 6px; border-radius: 999px; }
+  details.board-item summary { list-style: none; cursor: pointer; }
+  details.board-item summary::-webkit-details-marker { display: none; }
+  .board-preview { font-size: 11px; color: var(--text-secondary); margin-top: 1px; }
+  details.board-item[open] .board-preview { display: none; }
+  details.board-item[open] .board-text { margin-top: 3px; }
+
   #undo-toast {
-    position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%);
-    background: var(--text-primary); color: var(--card); padding: 10px 18px; border-radius: 999px;
-    font-size: 13px; display: none; align-items: center; gap: 12px; z-index: 120;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); background: var(--sidebar-bg);
+    color: #fff; padding: 9px 16px; border-radius: 999px; font-size: 12px; display: none;
+    align-items: center; gap: 10px; z-index: 120; box-shadow: 0 8px 24px rgba(0,0,0,0.3);
   }
   #undo-toast.show { display: flex; }
-  #undo-toast button { background: none; border: none; color: var(--cat-dn8); font-weight: 700; cursor: pointer; font-size: 13px; }
+  #undo-toast button { background: none; border: none; color: #ffb648; font-weight: 700; font-size: 12px; }
 </style>
 </head>
 <body>
-<button class="theme-toggle" id="themeToggle">🌓 테마</button>
-
-<!-- 좌측 고정 메뉴 — 페이지 전환용. 홈화면은 추후 추가 예정, 지금은 "오늘"이 기본 -->
+<div class="shell">
 <nav class="leftnav">
-  <button class="nav-btn active" data-page="page-today" onclick="activatePage('page-today')">
-    <span class="nav-icon">📋</span><span class="nav-label">오늘</span>
-  </button>
-  <button class="nav-btn" data-page="page-budget" onclick="activatePage('page-budget')">
-    <span class="nav-icon">💰</span><span class="nav-label">가계부</span>
-    <span class="nav-sub" id="leftRailRemain">-</span>
-  </button>
-  <button class="nav-btn" data-page="page-board" onclick="activatePage('page-board')">
-    <span class="nav-icon">📌</span><span class="nav-label">칠판</span>
-  </button>
-  <button class="nav-btn" data-page="page-schedule" onclick="activatePage('page-schedule')">
-    <span class="nav-icon">🏃</span><span class="nav-label">일정</span>
-  </button>
-  <button class="nav-btn" data-page="page-leverage" onclick="activatePage('page-leverage')">
-    <span class="nav-icon">📈</span><span class="nav-label">레버리지</span>
-  </button>
+  <div class="brand">🎮 준현 대시보드</div>
+  <div class="nav-scroll">
+    <button class="nav-btn active" data-page="page-today" onclick="activatePage('page-today')">
+      <span class="nav-icon">📋</span><span class="nav-label">오늘</span>
+    </button>
+    <button class="nav-btn" data-page="page-budget" onclick="activatePage('page-budget')">
+      <span class="nav-icon">💰</span><span class="nav-label">가계부</span>
+      <span class="nav-sub" id="leftRailRemain">-</span>
+    </button>
+    <button class="nav-btn" data-page="page-board" onclick="activatePage('page-board')">
+      <span class="nav-icon">📌</span><span class="nav-label">칠판</span>
+    </button>
+    <button class="nav-btn" data-page="page-schedule" onclick="activatePage('page-schedule')">
+      <span class="nav-icon">🏃</span><span class="nav-label">일정</span>
+    </button>
+    <button class="nav-btn" data-page="page-leverage" onclick="activatePage('page-leverage')">
+      <span class="nav-icon">📈</span><span class="nav-label">레버리지</span>
+    </button>
+  </div>
 </nav>
 
-<!-- 우측 하단 고정 — 답변 남기기(챗봇처럼 항상 떠있음, 어느 페이지든 안 사라짐) -->
+<div class="main">
+  <div class="topbar">
+    <div class="title">준현 대시보드</div>
+    <button class="theme-toggle" id="themeToggle">🌓 테마</button>
+  </div>
+  <div class="content">
+    <div class="page-layout">
+      <div class="card marathon-panel" id="ddayPanel"></div>
+
+      <div class="app-page" id="page-today">
+        <header>
+          <h1>🎮 준현 인생 대시보드</h1>
+          <div class="sub">오늘도 퀘스트 깨자</div>
+        </header>
+
+        <div class="points-bar">
+          <div class="num" id="totalPoints">0</div>
+          <div class="label">누적 포인트 · 총 <span id="totalDone">0</span>개 퀘스트 완료</div>
+        </div>
+
+        <section id="moodSection">
+          <h2>🧠 오늘의 행복도</h2>
+          <div class="card" style="padding:12px; display:flex; gap:8px; justify-content:center;" id="moodPicker"></div>
+        </section>
+
+        <div class="date-nav">
+          <button id="prevDay">◀ 어제</button>
+          <div class="today-label" id="dateLabel"></div>
+          <button id="nextDay">내일 ▶</button>
+          <button id="gotoToday">오늘로</button>
+        </div>
+
+        <section>
+          <h2>📋 오늘의 퀘스트 <span class="count" id="questCount"></span></h2>
+          <div class="card"><div id="catNav" class="cat-nav"></div><div id="questList"></div></div>
+        </section>
+
+        <section>
+          <h2>📝 할 일 <span class="count" id="todoCount"></span></h2>
+          <div class="card">
+            <div class="todo-input-row">
+              <input type="text" id="todoInput" placeholder="할 일 입력 후 Enter">
+              <button id="todoAddBtn" type="button">추가</button>
+            </div>
+            <div id="todoList"></div>
+          </div>
+        </section>
+
+        <section id="weekGridSection" style="margin-top:6px;">
+          <h2 style="text-align:center;">📅 이번 주 체크 현황</h2>
+          <div class="card" style="padding:12px; max-width:480px; margin:0 auto;">
+            <div class="week-grid" id="weekGrid"></div>
+          </div>
+        </section>
+
+        <details class="card" style="padding:9px 12px; margin-top:14px;">
+          <summary style="cursor:pointer; font-weight:700; padding:3px 0; font-size:12.5px;">📊 인생 스탯 · 🎯 올해 목표 · 📜 완료 기록 (펼치기)</summary>
+          <section style="margin-top:10px;">
+            <h2>📊 인생 스탯</h2>
+            <div class="stat-grid" id="statGrid"></div>
+          </section>
+
+          <section>
+            <h2>🎯 올해 목표 <span class="count" id="goalCount"></span></h2>
+            <div class="card goal-list"><div id="goalList"></div></div>
+          </section>
+
+          <section>
+            <h2>📜 완료 기록</h2>
+            <div class="card" id="todoLogList"></div>
+          </section>
+        </details>
+
+        <footer class="note">
+          체크는 브라우저에 저장돼 — 이 파일을 그대로 두고 매번 열면 이어짐 (같은 브라우저 기준)<br>
+          <span id="resetPoints" style="text-decoration:underline; cursor:pointer;">포인트만 0으로 초기화</span>
+        </footer>
+      </div>
+
+      <div class="app-page" id="page-budget" hidden>
+        <div class="card marathon-panel" id="budgetPanel"></div>
+      </div>
+
+      <div class="app-page" id="page-board" hidden>
+        <div class="card marathon-panel" id="boardPanel"></div>
+      </div>
+
+      <div class="app-page" id="page-schedule" hidden>
+        <div class="card marathon-panel" id="weatherPanel"></div>
+        <div class="card marathon-panel" id="marathonPanel" style="margin-top:14px;"></div>
+        <div class="card marathon-panel" id="hikingPanel" style="margin-top:14px;"></div>
+      </div>
+
+      <div class="app-page" id="page-leverage" hidden>
+        <header>
+          <h1>📈 레버리지 거래량 알림</h1>
+          <div class="sub">단일종목 3배 ETP 56개 · 판단 아님, 사실만 기록</div>
+        </header>
+        <div class="card" id="leverageAlertPanel">불러오는 중...</div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
 <button class="floating-chat" onclick="openReplyModal()" title="답변 남기기">💬</button>
 <div class="modal-backdrop" id="replyModalBackdrop" onclick="closeReplyModalOutside(event)">
   <div class="modal-card">
     <button class="modal-close" onclick="closeReplyModal()">✕</button>
     <div id="replyPanel"></div>
-  </div>
-</div>
-
-<div class="page-layout">
-  <div class="card marathon-panel" id="ddayPanel"></div>
-
-  <div class="app-page" id="page-today">
-    <header>
-      <h1>🎮 준현 인생 대시보드</h1>
-      <div class="sub">오늘도 퀘스트 깨자</div>
-    </header>
-
-    <div class="points-bar">
-      <div class="num" id="totalPoints">0</div>
-      <div class="label">누적 포인트 · 총 <span id="totalDone">0</span>개 퀘스트 완료</div>
-    </div>
-
-    <section id="moodSection">
-      <h2>🧠 오늘의 행복도</h2>
-      <div class="card" style="padding:14px; display:flex; gap:8px; justify-content:center;" id="moodPicker"></div>
-    </section>
-
-    <div class="date-nav">
-      <button id="prevDay">◀ 어제</button>
-      <div class="today-label" id="dateLabel"></div>
-      <button id="nextDay">내일 ▶</button>
-      <button id="gotoToday">오늘로</button>
-    </div>
-
-    <section>
-      <h2>📋 오늘의 퀘스트 <span class="count" id="questCount"></span></h2>
-      <div class="card"><div id="catNav" class="cat-nav"></div><div id="questList"></div></div>
-    </section>
-
-    <section>
-      <h2>📝 할 일 <span class="count" id="todoCount"></span></h2>
-      <div class="card">
-        <div class="todo-input-row">
-          <input type="text" id="todoInput" placeholder="할 일 입력 후 Enter">
-          <button id="todoAddBtn" type="button">추가</button>
-        </div>
-        <div id="todoList"></div>
-      </div>
-    </section>
-
-    <section id="weekGridSection" style="margin-top:8px;">
-      <h2 style="text-align:center;">📅 이번 주 체크 현황</h2>
-      <div class="card" style="padding:14px; max-width:480px; margin:0 auto;">
-        <div class="week-grid" id="weekGrid"></div>
-      </div>
-    </section>
-
-    <details class="card" style="padding:10px 14px; margin-top:16px;">
-      <summary style="cursor:pointer; font-weight:700; padding:4px 0;">📊 인생 스탯 · 🎯 올해 목표 · 📜 완료 기록 (펼치기)</summary>
-      <section style="margin-top:12px;">
-        <h2>📊 인생 스탯</h2>
-        <div class="stat-grid" id="statGrid"></div>
-      </section>
-
-      <section>
-        <h2>🎯 올해 목표 <span class="count" id="goalCount"></span></h2>
-        <div class="card goal-list"><div id="goalList"></div></div>
-      </section>
-
-      <section>
-        <h2>📜 완료 기록</h2>
-        <div class="card" id="todoLogList"></div>
-      </section>
-    </details>
-
-    <footer class="note">
-      체크는 브라우저에 저장돼 — 이 파일을 그대로 두고 매번 열면 이어짐 (같은 브라우저 기준)<br>
-      <span id="resetPoints" style="text-decoration:underline; cursor:pointer;">포인트만 0으로 초기화</span>
-    </footer>
-  </div>
-
-  <div class="app-page" id="page-budget" hidden>
-    <div class="card marathon-panel" id="budgetPanel"></div>
-  </div>
-
-  <div class="app-page" id="page-board" hidden>
-    <div class="card marathon-panel" id="boardPanel"></div>
-  </div>
-
-  <div class="app-page" id="page-schedule" hidden>
-    <!-- 채널 실적 위젯 2026-09-11 임시 비활성화(안 쓰고 갱신도 안 됨) — CHANNEL_STATS/renderChannelStats()는 코드에 남겨둠, 필요해지면 여기에 div 다시 추가 -->
-    <div class="card marathon-panel" id="weatherPanel"></div>
-    <div class="card marathon-panel" id="marathonPanel" style="margin-top:16px;"></div>
-    <div class="card marathon-panel" id="hikingPanel" style="margin-top:16px;"></div>
-  </div>
-
-  <div class="app-page" id="page-leverage" hidden>
-    <header>
-      <h1>📈 레버리지 거래량 알림</h1>
-      <div class="sub">단일종목 3배 ETP 56개 · 판단 아님, 사실만 기록</div>
-    </header>
-    <div class="card" id="leverageAlertPanel">불러오는 중...</div>
   </div>
 </div>
 
@@ -654,7 +565,6 @@
     <button id="lootboxAction">박스 열기</button>
   </div>
 </div>
-
 <script>
 // ── 좌측 메뉴 페이지 전환 (홈화면은 추후 추가 예정 — 지금은 "오늘"이 기본값) ──
 const LS_ACTIVE_PAGE = "jh_active_page";
