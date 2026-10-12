@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-12T16:51:54.672126",
+  "generated_at": "2026-10-12T17:18:04.350821",
   "groups": [
     "자동화 채널",
     "AI겨냥 사업",
@@ -43,9 +43,16 @@
       "icon": "🎬",
       "group": "자동화 채널",
       "status_note": null,
-      "last_activity": null,
-      "entry_count": 0,
-      "entries": []
+      "last_activity": "2026-10-12",
+      "entry_count": 1,
+      "entries": [
+        {
+          "date": "2026-10-12",
+          "hash": null,
+          "msg": "영어판 완성+업로드, YouTube 제목 언어 버그 발견/수정",
+          "src": "memory"
+        }
+      ]
     },
     {
       "id": "kdrama",
@@ -422,6 +429,30 @@
       "entries": [
         {
           "date": "2026-10-12",
+          "hash": "8c1a12d",
+          "msg": "가계부: 10/8 타이어 교체 30만원 실지출 반영",
+          "src": "git"
+        },
+        {
+          "date": "2026-10-12",
+          "hash": "5a9418b",
+          "msg": "dashboard: 조기퇴사일(2027-02-03) D-day 추가, 공식퇴사일과 2칸 표시",
+          "src": "git"
+        },
+        {
+          "date": "2026-10-12",
+          "hash": "b77536c",
+          "msg": "dashboard: 홈 화면에 장비포털식 KPI+최근공지 블록 추가",
+          "src": "git"
+        },
+        {
+          "date": "2026-10-12",
+          "hash": "f2c79ee",
+          "msg": "dashboard: 퀘스트 탭 분리 + 하고있는거 섹션 + 결정대기 할일 + D-day 메모",
+          "src": "git"
+        },
+        {
+          "date": "2026-10-12",
           "hash": "f91ac02",
           "msg": "dashboard: 장비포털 스타일 사이드바 관리자 UI로 전체 재설계",
           "src": "git"
@@ -574,30 +605,6 @@
           "date": "2026-09-30",
           "hash": "732ec81",
           "msg": "가계부: Claude API 크레딧 충전 예정 지출 5만원 기록",
-          "src": "git"
-        },
-        {
-          "date": "2026-09-30",
-          "hash": "a4285ad",
-          "msg": "가계부/칠판/일정 등 카테고리 전환 버그 수정: #page-today의 display:grid가 ID 우선순위로 [hidden]을 무시하던 문제",
-          "src": "git"
-        },
-        {
-          "date": "2026-09-30",
-          "hash": "360f435",
-          "msg": "가계부 잔액 갱신: 9월 월급 정산(88만원) + 이전 잔여비용(15만원) 반영",
-          "src": "git"
-        },
-        {
-          "date": "2026-09-30",
-          "hash": "2599cba",
-          "msg": "Auto-update leverage volume alerts",
-          "src": "git"
-        },
-        {
-          "date": "2026-09-29",
-          "hash": "63b3446",
-          "msg": "Revert \"AI 크롤링 사이트 자동발행 — 2026-09-29 22:10\"",
           "src": "git"
         },
         {
