@@ -120,13 +120,6 @@
   .app-page[hidden] { display: none; }
   @media (min-width: 1100px) {
     .page-layout { max-width: 1300px; }
-    #page-today:not([hidden]) {
-      display: grid; grid-template-columns: 1fr 1fr; column-gap: 16px; align-items: start;
-    }
-    #page-today > header, #page-today > .points-bar, #page-today > .date-nav,
-    #page-today > #moodSection, #page-today > #weekGridSection, #page-today > details {
-      grid-column: 1 / -1;
-    }
   }
 
   /* ---------- 패널/카드 (장비포털 .panel 스타일 채용) ---------- */
@@ -411,6 +404,9 @@
     <button class="nav-btn active" data-page="page-today" onclick="activatePage('page-today')">
       <span class="nav-icon">📋</span><span class="nav-label">오늘</span>
     </button>
+    <button class="nav-btn" data-page="page-quest" onclick="activatePage('page-quest')">
+      <span class="nav-icon">🎮</span><span class="nav-label">퀘스트</span>
+    </button>
     <button class="nav-btn" data-page="page-budget" onclick="activatePage('page-budget')">
       <span class="nav-icon">💰</span><span class="nav-label">가계부</span>
       <span class="nav-sub" id="leftRailRemain">-</span>
@@ -442,11 +438,6 @@
           <div class="sub">오늘도 퀘스트 깨자</div>
         </header>
 
-        <div class="points-bar">
-          <div class="num" id="totalPoints">0</div>
-          <div class="label">누적 포인트 · 총 <span id="totalDone">0</span>개 퀘스트 완료</div>
-        </div>
-
         <section id="moodSection">
           <h2>🧠 오늘의 행복도</h2>
           <div class="card" style="padding:12px; display:flex; gap:8px; justify-content:center;" id="moodPicker"></div>
@@ -460,50 +451,63 @@
         </div>
 
         <section>
-          <h2>📋 오늘의 퀘스트 <span class="count" id="questCount"></span></h2>
-          <div class="card"><div id="catNav" class="cat-nav"></div><div id="questList"></div></div>
+          <h2>🧭 하고 있는 거</h2>
+          <div class="card" style="padding:10px;"><div id="workLogGroups"></div></div>
         </section>
 
-        <section>
-          <h2>📝 할 일 <span class="count" id="todoCount"></span></h2>
-          <div class="card">
+        <details class="card" style="padding:9px 12px; margin-top:10px;">
+          <summary style="cursor:pointer; font-weight:700; padding:3px 0; font-size:12.5px;">📝 할 일 <span class="count" id="todoCount"></span> (펼치기)</summary>
+          <div class="card" style="margin-top:8px;">
             <div class="todo-input-row">
               <input type="text" id="todoInput" placeholder="할 일 입력 후 Enter">
               <button id="todoAddBtn" type="button">추가</button>
             </div>
             <div id="todoList"></div>
           </div>
-        </section>
-
-        <section id="weekGridSection" style="margin-top:6px;">
-          <h2 style="text-align:center;">📅 이번 주 체크 현황</h2>
-          <div class="card" style="padding:12px; max-width:480px; margin:0 auto;">
-            <div class="week-grid" id="weekGrid"></div>
-          </div>
-        </section>
-
-        <details class="card" style="padding:9px 12px; margin-top:14px;">
-          <summary style="cursor:pointer; font-weight:700; padding:3px 0; font-size:12.5px;">📊 인생 스탯 · 🎯 올해 목표 · 📜 완료 기록 (펼치기)</summary>
-          <section style="margin-top:10px;">
-            <h2>📊 인생 스탯</h2>
-            <div class="stat-grid" id="statGrid"></div>
-          </section>
-
-          <section>
-            <h2>🎯 올해 목표 <span class="count" id="goalCount"></span></h2>
-            <div class="card goal-list"><div id="goalList"></div></div>
-          </section>
-
-          <section>
-            <h2>📜 완료 기록</h2>
-            <div class="card" id="todoLogList"></div>
-          </section>
         </details>
 
         <footer class="note">
           체크는 브라우저에 저장돼 — 이 파일을 그대로 두고 매번 열면 이어짐 (같은 브라우저 기준)<br>
           <span id="resetPoints" style="text-decoration:underline; cursor:pointer;">포인트만 0으로 초기화</span>
         </footer>
+      </div>
+
+      <div class="app-page" id="page-quest" hidden>
+        <header>
+          <h1>🎮 퀘스트</h1>
+        </header>
+
+        <div class="points-bar">
+          <div class="num" id="totalPoints">0</div>
+          <div class="label">누적 포인트 · 총 <span id="totalDone">0</span>개 퀘스트 완료</div>
+        </div>
+
+        <section>
+          <h2>📋 오늘의 퀘스트 <span class="count" id="questCount"></span></h2>
+          <div class="card"><div id="catNav" class="cat-nav"></div><div id="questList"></div></div>
+        </section>
+
+        <section>
+          <h2 style="text-align:center;">📅 이번 주 체크 현황</h2>
+          <div class="card" style="padding:12px; max-width:480px; margin:0 auto;">
+            <div class="week-grid" id="weekGrid"></div>
+          </div>
+        </section>
+
+        <section>
+          <h2>📊 인생 스탯</h2>
+          <div class="stat-grid" id="statGrid"></div>
+        </section>
+
+        <section>
+          <h2>🎯 올해 목표 <span class="count" id="goalCount"></span></h2>
+          <div class="card goal-list"><div id="goalList"></div></div>
+        </section>
+
+        <section>
+          <h2>📜 완료 기록</h2>
+          <div class="card" id="todoLogList"></div>
+        </section>
       </div>
 
       <div class="app-page" id="page-budget" hidden>
@@ -537,6 +541,13 @@
   <div class="modal-card">
     <button class="modal-close" onclick="closeReplyModal()">✕</button>
     <div id="replyPanel"></div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="workLogModalBackdrop" onclick="if(event.target===this) closeWorkLogModal()">
+  <div class="modal-card" style="max-width:480px;">
+    <button class="modal-close" onclick="closeWorkLogModal()">✕</button>
+    <div id="workLogPanel"></div>
   </div>
 </div>
 
@@ -1270,25 +1281,13 @@ function renderDday() {
   const panel = document.getElementById("ddayPanel");
   const now = new Date();
   const dday = Math.ceil((RESIGN_DATE - now) / 86400000);
-  const currentSubs = (CHANNEL_STATS.find(c => c.name === "부동산비상구") || {}).subs || 0;
-  const remain = Math.max(0, COMMUNITY_TAB_GOAL - currentSubs);
   panel.innerHTML = `
     <h3>🎯 카운트다운</h3>
     <div style="text-align:center; padding:8px 0 4px;">
       <div style="font-size:42px; font-weight:800; color:var(--cat-invest); line-height:1;">D-${dday}</div>
       <div style="font-size:12px; color:var(--text-muted); margin-top:4px;">2027-02-28 퇴사 · 그날부터 온전히 내 사업</div>
+      <div style="font-size:10.5px; color:var(--text-muted); margin-top:2px;">연가 소진으로 실제 마지막 출근은 2027-02-03 · 그 뒤는 퇴사일까지 연가 처리</div>
     </div>
-    <div style="border-top:1px solid var(--line, #e5e5e5); margin:10px 0; padding-top:10px;">
-      <div style="display:flex; justify-content:space-between; align-items:center;">
-        <span style="font-size:13px;">부동산비상구 커뮤니티탭</span>
-        <span style="font-size:13px; font-weight:700; color:var(--cat-asset);">${currentSubs} / 500명</span>
-      </div>
-      <div style="background:var(--line,#e5e5e5); border-radius:6px; height:8px; margin-top:6px; overflow:hidden;">
-        <div style="background:var(--cat-asset); height:100%; width:${Math.min(100, currentSubs/COMMUNITY_TAB_GOAL*100)}%;"></div>
-      </div>
-      <div style="font-size:11px; color:var(--text-muted); margin-top:4px;">${remain}명 남으면 커뮤니티 수익화 전략 바로 적용</div>
-    </div>
-    <div class="marathon-note">D-Day는 오늘 세션에서 클로드가 스스로 추가한 카드임 — 마음에 안 들면 얘기해줘, 다른 목표로 바꾸거나 없앨 수 있음.</div>
   `;
 }
 
@@ -2105,6 +2104,21 @@ if (!load("jh_todos_seed_xbot", false)) {
   save(LS_TODOS, todos);
   save("jh_todos_seed_xbot", true);
 }
+// 2026-10-12: 오늘 대화에서 나온 결정 대기 항목들, 1회성 추가
+if (!load("jh_todos_seed_1012", false)) {
+  const items1012 = [
+    { id: "w1", text: "[마켓브리프] 인스타 해시태그 API용 Facebook 페이지 만들고 앱심사 신청(집에서 할 것)" },
+    { id: "w2", text: "월가비상구 — 아예 다른 주제·카테고리로 피벗할지 방향 정하기" },
+    { id: "w3", text: "RTK(토큰절약 CLI툴) 설치할지 결정 — winget install rtk-ai.rtk" },
+    { id: "w4", text: "FilmCraft / Video Use(영상편집 MCP 도구) 도입 검토 — Doc3D 파이프라인에 쓸만한지" },
+    { id: "w5", text: "[마켓브리프] 국내 커뮤니티·SNS 트렌드 관(hall) 추가할지 — TrafficScent 스타일" },
+    { id: "w6", text: "인스타(philos1001) 유료광고 집행 — 한글 영상 2번째 올라간 뒤 재논의" },
+    { id: "w7", text: "화성편(Doc3D) 유료 생성 재개할지 — 예산/시간 여유될 때" },
+  ];
+  todos = todos.concat(items1012);
+  save(LS_TODOS, todos);
+  save("jh_todos_seed_1012", true);
+}
 let todoLog = load(LS_TODO_LOG, []);
 let lastRemovedTodo = null, lastRemovedLog = null, undoTimer = null;
 
@@ -2367,6 +2381,60 @@ document.getElementById("lootboxAction").onclick = () => {
 };
 
 renderAll();
+
+// ── 하고 있는 거 (work_log.json 읽어서 카테고리별로 표시, 클릭하면 로그 모달) ──
+// work_log.json은 bot/work_status_portal/collect_history.py가 git log + memory/project_*.md를
+// 모아서 생성 -> 이 저장소에 같이 커밋해야 반영됨(정적 사이트라 실시간 조회는 불가).
+let _workLogData = null;
+async function loadWorkLog() {
+  const wrap = document.getElementById("workLogGroups");
+  try {
+    const res = await fetch("work_log.json?t=" + Date.now());
+    _workLogData = await res.json();
+  } catch (e) {
+    wrap.innerHTML = `<div style="padding:10px; font-size:12px; color:var(--text-muted);">불러오기 실패 — work_log.json 없음</div>`;
+    return;
+  }
+  const byGroup = {};
+  _workLogData.projects.forEach(p => { (byGroup[p.group] = byGroup[p.group] || []).push(p); });
+
+  wrap.innerHTML = _workLogData.groups.map(g => {
+    const items = (byGroup[g] || []).map(p => {
+      const sub = p.status_note ? p.status_note : (p.last_activity ? p.last_activity : "기록 없음");
+      return `<button onclick="openWorkLog('${p.id}')" style="display:flex; align-items:center; gap:6px;
+        background:var(--page); border:1px solid var(--border); border-radius:999px;
+        padding:5px 11px; font-size:11.5px; color:var(--text-primary); font-family:inherit;">
+        <span>${p.icon}</span><span style="font-weight:700;">${p.name}</span>
+        <span style="color:var(--text-muted); font-size:10px;">${sub}</span>
+      </button>`;
+    }).join("");
+    return `<div style="margin-bottom:8px;">
+      <div style="font-size:10px; font-weight:700; color:var(--text-muted); margin-bottom:4px;">${g}</div>
+      <div style="display:flex; flex-wrap:wrap; gap:5px;">${items}</div>
+    </div>`;
+  }).join("");
+}
+function openWorkLog(id) {
+  const p = _workLogData.projects.find(x => x.id === id);
+  if (!p) return;
+  const panel = document.getElementById("workLogPanel");
+  const rows = p.entries.length
+    ? p.entries.map(e => `<div style="padding:7px 0; border-bottom:1px solid var(--gridline); font-size:12px;">
+        <div style="color:var(--text-muted); font-size:10.5px;">${e.date} ${e.src === "git" ? "🔧" : "📝"}</div>
+        <div style="margin-top:1px;">${e.msg}</div>
+      </div>`).join("")
+    : `<div style="padding:16px 0; text-align:center; color:var(--text-muted); font-size:12px;">아직 기록된 로그 없음</div>`;
+  panel.innerHTML = `
+    <h3 style="margin:0 0 2px; font-size:15px;">${p.icon} ${p.name}</h3>
+    <div style="font-size:11px; color:var(--text-muted); margin-bottom:10px;">총 ${p.entry_count}건 · 최근 ${p.last_activity || "-"}</div>
+    ${rows}
+  `;
+  document.getElementById("workLogModalBackdrop").style.display = "flex";
+}
+function closeWorkLogModal() {
+  document.getElementById("workLogModalBackdrop").style.display = "none";
+}
+loadWorkLog();
 </script>
 </body>
 </html>

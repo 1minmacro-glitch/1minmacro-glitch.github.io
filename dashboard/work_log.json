@@ -1,0 +1,657 @@
+{
+  "generated_at": "2026-10-12T16:51:54.672126",
+  "groups": [
+    "자동화 채널",
+    "AI겨냥 사업",
+    "캐릭터·로봇",
+    "인프라·도구"
+  ],
+  "projects": [
+    {
+      "id": "wallst",
+      "name": "월가비상구",
+      "icon": "📈",
+      "group": "자동화 채널",
+      "status_note": null,
+      "last_activity": null,
+      "entry_count": 0,
+      "entries": []
+    },
+    {
+      "id": "realestate",
+      "name": "부동산비상구",
+      "icon": "🏠",
+      "group": "자동화 채널",
+      "status_note": null,
+      "last_activity": null,
+      "entry_count": 0,
+      "entries": []
+    },
+    {
+      "id": "koreaworld",
+      "name": "Korea vs World",
+      "icon": "🌍",
+      "group": "자동화 채널",
+      "status_note": null,
+      "last_activity": null,
+      "entry_count": 0,
+      "entries": []
+    },
+    {
+      "id": "philos_mystery",
+      "name": "Philos 미스터리 (Doc3D)",
+      "icon": "🎬",
+      "group": "자동화 채널",
+      "status_note": null,
+      "last_activity": null,
+      "entry_count": 0,
+      "entries": []
+    },
+    {
+      "id": "kdrama",
+      "name": "감성극장(한국드라마)",
+      "icon": "🎭",
+      "group": "자동화 채널",
+      "status_note": null,
+      "last_activity": null,
+      "entry_count": 0,
+      "entries": []
+    },
+    {
+      "id": "archi_trivia",
+      "name": "Instagram ArchiTrivia",
+      "icon": "🏛️",
+      "group": "자동화 채널",
+      "status_note": null,
+      "last_activity": null,
+      "entry_count": 0,
+      "entries": []
+    },
+    {
+      "id": "curiosity3d",
+      "name": "만약연구소 (Curiosity3D)",
+      "icon": "❓",
+      "group": "자동화 채널",
+      "status_note": "보류중",
+      "last_activity": "2026-10-12",
+      "entry_count": 1,
+      "entries": [
+        {
+          "date": "2026-10-12",
+          "hash": null,
+          "msg": "제작 보류 결정",
+          "src": "memory"
+        }
+      ]
+    },
+    {
+      "id": "marketbriefwire",
+      "name": "marketbriefwire.com (LOVEPHILOS)",
+      "icon": "🤖",
+      "group": "AI겨냥 사업",
+      "status_note": null,
+      "last_activity": "2026-10-12",
+      "entry_count": 47,
+      "entries": [
+        {
+          "date": "2026-10-12",
+          "hash": "542a289",
+          "msg": "AI 크롤링 사이트 — 공시(SEC) 갱신 (10/12 16:02)",
+          "src": "git"
+        },
+        {
+          "date": "2026-10-12",
+          "hash": "011d978",
+          "msg": "AI 크롤링 사이트 — 종목별 현황 갱신 (10/12 16:01)",
+          "src": "git"
+        },
+        {
+          "date": "2026-10-12",
+          "hash": "3927e68",
+          "msg": "AI 크롤링 사이트 — 금리·지표 갱신 (10/12 16:01)",
+          "src": "git"
+        },
+        {
+          "date": "2026-10-12",
+          "hash": "1599dac",
+          "msg": "AI 크롤링 사이트 자동발행 — 10/12 16:00",
+          "src": "git"
+        },
+        {
+          "date": "2026-10-12",
+          "hash": "7133ced",
+          "msg": "AI 크롤링 사이트 — 오늘 수집 현황 갱신 (10/12 16:01)",
+          "src": "git"
+        },
+        {
+          "date": "2026-10-12",
+          "hash": "34fd676",
+          "msg": "AI 크롤링 사이트 — 공시(SEC) 갱신 (10/12 05:31)",
+          "src": "git"
+        },
+        {
+          "date": "2026-10-12",
+          "hash": "566214b",
+          "msg": "AI 크롤링 사이트 — 종목별 현황 갱신 (10/12 05:31)",
+          "src": "git"
+        },
+        {
+          "date": "2026-10-12",
+          "hash": "ba61d48",
+          "msg": "AI 크롤링 사이트 — 금리·지표 갱신 (10/12 05:31)",
+          "src": "git"
+        },
+        {
+          "date": "2026-10-12",
+          "hash": "141709f",
+          "msg": "AI 크롤링 사이트 자동발행 — 10/12 05:30",
+          "src": "git"
+        },
+        {
+          "date": "2026-10-12",
+          "hash": "8bd34b0",
+          "msg": "AI 크롤링 사이트 — 오늘 수집 현황 갱신 (10/12 05:31)",
+          "src": "git"
+        },
+        {
+          "date": "2026-10-11",
+          "hash": "140b458",
+          "msg": "AI 크롤링 사이트 — 공시(SEC) 갱신 (10/11 22:02)",
+          "src": "git"
+        },
+        {
+          "date": "2026-10-11",
+          "hash": "ac35605",
+          "msg": "AI 크롤링 사이트 — 종목별 현황 갱신 (10/11 22:02)",
+          "src": "git"
+        },
+        {
+          "date": "2026-10-11",
+          "hash": "a474d8f",
+          "msg": "AI 크롤링 사이트 — 금리·지표 갱신 (10/11 22:01)",
+          "src": "git"
+        },
+        {
+          "date": "2026-10-11",
+          "hash": "15d525e",
+          "msg": "AI 크롤링 사이트 자동발행 — 10/11 22:00",
+          "src": "git"
+        },
+        {
+          "date": "2026-10-11",
+          "hash": "0f3c113",
+          "msg": "AI 크롤링 사이트 — 오늘 수집 현황 갱신 (10/11 22:01)",
+          "src": "git"
+        },
+        {
+          "date": "2026-10-11",
+          "hash": "1b36b52",
+          "msg": "AI 크롤링 사이트 — 오늘 수집 현황 갱신 (10/11 16:01)",
+          "src": "git"
+        },
+        {
+          "date": "2026-10-11",
+          "hash": "ad8949d",
+          "msg": "AI 크롤링 사이트 — 공시(SEC) 갱신 (10/11 05:31)",
+          "src": "git"
+        },
+        {
+          "date": "2026-10-11",
+          "hash": "e50cf48",
+          "msg": "AI 크롤링 사이트 — 종목별 현황 갱신 (10/11 05:31)",
+          "src": "git"
+        },
+        {
+          "date": "2026-10-11",
+          "hash": "cb2a1a6",
+          "msg": "AI 크롤링 사이트 — 금리·지표 갱신 (10/11 05:31)",
+          "src": "git"
+        },
+        {
+          "date": "2026-10-11",
+          "hash": "40a2dc1",
+          "msg": "AI 크롤링 사이트 자동발행 — 10/11 05:30",
+          "src": "git"
+        },
+        {
+          "date": "2026-10-11",
+          "hash": "0cfdf4d",
+          "msg": "AI 크롤링 사이트 — 오늘 수집 현황 갱신 (10/11 05:31)",
+          "src": "git"
+        },
+        {
+          "date": "2026-10-10",
+          "hash": "801d8d7",
+          "msg": "AI 크롤링 사이트 — 공시(SEC) 갱신 (10/10 22:02)",
+          "src": "git"
+        },
+        {
+          "date": "2026-10-10",
+          "hash": "7d45643",
+          "msg": "AI 크롤링 사이트 — 종목별 현황 갱신 (10/10 22:02)",
+          "src": "git"
+        },
+        {
+          "date": "2026-10-10",
+          "hash": "1da4275",
+          "msg": "AI 크롤링 사이트 — 금리·지표 갱신 (10/10 22:02)",
+          "src": "git"
+        },
+        {
+          "date": "2026-10-10",
+          "hash": "02f43b3",
+          "msg": "AI 크롤링 사이트 자동발행 — 10/10 22:00",
+          "src": "git"
+        },
+        {
+          "date": "2026-10-10",
+          "hash": "07ba101",
+          "msg": "AI 크롤링 사이트 — 오늘 수집 현황 갱신 (10/10 22:01)",
+          "src": "git"
+        },
+        {
+          "date": "2026-10-10",
+          "hash": "8b0f4c5",
+          "msg": "AI 크롤링 사이트 — 공시(SEC) 갱신 (10/10 16:02)",
+          "src": "git"
+        },
+        {
+          "date": "2026-10-10",
+          "hash": "43378a0",
+          "msg": "AI 크롤링 사이트 — 종목별 현황 갱신 (10/10 16:02)",
+          "src": "git"
+        },
+        {
+          "date": "2026-10-10",
+          "hash": "00bf682",
+          "msg": "AI 크롤링 사이트 — 금리·지표 갱신 (10/10 16:02)",
+          "src": "git"
+        },
+        {
+          "date": "2026-10-10",
+          "hash": "21a6b9e",
+          "msg": "AI 크롤링 사이트 자동발행 — 10/10 16:00",
+          "src": "git"
+        },
+        {
+          "date": "2026-10-09",
+          "hash": null,
+          "msg": "CDP API 키 발급 + Cloudflare workers.dev 서브도메인 확인",
+          "src": "memory"
+        },
+        {
+          "date": "2026-10-09",
+          "hash": null,
+          "msg": "LOVEPHILOS 인프라 재점검(문제 없음) + 미해결 기록 2건 정정",
+          "src": "memory"
+        },
+        {
+          "date": "2026-10-09",
+          "hash": null,
+          "msg": "mcp-wallet-facts 체인 2개→6개 확장",
+          "src": "memory"
+        },
+        {
+          "date": "2026-10-09",
+          "hash": null,
+          "msg": "marketbriefwire.com SEC 공시 섹션 신설 + 암호화폐 집행조치 확장",
+          "src": "memory"
+        },
+        {
+          "date": "2026-10-07",
+          "hash": null,
+          "msg": "순서 재확정: MCP 툴 서버 먼저, LOVEPHILOS 추가작업은 그 다음 ★★★",
+          "src": "memory"
+        },
+        {
+          "date": "2026-10-07",
+          "hash": null,
+          "msg": "MCP 지갑조회 툴 서버 빌드 + x402 facilitator 치명적 버그 발견·수정 ★★★★★",
+          "src": "memory"
+        },
+        {
+          "date": "2026-10-06",
+          "hash": null,
+          "msg": "밤샘 세션 — 사업방향 확정: \"AI겨냥 사업\" ★★★★★",
+          "src": "memory"
+        },
+        {
+          "date": "2026-10-05",
+          "hash": null,
+          "msg": "수동 테스트 실행이 실제 공개 리포트로 쌓이는 사고 (해결)",
+          "src": "memory"
+        },
+        {
+          "date": "2026-10-01",
+          "hash": null,
+          "msg": "news_watcher.py 스케줄 등록 완료 ★",
+          "src": "memory"
+        },
+        {
+          "date": "2026-10-01",
+          "hash": null,
+          "msg": "저장소 Private 전환 사고 + 올바른 분리 구조 확정 ★★★",
+          "src": "memory"
+        }
+      ]
+    },
+    {
+      "id": "mcp_wallet_facts",
+      "name": "MCP 지갑조회 툴서버",
+      "icon": "👛",
+      "group": "AI겨냥 사업",
+      "status_note": null,
+      "last_activity": "2026-10-09",
+      "entry_count": 2,
+      "entries": [
+        {
+          "date": "2026-10-09",
+          "hash": "605f956",
+          "msg": "체인 4개 추가(Polygon/Arbitrum/Optimism/Avalanche) — 네이티브 USDC 온체인 검증 완료",
+          "src": "git"
+        },
+        {
+          "date": "2026-10-07",
+          "hash": "8692159",
+          "msg": "Initial commit: wallet-facts MCP server (local stdio + x402-gated worker)",
+          "src": "git"
+        }
+      ]
+    },
+    {
+      "id": "x402_gateway",
+      "name": "x402 결제 게이트웨이",
+      "icon": "💳",
+      "group": "AI겨냥 사업",
+      "status_note": null,
+      "last_activity": null,
+      "entry_count": 0,
+      "entries": []
+    },
+    {
+      "id": "ai_character",
+      "name": "AI 캐릭터(face_038)",
+      "icon": "🧑‍🎨",
+      "group": "캐릭터·로봇",
+      "status_note": null,
+      "last_activity": null,
+      "entry_count": 0,
+      "entries": []
+    },
+    {
+      "id": "philos_robot",
+      "name": "필로스 로봇(DIY)",
+      "icon": "🤲",
+      "group": "캐릭터·로봇",
+      "status_note": null,
+      "last_activity": null,
+      "entry_count": 0,
+      "entries": []
+    },
+    {
+      "id": "reels_character",
+      "name": "릴스 캐릭터 영상 계획",
+      "icon": "🎞️",
+      "group": "캐릭터·로봇",
+      "status_note": null,
+      "last_activity": "2026-09-21",
+      "entry_count": 2,
+      "entries": [
+        {
+          "date": "2026-09-21",
+          "hash": null,
+          "msg": "전략 전환: 틱톡보다 인스타릴스 우선 + \"설명형\" 콘텐츠 추가",
+          "src": "memory"
+        },
+        {
+          "date": "2026-09-21",
+          "hash": null,
+          "msg": "\"Jev\" 표정 엔진 발견, 11월 출시 예정 확인 필요",
+          "src": "memory"
+        }
+      ]
+    },
+    {
+      "id": "jh_dashboard",
+      "name": "준현 대시보드",
+      "icon": "🎮",
+      "group": "인프라·도구",
+      "status_note": null,
+      "last_activity": "2026-10-12",
+      "entry_count": 33,
+      "entries": [
+        {
+          "date": "2026-10-12",
+          "hash": "f91ac02",
+          "msg": "dashboard: 장비포털 스타일 사이드바 관리자 UI로 전체 재설계",
+          "src": "git"
+        },
+        {
+          "date": "2026-10-12",
+          "hash": "06ec9b3",
+          "msg": "fix: 신한 실잔액 비교값이 지출 로그와 따로 놀던 버그 수정",
+          "src": "git"
+        },
+        {
+          "date": "2026-10-12",
+          "hash": "21553bb",
+          "msg": "Auto-update leverage volume alerts",
+          "src": "git"
+        },
+        {
+          "date": "2026-10-11",
+          "hash": "9ceddae",
+          "msg": "Auto-update leverage volume alerts",
+          "src": "git"
+        },
+        {
+          "date": "2026-10-10",
+          "hash": "d40f8a5",
+          "msg": "Auto-update leverage volume alerts",
+          "src": "git"
+        },
+        {
+          "date": "2026-10-09",
+          "hash": "8a407fb",
+          "msg": "칠판: 전사업 법적 리스크 재점검 결과 메모 추가",
+          "src": "git"
+        },
+        {
+          "date": "2026-10-08",
+          "hash": "3370dda",
+          "msg": "Auto-update leverage volume alerts",
+          "src": "git"
+        },
+        {
+          "date": "2026-10-07",
+          "hash": "180e07e",
+          "msg": "Auto-update leverage volume alerts",
+          "src": "git"
+        },
+        {
+          "date": "2026-10-06",
+          "hash": "c8f5549",
+          "msg": "Auto-update leverage volume alerts",
+          "src": "git"
+        },
+        {
+          "date": "2026-10-05",
+          "hash": "648b41c",
+          "msg": "Auto-update leverage volume alerts",
+          "src": "git"
+        },
+        {
+          "date": "2026-10-04",
+          "hash": "67e7a1c",
+          "msg": "자유자금 지출 기록: 명조 파수인 캐릭터 6만원 (10/4)",
+          "src": "git"
+        },
+        {
+          "date": "2026-10-04",
+          "hash": "9a20a47",
+          "msg": "Auto-update leverage volume alerts",
+          "src": "git"
+        },
+        {
+          "date": "2026-10-02",
+          "hash": "af63339",
+          "msg": "가계부: Anthropic API 크롤링사이트 고정비 월5만원 추가",
+          "src": "git"
+        },
+        {
+          "date": "2026-10-02",
+          "hash": "ff8de6a",
+          "msg": "Auto-update leverage volume alerts",
+          "src": "git"
+        },
+        {
+          "date": "2026-10-01",
+          "hash": "5ec3623",
+          "msg": "칠판: 저녁~밤 작업 요약(ai뉴스 재설계/도메인진행/가계부/스케줄러수정) 기록",
+          "src": "git"
+        },
+        {
+          "date": "2026-10-01",
+          "hash": "09c2d8b",
+          "msg": "가계부: 엄마 추가요청 10만원 반영, 신한잔액 갱신(던파 게임비는 한도내라 별도기록 없음)",
+          "src": "git"
+        },
+        {
+          "date": "2026-10-01",
+          "hash": "b78da1a",
+          "msg": "칠판: 저장소 Private전환 사고 경위+복구+새 계정 분리 결정 기록",
+          "src": "git"
+        },
+        {
+          "date": "2026-10-01",
+          "hash": "7f2121a",
+          "msg": "속보 감시 자동게시 1건 — 10/01 02:26",
+          "src": "git"
+        },
+        {
+          "date": "2026-10-01",
+          "hash": "1a0d248",
+          "msg": "Auto-update leverage volume alerts",
+          "src": "git"
+        },
+        {
+          "date": "2026-10-01",
+          "hash": "64e624f",
+          "msg": "칠판: 야간 작업 요약(디스크정리/가계부/로컬AI/뉴스감시 스케줄링) 기록",
+          "src": "git"
+        },
+        {
+          "date": "2026-09-30",
+          "hash": "43e9d69",
+          "msg": "가계부: 헤더(좌측메뉴)에 이론치 대신 실제 신한잔액 우선 표시, 명조 결제 후 잔액 577,580원 갱신",
+          "src": "git"
+        },
+        {
+          "date": "2026-09-30",
+          "hash": "ea059a1",
+          "msg": "가계부: 명조 119,000원 충전, 10월 게임비 사이클 조기적용(초과분 19,000원만 반영)",
+          "src": "git"
+        },
+        {
+          "date": "2026-09-30",
+          "hash": "98d6f2f",
+          "msg": "가계부: 엄마 생활비 207만원->200만원 퉁쳐서로 정정(엄마와 합의)",
+          "src": "git"
+        },
+        {
+          "date": "2026-09-30",
+          "hash": "252a32f",
+          "msg": "가계부: 복싱비 16만원 9월 실지출 기록 추가",
+          "src": "git"
+        },
+        {
+          "date": "2026-09-30",
+          "hash": "148e64b",
+          "msg": "가계부: API 크레딧 실제 결제액($25=33,877원)으로 정정",
+          "src": "git"
+        },
+        {
+          "date": "2026-09-30",
+          "hash": "732ec81",
+          "msg": "가계부: Claude API 크레딧 충전 예정 지출 5만원 기록",
+          "src": "git"
+        },
+        {
+          "date": "2026-09-30",
+          "hash": "a4285ad",
+          "msg": "가계부/칠판/일정 등 카테고리 전환 버그 수정: #page-today의 display:grid가 ID 우선순위로 [hidden]을 무시하던 문제",
+          "src": "git"
+        },
+        {
+          "date": "2026-09-30",
+          "hash": "360f435",
+          "msg": "가계부 잔액 갱신: 9월 월급 정산(88만원) + 이전 잔여비용(15만원) 반영",
+          "src": "git"
+        },
+        {
+          "date": "2026-09-30",
+          "hash": "2599cba",
+          "msg": "Auto-update leverage volume alerts",
+          "src": "git"
+        },
+        {
+          "date": "2026-09-29",
+          "hash": "63b3446",
+          "msg": "Revert \"AI 크롤링 사이트 자동발행 — 2026-09-29 22:10\"",
+          "src": "git"
+        },
+        {
+          "date": "2026-07-27",
+          "hash": null,
+          "msg": "원웨이 동기화 버그 발견·수정 + \"칠판\" 메모 기능 신설 ★★★",
+          "src": "memory"
+        },
+        {
+          "date": "2026-07-26",
+          "hash": null,
+          "msg": "대구 날씨 위젯 추가 (완료)",
+          "src": "memory"
+        },
+        {
+          "date": "2026-07-21",
+          "hash": null,
+          "msg": "\"해야할 일\" 트래커 신규 추가 + 요청게시판 자동화 착수(진행중)",
+          "src": "memory"
+        }
+      ]
+    },
+    {
+      "id": "local_ai",
+      "name": "로컬 AI(Ollama)",
+      "icon": "🖥️",
+      "group": "인프라·도구",
+      "status_note": null,
+      "last_activity": "2026-10-01",
+      "entry_count": 2,
+      "entries": [
+        {
+          "date": "2026-10-01",
+          "hash": null,
+          "msg": "설치 완료 + 속도 진단 ★★★",
+          "src": "memory"
+        },
+        {
+          "date": "2026-09-29",
+          "hash": null,
+          "msg": "업데이트",
+          "src": "memory"
+        }
+      ]
+    },
+    {
+      "id": "dev_for_money",
+      "name": "파이프라인 상품화",
+      "icon": "💼",
+      "group": "인프라·도구",
+      "status_note": null,
+      "last_activity": null,
+      "entry_count": 0,
+      "entries": []
+    }
+  ]
+}
