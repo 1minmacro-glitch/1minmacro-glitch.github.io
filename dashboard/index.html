@@ -126,6 +126,20 @@
   .card {
     background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 4px;
   }
+  .panel { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; }
+  .kpi-row { display: flex; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
+  .kpi { flex: 1; min-width: 130px; background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 11px 13px; }
+  .kpi .label { font-size: 10.5px; color: var(--text-muted); margin-bottom: 4px; }
+  .kpi .value { font-size: 20px; font-weight: 800; color: var(--accent); }
+  .kpi .sub { font-size: 9.5px; color: var(--text-muted); margin-top: 3px; }
+  .list-toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-size: 11.5px; color: var(--text-muted); }
+  .list-toolbar .count { font-weight: 700; color: var(--text-primary); }
+  table { width: 100%; border-collapse: collapse; font-size: 11.5px; }
+  thead th { background: var(--page); color: var(--text-secondary); font-weight: 700; text-align: center; padding: 7px 6px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  tbody td { padding: 7px 6px; text-align: center; border-bottom: 1px solid var(--gridline); color: var(--text-primary); }
+  tbody tr:last-child td { border-bottom: none; }
+  th.txt-left, td.txt-left { text-align: left; }
+  .link-cell { color: var(--accent); cursor: pointer; font-weight: 600; }
   .marathon-panel h3 {
     font-size: 12.5px; font-weight: 700; margin: 14px 0 6px; color: var(--text-secondary);
     display: flex; align-items: center; gap: 5px; padding: 0 10px;
@@ -437,6 +451,12 @@
           <h1>🎮 준현 인생 대시보드</h1>
           <div class="sub">오늘도 퀘스트 깨자</div>
         </header>
+
+        <div class="kpi-row" id="kpiRow"></div>
+        <div class="panel" style="margin-bottom:14px;">
+          <div class="list-toolbar"><div class="count">📢 최근 공지</div></div>
+          <table id="noticeTable"><thead><tr><th class="txt-left">내용</th><th>분류</th><th>날짜</th></tr></thead><tbody></tbody></table>
+        </div>
 
         <section id="moodSection">
           <h2>🧠 오늘의 행복도</h2>
@@ -2385,6 +2405,34 @@ renderAll();
 // ── 하고 있는 거 (work_log.json 읽어서 카테고리별로 표시, 클릭하면 로그 모달) ──
 // work_log.json은 bot/work_status_portal/collect_history.py가 git log + memory/project_*.md를
 // 모아서 생성 -> 이 저장소에 같이 커밋해야 반영됨(정적 사이트라 실시간 조회는 불가).
+function renderKpiAndNotices(data) {
+  const active = data.projects.filter(p => p.entry_count > 0);
+  const now = new Date();
+  const weekAgo = new Date(now.getTime() - 7 * 86400000).toISOString().slice(0, 10);
+  const weekCount = data.projects.reduce((s, p) => s + p.entries.filter(e => e.date >= weekAgo).length, 0);
+  const pausedCount = data.projects.filter(p => p.status_note).length;
+
+  document.getElementById("kpiRow").innerHTML = `
+    <div class="kpi"><div class="label">진행중 프로젝트</div><div class="value">${data.projects.length}</div><div class="sub">기록 있는 거 ${active.length}개</div></div>
+    <div class="kpi"><div class="label">이번주 업데이트</div><div class="value">${weekCount}</div><div class="sub">건 (git+메모리 합산)</div></div>
+    <div class="kpi"><div class="label">보류중</div><div class="value">${pausedCount}</div><div class="sub">명시적으로 멈춰둔 것</div></div>
+    <div class="kpi"><div class="label">자유자금</div><div class="value" style="font-size:15px;">${_budgetLiveTargets.remain != null ? _budgetLiveTargets.remain.toLocaleString("ko-KR") + "원" : "-"}</div><div class="sub">이번달 남음</div></div>
+  `;
+
+  // 전체 프로젝트 로그를 날짜순으로 합쳐서 "최근 공지" 테이블 생성
+  const allEntries = [];
+  data.projects.forEach(p => p.entries.forEach(e => allEntries.push({ ...e, projName: p.name, projIcon: p.icon })));
+  allEntries.sort((a, b) => b.date.localeCompare(a.date));
+  const tbody = document.querySelector("#noticeTable tbody");
+  tbody.innerHTML = allEntries.slice(0, 8).map(e => `
+    <tr>
+      <td class="txt-left">${e.projIcon} ${e.msg}</td>
+      <td>${e.projName}</td>
+      <td>${e.date}</td>
+    </tr>
+  `).join("") || `<tr><td colspan="3" style="color:var(--text-muted);">기록 없음</td></tr>`;
+}
+
 let _workLogData = null;
 async function loadWorkLog() {
   const wrap = document.getElementById("workLogGroups");
@@ -2395,6 +2443,7 @@ async function loadWorkLog() {
     wrap.innerHTML = `<div style="padding:10px; font-size:12px; color:var(--text-muted);">불러오기 실패 — work_log.json 없음</div>`;
     return;
   }
+  renderKpiAndNotices(_workLogData);
   const byGroup = {};
   _workLogData.projects.forEach(p => { (byGroup[p.group] = byGroup[p.group] || []).push(p); });
 
