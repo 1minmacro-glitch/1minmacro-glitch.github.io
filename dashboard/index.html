@@ -1295,18 +1295,26 @@ function renderAll() {
 // 숫자로 못박아두면 실제로 동기부여가 될 거라 판단함. 부동산비상구 커뮤니티탭 500명 목표도 같이 넣음
 // (오늘 확인한 실제 진행중인 목표라 연결지음 — 개인 목표 + 사업 목표를 한 화면에 묶은 게 이 카드의 의도).
 const RESIGN_DATE = new Date("2027-02-28T00:00:00+09:00");
+const LAST_WORKDAY = new Date("2027-02-03T00:00:00+09:00");
 const COMMUNITY_TAB_GOAL = 500;
 
 function renderDday() {
   const panel = document.getElementById("ddayPanel");
   const now = new Date();
   const dday = Math.ceil((RESIGN_DATE - now) / 86400000);
+  const ddayWork = Math.ceil((LAST_WORKDAY - now) / 86400000);
   panel.innerHTML = `
     <h3>🎯 카운트다운</h3>
-    <div style="text-align:center; padding:8px 0 4px;">
-      <div style="font-size:42px; font-weight:800; color:var(--cat-invest); line-height:1;">D-${dday}</div>
-      <div style="font-size:12px; color:var(--text-muted); margin-top:4px;">2027-02-28 퇴사 · 그날부터 온전히 내 사업</div>
-      <div style="font-size:10.5px; color:var(--text-muted); margin-top:2px;">연가 소진으로 실제 마지막 출근은 2027-02-03 · 그 뒤는 퇴사일까지 연가 처리</div>
+    <div style="display:flex; gap:10px; padding:8px 0 4px; text-align:center;">
+      <div style="flex:1;">
+        <div style="font-size:34px; font-weight:800; color:var(--cat-dn8); line-height:1;">D-${ddayWork}</div>
+        <div style="font-size:10.5px; color:var(--text-muted); margin-top:4px;">2027-02-03 마지막 출근<br>(연가 소진 조기퇴근)</div>
+      </div>
+      <div style="width:1px; background:var(--border);"></div>
+      <div style="flex:1;">
+        <div style="font-size:34px; font-weight:800; color:var(--cat-invest); line-height:1;">D-${dday}</div>
+        <div style="font-size:10.5px; color:var(--text-muted); margin-top:4px;">2027-02-28 공식 퇴사<br>그날부터 온전히 내 사업</div>
+      </div>
     </div>
   `;
 }
