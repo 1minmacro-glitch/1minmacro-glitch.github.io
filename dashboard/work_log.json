@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-12T22:16:09.293249",
+  "generated_at": "2026-10-12T22:24:57.567138",
   "groups": [
     "자동화 채널",
     "AI겨냥 사업",
@@ -38,30 +38,35 @@
       "entries": []
     },
     {
-      "id": "philos_mystery",
-      "name": "Philos 미스터리 (Doc3D)",
+      "id": "philos_youtube",
+      "name": "Philos 미스터리 — YouTube",
       "icon": "🎬",
       "group": "자동화 채널",
       "status_note": null,
       "last_activity": "2026-10-12",
-      "entry_count": 5,
+      "entry_count": 1,
       "entries": [
-        {
-          "date": "2026-10-12",
-          "hash": null,
-          "msg": "화성편 포맷 피벗",
-          "src": "memory"
-        },
         {
           "date": "2026-10-12",
           "hash": null,
           "msg": "영어판 완성+업로드, YouTube 제목 언어 버그 발견/수정",
           "src": "memory"
-        },
+        }
+      ]
+    },
+    {
+      "id": "philos_instagram",
+      "name": "Philos 미스터리 — 인스타 릴스",
+      "icon": "📱",
+      "group": "자동화 채널",
+      "status_note": null,
+      "last_activity": "2026-10-12",
+      "entry_count": 3,
+      "entries": [
         {
           "date": "2026-10-12",
           "hash": null,
-          "msg": "카메라워크 용어 Grok 모션 프롬프트에 반영",
+          "msg": "영어판 완성+업로드, YouTube 제목 언어 버그 발견/수정",
           "src": "memory"
         },
         {
@@ -472,6 +477,12 @@
       "entries": [
         {
           "date": "2026-10-12",
+          "hash": "83b2863",
+          "msg": "work_log: 카메라워크 용어 Grok 모션프롬프트 반영 기록 추가",
+          "src": "git"
+        },
+        {
+          "date": "2026-10-12",
           "hash": "f0ed9fc",
           "msg": "work_log: 괄호 안 날짜 헤더 못잡던 버그 수정 — 인스타 릴스 업로드 기록(10/11) 복구",
           "src": "git"
@@ -642,12 +653,6 @@
           "date": "2026-09-30",
           "hash": "98d6f2f",
           "msg": "가계부: 엄마 생활비 207만원->200만원 퉁쳐서로 정정(엄마와 합의)",
-          "src": "git"
-        },
-        {
-          "date": "2026-09-30",
-          "hash": "252a32f",
-          "msg": "가계부: 복싱비 16만원 9월 실지출 기록 추가",
           "src": "git"
         },
         {
