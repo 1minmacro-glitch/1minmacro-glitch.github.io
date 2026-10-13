@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-12T23:14:29.803930",
+  "generated_at": "2026-10-13T11:01:25.871569",
   "groups": [
     "자동화 채널",
     "AI겨냥 사업",
@@ -126,9 +126,51 @@
       "icon": "🤖",
       "group": "AI겨냥 사업",
       "status_note": null,
-      "last_activity": "2026-10-12",
-      "entry_count": 49,
+      "last_activity": "2026-10-13",
+      "entry_count": 50,
       "entries": [
+        {
+          "date": "2026-10-13",
+          "hash": "b48681d",
+          "msg": "6관 — 국내 검색관심도(네이버 데이터랩) 갱신 (2026-10-13 11:01)",
+          "src": "git"
+        },
+        {
+          "date": "2026-10-13",
+          "hash": "98a3add",
+          "msg": "AI 크롤링 사이트 — 공시(SEC) 갱신 (10/13 05:31)",
+          "src": "git"
+        },
+        {
+          "date": "2026-10-13",
+          "hash": "28043fa",
+          "msg": "AI 크롤링 사이트 — 종목별 현황 갱신 (10/13 05:31)",
+          "src": "git"
+        },
+        {
+          "date": "2026-10-13",
+          "hash": "7f6374d",
+          "msg": "AI 크롤링 사이트 — 금리·지표 갱신 (10/13 05:31)",
+          "src": "git"
+        },
+        {
+          "date": "2026-10-13",
+          "hash": "c200d0a",
+          "msg": "AI 크롤링 사이트 자동발행 — 10/13 05:30",
+          "src": "git"
+        },
+        {
+          "date": "2026-10-13",
+          "hash": "bc4c07f",
+          "msg": "AI 크롤링 사이트 — 오늘 수집 현황 갱신 (10/13 05:31)",
+          "src": "git"
+        },
+        {
+          "date": "2026-10-13",
+          "hash": null,
+          "msg": "아침 — NAVER API HUB 가입 완료 + 검색어트렌드 라이브",
+          "src": "memory"
+        },
         {
           "date": "2026-10-12",
           "hash": "0bb060d",
@@ -286,42 +328,6 @@
           "src": "git"
         },
         {
-          "date": "2026-10-11",
-          "hash": "ad8949d",
-          "msg": "AI 크롤링 사이트 — 공시(SEC) 갱신 (10/11 05:31)",
-          "src": "git"
-        },
-        {
-          "date": "2026-10-11",
-          "hash": "e50cf48",
-          "msg": "AI 크롤링 사이트 — 종목별 현황 갱신 (10/11 05:31)",
-          "src": "git"
-        },
-        {
-          "date": "2026-10-11",
-          "hash": "cb2a1a6",
-          "msg": "AI 크롤링 사이트 — 금리·지표 갱신 (10/11 05:31)",
-          "src": "git"
-        },
-        {
-          "date": "2026-10-11",
-          "hash": "40a2dc1",
-          "msg": "AI 크롤링 사이트 자동발행 — 10/11 05:30",
-          "src": "git"
-        },
-        {
-          "date": "2026-10-11",
-          "hash": "0cfdf4d",
-          "msg": "AI 크롤링 사이트 — 오늘 수집 현황 갱신 (10/11 05:31)",
-          "src": "git"
-        },
-        {
-          "date": "2026-10-10",
-          "hash": "801d8d7",
-          "msg": "AI 크롤링 사이트 — 공시(SEC) 갱신 (10/10 22:02)",
-          "src": "git"
-        },
-        {
           "date": "2026-10-09",
           "hash": null,
           "msg": "CDP API 키 발급 + Cloudflare workers.dev 서브도메인 확인",
@@ -361,12 +367,6 @@
           "date": "2026-10-06",
           "hash": null,
           "msg": "~07 밤샘 세션 — 사업방향 확정: \"AI겨냥 사업\" ★★★★★",
-          "src": "memory"
-        },
-        {
-          "date": "2026-10-05",
-          "hash": null,
-          "msg": "수동 테스트 실행이 실제 공개 리포트로 쌓이는 사고 (해결)",
           "src": "memory"
         }
       ]
@@ -472,9 +472,21 @@
       "icon": "🎮",
       "group": "인프라·도구",
       "status_note": null,
-      "last_activity": "2026-10-12",
+      "last_activity": "2026-10-13",
       "entry_count": 38,
       "entries": [
+        {
+          "date": "2026-10-13",
+          "hash": "ba0e9fb",
+          "msg": "Auto-update leverage volume alerts",
+          "src": "git"
+        },
+        {
+          "date": "2026-10-12",
+          "hash": "7a0a49f",
+          "msg": "work_log: 6관 확장(AI벤치마크+보배드림) + 커뮤니티 robots.txt 조사결과 기록",
+          "src": "git"
+        },
         {
           "date": "2026-10-12",
           "hash": "f58d83d",
@@ -647,18 +659,6 @@
           "date": "2026-10-01",
           "hash": "7f2121a",
           "msg": "속보 감시 자동게시 1건 — 10/01 02:26",
-          "src": "git"
-        },
-        {
-          "date": "2026-10-01",
-          "hash": "1a0d248",
-          "msg": "Auto-update leverage volume alerts",
-          "src": "git"
-        },
-        {
-          "date": "2026-10-01",
-          "hash": "64e624f",
-          "msg": "칠판: 야간 작업 요약(디스크정리/가계부/로컬AI/뉴스감시 스케줄링) 기록",
           "src": "git"
         },
         {
