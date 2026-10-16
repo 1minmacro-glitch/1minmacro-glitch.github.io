@@ -565,5 +565,30 @@
         "date": "2026-10-15"
       }
     ]
+  },
+  {
+    "date": "2026-10-16",
+    "checked_at_utc": "2026-10-16T17:00:15.184120+00:00",
+    "threshold": 8.0,
+    "hits": [
+      {
+        "ticker": "3SAP.L",
+        "name": "Apple(숏)",
+        "latest_vol": 26179,
+        "avg_vol": 2061,
+        "ratio": 12.7,
+        "price": 1.38,
+        "date": "2026-10-16"
+      },
+      {
+        "ticker": "3LNF.L",
+        "name": "Netflix",
+        "latest_vol": 4126,
+        "avg_vol": 502,
+        "ratio": 8.2,
+        "price": 12.3,
+        "date": "2026-10-16"
+      }
+    ]
   }
 ]
