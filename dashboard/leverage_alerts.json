@@ -606,5 +606,21 @@
         "date": "2026-10-16"
       }
     ]
+  },
+  {
+    "date": "2026-10-18",
+    "checked_at_utc": "2026-10-18T17:00:14.442715+00:00",
+    "threshold": 8.0,
+    "hits": [
+      {
+        "ticker": "3SAP.L",
+        "name": "Apple(숏)",
+        "latest_vol": 25679,
+        "avg_vol": 3058,
+        "ratio": 8.4,
+        "price": 1.38,
+        "date": "2026-10-16"
+      }
+    ]
   }
 ]
