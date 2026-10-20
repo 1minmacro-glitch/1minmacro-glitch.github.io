@@ -628,5 +628,21 @@
     "checked_at_utc": "2026-10-19T17:00:14.449780+00:00",
     "threshold": 8.0,
     "hits": []
+  },
+  {
+    "date": "2026-10-20",
+    "checked_at_utc": "2026-10-20T17:00:14.251969+00:00",
+    "threshold": 8.0,
+    "hits": [
+      {
+        "ticker": "3LCO.L",
+        "name": "Coinbase",
+        "latest_vol": 774678,
+        "avg_vol": 85471,
+        "ratio": 9.1,
+        "price": 0.0825,
+        "date": "2026-10-20"
+      }
+    ]
   }
 ]
