@@ -691,5 +691,30 @@
         "date": "2026-10-23"
       }
     ]
+  },
+  {
+    "date": "2026-10-25",
+    "checked_at_utc": "2026-10-25T17:00:15.073417+00:00",
+    "threshold": 8.0,
+    "hits": [
+      {
+        "ticker": "3SNV.L",
+        "name": "NVIDIA(숏)",
+        "latest_vol": 689887,
+        "avg_vol": 52652,
+        "ratio": 13.1,
+        "price": 0.2685,
+        "date": "2026-10-23"
+      },
+      {
+        "ticker": "3SAP.L",
+        "name": "Apple(숏)",
+        "latest_vol": 25913,
+        "avg_vol": 2061,
+        "ratio": 12.6,
+        "price": 1.345,
+        "date": "2026-10-23"
+      }
+    ]
   }
 ]
