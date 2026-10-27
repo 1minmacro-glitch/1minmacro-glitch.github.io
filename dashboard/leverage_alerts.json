@@ -722,5 +722,21 @@
     "checked_at_utc": "2026-10-26T17:00:15.467912+00:00",
     "threshold": 8.0,
     "hits": []
+  },
+  {
+    "date": "2026-10-27",
+    "checked_at_utc": "2026-10-27T17:00:14.425227+00:00",
+    "threshold": 8.0,
+    "hits": [
+      {
+        "ticker": "3SLL.L",
+        "name": "Lloyds(숏)",
+        "latest_vol": 10104,
+        "avg_vol": 652,
+        "ratio": 15.5,
+        "price": 64.55,
+        "date": "2026-10-27"
+      }
+    ]
   }
 ]
