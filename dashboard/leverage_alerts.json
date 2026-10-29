@@ -744,5 +744,21 @@
     "checked_at_utc": "2026-10-28T17:00:16.024909+00:00",
     "threshold": 8.0,
     "hits": []
+  },
+  {
+    "date": "2026-10-29",
+    "checked_at_utc": "2026-10-29T17:00:16.539756+00:00",
+    "threshold": 8.0,
+    "hits": [
+      {
+        "ticker": "3SBP.L",
+        "name": "BP(숏)",
+        "latest_vol": 15157,
+        "avg_vol": 1123,
+        "ratio": 13.5,
+        "price": 343.5,
+        "date": "2026-10-29"
+      }
+    ]
   }
 ]
