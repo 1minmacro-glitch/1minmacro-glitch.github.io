@@ -1364,7 +1364,7 @@ const BUDGET_FOODFUEL = [ // 식비주유비 전용통장으로 매달 이체
   { label: "기름값", amount: 110000, note: "평균, 주행량에 따라 변동" },
 ];
 const BUDGET_SELF = [...BUDGET_KAKAO, ...BUDGET_FOODFUEL]; // 자유자금 계산용 합계는 그대로 필요해서 유지
-const BUDGET_GAME = 100000; // 게임비 고정 할당(2026-09-08 결정, 가챠 등은 이 안에서만)
+const BUDGET_GAME = 0; // 2026-10-30: 게임비 고정할당 폐지(2026-09-08 결정 철회) — 트위터/패트리온 구독은 둘 다 실사용 중이라 유지, 게임비만 전액 자유자금으로 환원
 
 const LS_EXPENSES = "jh_expenses";
 let expenses = load(LS_EXPENSES, []);
@@ -1709,7 +1709,7 @@ function renderBudget() {
     { label: "식비주유비", amount: foodfuelTotal, color: "var(--cat-workout)" },
     { label: "게임비", amount: BUDGET_GAME, color: "var(--cat-dn8)" },
     { label: "자유자금(이론상)", amount: freeFund, color: "var(--cat-love)" },
-  ], BUDGET_INCOME, "월 소득", fmt);
+  ].filter(e => e.amount > 0), BUDGET_INCOME, "월 소득", fmt);
   // 이론상 총액(kakaoTotal)엔 이번달 스킵된 항목(예: 복싱 9~10월)도 포함돼있어서 실제보다 부풀려 보임 —
   // "이번달 실제로 통장에 반영돼야 하는 금액"은 스킵 항목 뺀 kakaoRealTotal로 따로 계산함.
   const kakaoRealTotal = BUDGET_KAKAO.filter(i => !(i.skipMonths && i.skipMonths.includes(ym))).reduce((s, i) => s + i.amount, 0);
@@ -1765,7 +1765,7 @@ function renderBudget() {
     <h3>💰 이번달 가계부</h3>
     ${budgetChartHtml}
     <div style="text-align:center; padding:4px 0 8px;">
-      <div style="font-size:12px; color:var(--text-muted);">자유자금(게임비 ${fmt(BUDGET_GAME)} 제외) ${fmt(freeFund)} 중</div>
+      <div style="font-size:12px; color:var(--text-muted);">자유자금${BUDGET_GAME > 0 ? `(게임비 ${fmt(BUDGET_GAME)} 제외)` : ""} ${fmt(freeFund)} 중</div>
       <div style="font-size:30px; font-weight:800; color:${remain >= 0 ? "var(--good)" : "var(--cat-invest)"}; line-height:1.3;">${fmt(remain)}</div>
       <div style="font-size:12px; color:var(--text-muted);">남음 (이번달 지출 ${fmt(spent)} 반영)</div>
     </div>
