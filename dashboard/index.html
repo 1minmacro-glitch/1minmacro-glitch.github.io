@@ -1551,6 +1551,48 @@ function changeCalMonth(delta) {
   renderBudget();
 }
 
+// 2026-10-30: 소득 대비 고정비/자유자금 "비중"을 한눈에 보고 싶다는 요청 — 도넛차트+표 추가.
+// 색상은 대시보드 기존 카테고리 토큰(--cat-*) 재사용(라이트/다크 이미 대응돼있음, 새 팔레트 안 만듦).
+// 엔티티별 색은 고정(순위 바뀌어도 안 바뀜) — 도넛 그리는 순서만 금액 큰 것부터 시계방향(12시 시작).
+function renderBudgetDonut(entries, totalAmount, totalLabel, fmt) {
+  const R = 58, SW = 20; // 반지름/띠두께 — viewBox 160x160 기준
+  const CX = 80, CY = 80;
+  const circumference = 2 * Math.PI * R;
+  const gapPx = 3; // 조각 사이 틈
+  const drawOrder = [...entries].sort((a, b) => b.amount - a.amount);
+  let cumulative = 0;
+  const arcs = drawOrder.map(e => {
+    const frac = totalAmount > 0 ? e.amount / totalAmount : 0;
+    const rawLen = frac * circumference;
+    const visibleLen = Math.max(0, rawLen - gapPx);
+    const dashoffset = -cumulative;
+    cumulative += rawLen;
+    return `<circle cx="${CX}" cy="${CY}" r="${R}" fill="none" stroke-width="${SW}"
+      style="stroke:${e.color};" stroke-dasharray="${visibleLen.toFixed(2)} ${(circumference - visibleLen).toFixed(2)}"
+      stroke-dashoffset="${dashoffset.toFixed(2)}" transform="rotate(-90 ${CX} ${CY})"><title>${e.label} ${fmt(e.amount)} (${(frac * 100).toFixed(1)}%)</title></circle>`;
+  }).join("");
+
+  const tableRows = drawOrder.map(e => {
+    const pct = totalAmount > 0 ? (e.amount / totalAmount) * 100 : 0;
+    return `<div style="display:flex; align-items:center; gap:6px; font-size:11.5px; padding:3px 0;">
+      <span style="width:9px; height:9px; border-radius:50%; flex-shrink:0; background:${e.color};"></span>
+      <span style="flex:1; min-width:0;">${e.label}</span>
+      <span style="font-variant-numeric:tabular-nums; color:var(--text-muted); width:40px; text-align:right;">${pct.toFixed(1)}%</span>
+      <span style="font-variant-numeric:tabular-nums; font-weight:700; width:78px; text-align:right;">${fmt(e.amount)}</span>
+    </div>`;
+  }).join("");
+
+  return `
+  <div style="display:flex; gap:14px; align-items:center; flex-wrap:wrap; margin:4px 0 10px;">
+    <svg viewBox="0 0 160 160" style="width:120px; height:120px; flex-shrink:0;" role="img" aria-label="월 소득 구성비 도넛차트">
+      ${arcs}
+      <text x="${CX}" y="${CY - 6}" text-anchor="middle" style="font-size:15px; font-weight:800; fill:var(--text-primary,#0b0b0b);">${fmt(totalAmount).replace("원", "")}</text>
+      <text x="${CX}" y="${CY + 12}" text-anchor="middle" style="font-size:9.5px; fill:var(--text-muted);">${totalLabel}</text>
+    </svg>
+    <div style="flex:1; min-width:180px;">${tableRows}</div>
+  </div>`;
+}
+
 function renderBudget() {
   const panel = document.getElementById("budgetPanel");
   if (!panel) return;
@@ -1661,6 +1703,13 @@ function renderBudget() {
 
   const kakaoTotal = BUDGET_KAKAO.reduce((s, i) => s + i.amount, 0);
   const foodfuelTotal = BUDGET_FOODFUEL.reduce((s, i) => s + i.amount, 0);
+  const budgetChartHtml = renderBudgetDonut([
+    { label: "저축·빚·용돈", amount: momTotal, color: "var(--cat-asset)" },
+    { label: "카카오뱅크 고정비", amount: kakaoTotal, color: "var(--cat-happy)" },
+    { label: "식비주유비", amount: foodfuelTotal, color: "var(--cat-workout)" },
+    { label: "게임비", amount: BUDGET_GAME, color: "var(--cat-dn8)" },
+    { label: "자유자금(이론상)", amount: freeFund, color: "var(--cat-love)" },
+  ], BUDGET_INCOME, "월 소득", fmt);
   // 이론상 총액(kakaoTotal)엔 이번달 스킵된 항목(예: 복싱 9~10월)도 포함돼있어서 실제보다 부풀려 보임 —
   // "이번달 실제로 통장에 반영돼야 하는 금액"은 스킵 항목 뺀 kakaoRealTotal로 따로 계산함.
   const kakaoRealTotal = BUDGET_KAKAO.filter(i => !(i.skipMonths && i.skipMonths.includes(ym))).reduce((s, i) => s + i.amount, 0);
@@ -1714,6 +1763,7 @@ function renderBudget() {
 
   panel.innerHTML = `
     <h3>💰 이번달 가계부</h3>
+    ${budgetChartHtml}
     <div style="text-align:center; padding:4px 0 8px;">
       <div style="font-size:12px; color:var(--text-muted);">자유자금(게임비 ${fmt(BUDGET_GAME)} 제외) ${fmt(freeFund)} 중</div>
       <div style="font-size:30px; font-weight:800; color:${remain >= 0 ? "var(--good)" : "var(--cat-invest)"}; line-height:1.3;">${fmt(remain)}</div>
