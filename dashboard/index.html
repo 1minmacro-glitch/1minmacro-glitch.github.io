@@ -1335,8 +1335,15 @@ function isKrHoliday(y, m, d) {
 }
 
 const BUDGET_INCOME = 2880000;
+// 2026-10-30: "엄마 200만원 퉁쳐서" 방식 폐기, 사장님이 저축/빚 상환 항목별로 재분리해서 알려줌.
+// 합계는 여전히 200만원으로 동일(70+80+25+12+13=200) — 그래서 freeFund 공식 결과는 안 바뀜,
+// 라벨/구성만 바뀐 것. 변수명은 기존 코드 재사용 위해 BUDGET_MOM 그대로 유지(실제론 "저축+빚+용돈").
 const BUDGET_MOM = [
-  { label: "엄마 생활비(퉁쳐서)", amount: 2000000, note: "2026-09-30부터 저축/할부/카드/학자금 세부항목 안 나누고 매달 200만원 고정으로 엄마랑 합의" },
+  { label: "청년도약계좌(저축)", amount: 700000, note: "매달 고정" },
+  { label: "학자금 적금", amount: 800000, note: "매달 고정 — 2026-11은 일회성으로 30만원만 자유자금으로 돌림(아래 지출기록 참고)" },
+  { label: "차 할부", amount: 250000, note: "매달 고정" },
+  { label: "노트북 할부", amount: 120000, note: "매달 고정" },
+  { label: "엄마 용돈", amount: 130000, note: "매달 고정" },
 ];
 // 2026-09-11: 계좌 구조(신한=자유자금/카카오뱅크=고정비 자동이체/식비주유비=별도 통장)에 맞춰
 // "직접 쓰는 것"을 어느 통장으로 이체되는지 기준으로 2개 그룹으로 분리함 — 예전엔 한 리스트로
@@ -1474,6 +1481,14 @@ if (!load("jh_bal_seed_1004", false)) {
   localStorage.setItem("jh_bal_shinhan", "387580");
   localStorage.setItem("jh_bal_updated_at", "2026-10-04");
   save("jh_bal_seed_1004", true);
+}
+// 2026-10-30: 사장님이 저축/빚 구조를 항목별로 재분리하면서, 11월은 학자금 적금(원래 80만원)
+// 중 30만원만 자유자금으로 돌리기로 함(1회성, 12월부터는 다시 80만원 전액 적금). BUDGET_MOM
+// 배열은 표준(80만원 전액)으로 유지하고, 이 1회성 차액만 11월 지출기록에 음수(환급=자유자금 추가)로 반영.
+if (!load("jh_expenses_seed_1101", false)) {
+  expenses.push({ id: "e1101a", date: "2026-11-01", label: "학자금적금 11월 일회성 감액(80→50만원), 차액 자유자금 전환", amount: -300000 });
+  save(LS_EXPENSES, expenses);
+  save("jh_expenses_seed_1101", true);
 }
 
 function addExpense() {
@@ -1744,7 +1759,7 @@ function renderBudget() {
     </div>
     ${calHtml}
     <details style="margin-top:8px;">
-      <summary style="cursor:pointer; font-size:12.5px; font-weight:700;">엄마에게 (${fmt(momTotal)})</summary>
+      <summary style="cursor:pointer; font-size:12.5px; font-weight:700;">저축·빚·용돈 (${fmt(momTotal)})</summary>
       ${BUDGET_MOM.map(row).join("")}
     </details>
     <details style="margin-top:8px;">
