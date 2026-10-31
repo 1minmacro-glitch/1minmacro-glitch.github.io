@@ -2238,6 +2238,17 @@ if (!load("jh_todos_seed_1012", false)) {
   save(LS_TODOS, todos);
   save("jh_todos_seed_1012", true);
 }
+// 2026-10-31: 부업 다각화 레퍼런스(X 참고 트윗) 대조해서 나온 실제 액션 항목, 1회성 추가
+if (!load("jh_todos_seed_1031", false)) {
+  const items1031 = [
+    { id: "p1", text: "[틱톡] developers.tiktok.com 가서 Content Posting API 승인상태 재확인 — 5월에 신청만 해놓고 .env 키 미입력, tokens/ 폴더 비어있음(OAuth 미완료)" },
+    { id: "p2", text: "[틱톡] 승인됐으면 .env에 TIKTOK_CLIENT_KEY_WALLST/SECRET 채우고 python auth_tiktok.py wallst 1회 실행해서 토큰 발급" },
+    { id: "p3", text: "[부업다각화] 네이버 블로그(애드포스트) 채널 신규 시작할지 결정 — 참고사례(@cheongchun123)는 블로그 4개로 월150~300만원, 우리는 블로그 채널 자체가 없음" },
+  ];
+  todos = todos.concat(items1031);
+  save(LS_TODOS, todos);
+  save("jh_todos_seed_1031", true);
+}
 let todoLog = load(LS_TODO_LOG, []);
 let lastRemovedTodo = null, lastRemovedLog = null, undoTimer = null;
 
