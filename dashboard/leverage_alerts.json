@@ -794,5 +794,39 @@
         "date": "2026-10-30"
       }
     ]
+  },
+  {
+    "date": "2026-10-31",
+    "checked_at_utc": "2026-10-31T17:00:16.658406+00:00",
+    "threshold": 8.0,
+    "hits": [
+      {
+        "ticker": "3SLL.L",
+        "name": "Lloyds(숏)",
+        "latest_vol": 32744,
+        "avg_vol": 652,
+        "ratio": 50.2,
+        "price": 81.15,
+        "date": "2026-10-30"
+      },
+      {
+        "ticker": "3LCO.L",
+        "name": "Coinbase",
+        "latest_vol": 325958,
+        "avg_vol": 29660,
+        "ratio": 11.0,
+        "price": 0.0425,
+        "date": "2026-10-30"
+      },
+      {
+        "ticker": "3LNV.L",
+        "name": "NVIDIA",
+        "latest_vol": 6720,
+        "avg_vol": 830,
+        "ratio": 8.1,
+        "price": 28.23,
+        "date": "2026-10-30"
+      }
+    ]
   }
 ]
