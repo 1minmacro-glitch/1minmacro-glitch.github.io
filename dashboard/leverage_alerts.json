@@ -862,5 +862,30 @@
         "date": "2026-10-30"
       }
     ]
+  },
+  {
+    "date": "2026-11-02",
+    "checked_at_utc": "2026-11-02T17:00:14.832923+00:00",
+    "threshold": 8.0,
+    "hits": [
+      {
+        "ticker": "3SAP.L",
+        "name": "Apple(숏)",
+        "latest_vol": 17943,
+        "avg_vol": 1457,
+        "ratio": 12.3,
+        "price": 1.4275,
+        "date": "2026-11-02"
+      },
+      {
+        "ticker": "3LDO.L",
+        "name": "Diageo",
+        "latest_vol": 5882,
+        "avg_vol": 590,
+        "ratio": 10.0,
+        "price": 196.5,
+        "date": "2026-11-02"
+      }
+    ]
   }
 ]
