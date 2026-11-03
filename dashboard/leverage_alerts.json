@@ -887,5 +887,39 @@
         "date": "2026-11-02"
       }
     ]
+  },
+  {
+    "date": "2026-11-03",
+    "checked_at_utc": "2026-11-03T17:00:15.483019+00:00",
+    "threshold": 8.0,
+    "hits": [
+      {
+        "ticker": "3SAP.L",
+        "name": "Apple(숏)",
+        "latest_vol": 74144,
+        "avg_vol": 1759,
+        "ratio": 42.1,
+        "price": 1.565,
+        "date": "2026-11-03"
+      },
+      {
+        "ticker": "3LNI.L",
+        "name": "NIO",
+        "latest_vol": 13667,
+        "avg_vol": 1404,
+        "ratio": 9.7,
+        "price": 2.1363,
+        "date": "2026-11-03"
+      },
+      {
+        "ticker": "3SPA.L",
+        "name": "Palantir(숏)",
+        "latest_vol": 323793,
+        "avg_vol": 33621,
+        "ratio": 9.6,
+        "price": 0.464,
+        "date": "2026-11-03"
+      }
+    ]
   }
 ]
