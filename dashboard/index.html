@@ -415,6 +415,9 @@
 <nav class="leftnav">
   <div class="brand">🎮 준현 대시보드</div>
   <div class="nav-scroll">
+    <button class="nav-btn" data-page="page-work" onclick="activatePage('page-work')">
+      <span class="nav-icon">🗂️</span><span class="nav-label">작업판</span>
+    </button>
     <button class="nav-btn active" data-page="page-today" onclick="activatePage('page-today')">
       <span class="nav-icon">📋</span><span class="nav-label">오늘</span>
     </button>
@@ -445,6 +448,59 @@
   <div class="content">
     <div class="page-layout">
       <div class="card marathon-panel" id="ddayPanel"></div>
+
+      <div class="app-page" id="page-work" hidden>
+        <header>
+          <h1>🗂️ 작업판</h1>
+          <div class="sub">지금 하고 있는 것 · 해야 할 것 · 완성도</div>
+        </header>
+
+        <div class="card marathon-panel" style="margin-top:14px;">
+          <h3 style="margin:0 0 4px;">사업 분류</h3>
+          <div style="font-size:12px; color:var(--text-muted); margin-bottom:14px;">돈 내는 주체 기준 2대분류</div>
+
+          <div style="margin-bottom:18px;">
+            <div style="font-weight:700; font-size:14px; margin-bottom:6px;">1. 생성물사업 (사람 겨냥) — 시작 2026-05-01</div>
+            <div style="font-size:12.5px; color:var(--text-secondary); line-height:1.7;">
+              영상매체 제작 — 월가비상구 · 부동산비상구 · Korea vs World · 감성극장(한국드라마) ·
+              Philos 미스터리(YouTube+인스타) · 만약연구소(Curiosity3D, 보류중) ·
+              수&amp;버터(냥글로우, 2026-10-19~, 캐릭터명 Sue, 고양이와 함께하는 beauty)
+            </div>
+          </div>
+
+          <div>
+            <div style="font-weight:700; font-size:14px; margin-bottom:6px;">2. LOVEPHILOS (AI 겨냥) — 시작 2026-10-07</div>
+            <div style="font-size:12.5px; color:var(--text-secondary); line-height:1.7;">
+              1. AI 웹크롤링 사업 — marketbriefwire.com<br>
+              2. AI 신원 검증 서비스 — 구상단계, 미착수<br>
+              3. AI MCP 툴 — mcp-wallet-facts(지갑조회)
+            </div>
+          </div>
+        </div>
+
+        <div class="card marathon-panel" style="margin-top:14px;">
+          <h3 style="margin:0 0 4px;">지금 해야 할 것</h3>
+          <div style="font-size:12.5px; line-height:1.9;">
+            - 유튜브 채널 전반적으로 폰트 업그레이드<br>
+            - 증권사 리포트 해체·독해 엔진 — 퇴사 후 주식 재개 대비 레퍼런스 정리<br>
+            - 증권사 리포트 읽는 법 공부
+          </div>
+        </div>
+
+        <div class="card marathon-panel" style="margin-top:14px;">
+          <h3 style="margin:0 0 2px;">자동화 채널 완성도</h3>
+          <div style="font-size:11px; color:var(--text-muted); margin-bottom:4px; line-height:1.6;">
+            <b>운영성숙도(50%)</b>: 파이프라인 전체(소재→대본→영상→업로드)가 사람 개입 없이
+            자동으로 도는지 + 포맷 다양성(각도·형식 종류). <b>콘텐츠 성과(50%)</b>: 실제 평균 시청완료율을
+            유튜브 쇼츠 업계 통용 "양호" 기준(65~80%+, Retensis 2026 벤치마크 등 기준)과 비교 + 구독자
+            목표(1,000명) 진행률 보조반영. 2026-11-04 실측 데이터(channel_analytics.py) 기준.<br>
+            <b style="color:var(--text-primary);">⚠ 이 점수는 "대본 깊이·소재 다양성·창의성" 같은 질적 요소는 못 잡음</b> —
+            그건 사장님이 직접 보시는 게 유일한 측정법이라 숫자에 억지로 안 섞었음. "내용이 부실하다"는
+            판단은 이 점수와 별개로 사장님 판단이 맞음.
+          </div>
+          <div id="completionBars"></div>
+        </div>
+      </div>
 
       <div class="app-page" id="page-today">
         <header>
@@ -2523,9 +2579,9 @@ function renderKpiAndNotices(data) {
   const pausedCount = data.projects.filter(p => p.status_note).length;
 
   document.getElementById("kpiRow").innerHTML = `
-    <div class="kpi"><div class="label">진행중 프로젝트</div><div class="value">${data.projects.length}</div><div class="sub">기록 있는 거 ${active.length}개</div></div>
-    <div class="kpi"><div class="label">이번주 업데이트</div><div class="value">${weekCount}</div><div class="sub">건 (git+메모리 합산)</div></div>
-    <div class="kpi"><div class="label">보류중</div><div class="value">${pausedCount}</div><div class="sub">명시적으로 멈춰둔 것</div></div>
+    <div class="kpi" style="cursor:pointer;" onclick="openKpiDetail('all')"><div class="label">진행중 프로젝트</div><div class="value">${data.projects.length}</div><div class="sub">기록 있는 거 ${active.length}개</div></div>
+    <div class="kpi" style="cursor:pointer;" onclick="openKpiDetail('week')"><div class="label">이번주 업데이트</div><div class="value">${weekCount}</div><div class="sub">건 (git+메모리 합산)</div></div>
+    <div class="kpi" style="cursor:pointer;" onclick="openKpiDetail('paused')"><div class="label">보류중</div><div class="value">${pausedCount}</div><div class="sub">명시적으로 멈춰둔 것</div></div>
     <div class="kpi"><div class="label">자유자금</div><div class="value" style="font-size:15px;">${_budgetLiveTargets.remain != null ? _budgetLiveTargets.remain.toLocaleString("ko-KR") + "원" : "-"}</div><div class="sub">이번달 남음</div></div>
   `;
 
@@ -2593,7 +2649,86 @@ function openWorkLog(id) {
 function closeWorkLogModal() {
   document.getElementById("workLogModalBackdrop").style.display = "none";
 }
+function openKpiDetail(type) {
+  if (!_workLogData) return;
+  const panel = document.getElementById("workLogPanel");
+  let title = "", rows = "";
+  if (type === "all") {
+    title = `📂 진행중 프로젝트 ${_workLogData.projects.length}개`;
+    rows = _workLogData.projects.map(p => {
+      const sub = p.status_note ? p.status_note : (p.last_activity ? `최근 ${p.last_activity}` : "기록 없음");
+      return `<div style="padding:7px 0; border-bottom:1px solid var(--gridline); font-size:12px; cursor:pointer;"
+        onclick="closeWorkLogModal(); setTimeout(()=>openWorkLog('${p.id}'), 150);">
+        <span style="font-weight:700;">${p.icon} ${p.name}</span>
+        <span style="color:var(--text-muted); font-size:10.5px; margin-left:6px;">${sub}</span>
+      </div>`;
+    }).join("");
+  } else if (type === "week") {
+    const now = new Date();
+    const weekAgo = new Date(now.getTime() - 7 * 86400000).toISOString().slice(0, 10);
+    const allEntries = [];
+    _workLogData.projects.forEach(p => p.entries.forEach(e => { if (e.date >= weekAgo) allEntries.push({ ...e, projName: p.name, projIcon: p.icon }); }));
+    allEntries.sort((a, b) => b.date.localeCompare(a.date));
+    title = `🆕 이번주 업데이트 ${allEntries.length}건`;
+    rows = allEntries.length ? allEntries.map(e => `
+      <div style="padding:7px 0; border-bottom:1px solid var(--gridline); font-size:12px;">
+        <div style="color:var(--text-muted); font-size:10.5px;">${e.date} · ${e.projIcon} ${e.projName}</div>
+        <div style="margin-top:1px;">${e.msg}</div>
+      </div>`).join("") : `<div style="padding:16px 0; text-align:center; color:var(--text-muted); font-size:12px;">이번주 기록 없음</div>`;
+  } else if (type === "paused") {
+    const paused = _workLogData.projects.filter(p => p.status_note);
+    title = `⏸️ 보류중 ${paused.length}개`;
+    rows = paused.length ? paused.map(p => `
+      <div style="padding:7px 0; border-bottom:1px solid var(--gridline); font-size:12px;">
+        <span style="font-weight:700;">${p.icon} ${p.name}</span>
+        <span style="color:var(--text-muted); font-size:10.5px; margin-left:6px;">${p.status_note}</span>
+      </div>`).join("") : `<div style="padding:16px 0; text-align:center; color:var(--text-muted); font-size:12px;">보류중인 것 없음</div>`;
+  }
+  panel.innerHTML = `<h3 style="margin:0 0 10px; font-size:15px;">${title}</h3>${rows}`;
+  document.getElementById("workLogModalBackdrop").style.display = "flex";
+}
 loadWorkLog();
+
+// ── 작업판: 자동화 채널 완성도 (2026-11-04, channel_analytics.py 실측 기준) ──
+// 운영성숙도(파이프라인 자동화+포맷다양성, 주관 평가) 50% + 콘텐츠성과(실제 시청완료율 ÷ 업계
+// "양호" 기준 65%, cap 100% + 구독자목표진행률 보조) 50%. 수치 바뀌면 여기 배열만 갱신하면 됨.
+const CHANNEL_COMPLETION = [
+  { name: "부동산비상구", icon: "🏠", ops: 100, retention: 50.0, subsPct: 30.1,
+    note: "숏폼+롱폼+청약+경매+연예인비교+자동댓글관리까지 포맷 제일 다양함" },
+  { name: "Korea vs World", icon: "🌍", ops: 85, retention: 106.3, subsPct: 3.6,
+    note: "시청완료율 106%(루프재생 추정) — 반응 자체는 강한데 구독전환이 약함" },
+  { name: "월가비상구", icon: "📈", ops: 90, retention: 50.4, subsPct: 13.1,
+    note: "완전자동+각도/시선 로테이션 있지만 포맷은 숏폼 단일" },
+  { name: "감성극장(한국드라마)", icon: "🎭", ops: 80, retention: 14.9, subsPct: 2.6,
+    note: "시청완료율 14.9%로 자체 분석에서도 ▽주의 — 대본/훅 재점검 필요" },
+  { name: "Brain Snack", icon: "🧠", ops: 0, retention: null, subsPct: 0.1,
+    note: "CLAUDE.md상 Disabled 상태, 가동 자체를 안 함" },
+];
+function renderCompletionBars() {
+  const wrap = document.getElementById("completionBars");
+  if (!wrap) return;
+  wrap.innerHTML = CHANNEL_COMPLETION.map(c => {
+    const retScore = c.retention == null ? 0 : Math.min(100, (c.retention / 65) * 100);
+    const perfScore = retScore * 0.8 + c.subsPct * 0.2;
+    const total = Math.round((c.ops + perfScore) / 2);
+    const color = total >= 70 ? "#2e9e5b" : total >= 40 ? "#d8a017" : "#c84b4b";
+    return `
+      <div style="margin-bottom:14px;">
+        <div style="display:flex; justify-content:space-between; font-size:12.5px; margin-bottom:3px;">
+          <span style="font-weight:700;">${c.icon} ${c.name}</span>
+          <span style="font-weight:700; color:${color};">${total}%</span>
+        </div>
+        <div style="background:var(--page); border-radius:6px; height:8px; overflow:hidden;">
+          <div style="width:${total}%; height:100%; background:${color};"></div>
+        </div>
+        <div style="font-size:10.5px; color:var(--text-muted); margin-top:3px;">
+          운영 ${c.ops}% · 시청완료율 ${c.retention == null ? "비활성" : c.retention + "%"} ·
+          구독자 ${c.subsPct}%(목표1,000명) — ${c.note}
+        </div>
+      </div>`;
+  }).join("");
+}
+renderCompletionBars();
 </script>
 </body>
 </html>
