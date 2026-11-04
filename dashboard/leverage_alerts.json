@@ -921,5 +921,30 @@
         "date": "2026-11-03"
       }
     ]
+  },
+  {
+    "date": "2026-11-04",
+    "checked_at_utc": "2026-11-04T17:00:14.660703+00:00",
+    "threshold": 8.0,
+    "hits": [
+      {
+        "ticker": "3SAP.L",
+        "name": "Apple(숏)",
+        "latest_vol": 38784,
+        "avg_vol": 2061,
+        "ratio": 18.8,
+        "price": 1.275,
+        "date": "2026-11-04"
+      },
+      {
+        "ticker": "3SLL.L",
+        "name": "Lloyds(숏)",
+        "latest_vol": 11481,
+        "avg_vol": 1302,
+        "ratio": 8.8,
+        "price": 70.3,
+        "date": "2026-11-04"
+      }
+    ]
   }
 ]
