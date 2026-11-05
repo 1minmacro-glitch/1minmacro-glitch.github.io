@@ -946,5 +946,48 @@
         "date": "2026-11-04"
       }
     ]
+  },
+  {
+    "date": "2026-11-05",
+    "checked_at_utc": "2026-11-05T17:00:18.994344+00:00",
+    "threshold": 8.0,
+    "hits": [
+      {
+        "ticker": "3SNV.L",
+        "name": "NVIDIA(숏)",
+        "latest_vol": 3899344,
+        "avg_vol": 30894,
+        "ratio": 126.2,
+        "price": 0.3765,
+        "date": "2026-11-05"
+      },
+      {
+        "ticker": "3LNV.L",
+        "name": "NVIDIA",
+        "latest_vol": 74161,
+        "avg_vol": 1230,
+        "ratio": 60.3,
+        "price": 20.78,
+        "date": "2026-11-05"
+      },
+      {
+        "ticker": "3SBP.L",
+        "name": "BP(숏)",
+        "latest_vol": 17379,
+        "avg_vol": 976,
+        "ratio": 17.8,
+        "price": 449.0,
+        "date": "2026-11-05"
+      },
+      {
+        "ticker": "3SAP.L",
+        "name": "Apple(숏)",
+        "latest_vol": 24380,
+        "avg_vol": 2258,
+        "ratio": 10.8,
+        "price": 1.3275,
+        "date": "2026-11-05"
+      }
+    ]
   }
 ]
