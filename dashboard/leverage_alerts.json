@@ -1032,5 +1032,48 @@
         "date": "2026-11-06"
       }
     ]
+  },
+  {
+    "date": "2026-11-07",
+    "checked_at_utc": "2026-11-07T17:00:17.375159+00:00",
+    "threshold": 8.0,
+    "hits": [
+      {
+        "ticker": "3SNV.L",
+        "name": "NVIDIA(숏)",
+        "latest_vol": 627738,
+        "avg_vol": 30894,
+        "ratio": 20.3,
+        "price": 0.356,
+        "date": "2026-11-06"
+      },
+      {
+        "ticker": "3SAP.L",
+        "name": "Apple(숏)",
+        "latest_vol": 28779,
+        "avg_vol": 1458,
+        "ratio": 19.7,
+        "price": 1.3525,
+        "date": "2026-11-06"
+      },
+      {
+        "ticker": "3LNV.L",
+        "name": "NVIDIA",
+        "latest_vol": 20983,
+        "avg_vol": 1382,
+        "ratio": 15.2,
+        "price": 20.87,
+        "date": "2026-11-06"
+      },
+      {
+        "ticker": "3LDO.L",
+        "name": "Diageo",
+        "latest_vol": 9723,
+        "avg_vol": 1003,
+        "ratio": 9.7,
+        "price": 223.0,
+        "date": "2026-11-06"
+      }
+    ]
   }
 ]
