@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-09T23:50:02.990931",
+  "generated_at": "2026-11-10T23:50:03.613752",
   "groups": [
     "자동화 채널",
     "AI겨냥 사업",
@@ -13,9 +13,51 @@
       "icon": "📈",
       "group": "자동화 채널",
       "status_note": null,
-      "last_activity": "2026-11-09",
+      "last_activity": "2026-11-10",
       "entry_count": 10,
       "entries": [
+        {
+          "date": "2026-11-10",
+          "hash": null,
+          "msg": "영상 생성: SHORT_20261110_2100.mp4",
+          "src": "output"
+        },
+        {
+          "date": "2026-11-10",
+          "hash": null,
+          "msg": "영상 생성: SHORT_20261110_1700.mp4",
+          "src": "output"
+        },
+        {
+          "date": "2026-11-10",
+          "hash": null,
+          "msg": "영상 생성: SHORT_20261110_1500.mp4",
+          "src": "output"
+        },
+        {
+          "date": "2026-11-10",
+          "hash": null,
+          "msg": "영상 생성: SHORT_20261110_1300.mp4",
+          "src": "output"
+        },
+        {
+          "date": "2026-11-10",
+          "hash": null,
+          "msg": "영상 생성: SHORT_20261110_1200.mp4",
+          "src": "output"
+        },
+        {
+          "date": "2026-11-10",
+          "hash": null,
+          "msg": "영상 생성: SHORT_20261110_1000.mp4",
+          "src": "output"
+        },
+        {
+          "date": "2026-11-10",
+          "hash": null,
+          "msg": "영상 생성: SHORT_20261110_0901.mp4",
+          "src": "output"
+        },
         {
           "date": "2026-11-09",
           "hash": null,
@@ -33,48 +75,6 @@
           "hash": null,
           "msg": "영상 생성: SHORT_20261109_1500.mp4",
           "src": "output"
-        },
-        {
-          "date": "2026-11-09",
-          "hash": null,
-          "msg": "영상 생성: SHORT_20261109_1300.mp4",
-          "src": "output"
-        },
-        {
-          "date": "2026-11-09",
-          "hash": null,
-          "msg": "영상 생성: SHORT_20261109_1200.mp4",
-          "src": "output"
-        },
-        {
-          "date": "2026-11-09",
-          "hash": null,
-          "msg": "영상 생성: SHORT_20261109_1000.mp4",
-          "src": "output"
-        },
-        {
-          "date": "2026-11-09",
-          "hash": null,
-          "msg": "영상 생성: SHORT_20261109_0901.mp4",
-          "src": "output"
-        },
-        {
-          "date": "2026-11-08",
-          "hash": null,
-          "msg": "영상 생성: SHORT_20261108_0900.mp4",
-          "src": "output"
-        },
-        {
-          "date": "2026-11-07",
-          "hash": null,
-          "msg": "영상 생성: SHORT_20261107_0900.mp4",
-          "src": "output"
-        },
-        {
-          "date": "2026-11-06",
-          "hash": null,
-          "msg": "영상 생성: SHORT_20261106_2100.mp4",
-          "src": "output"
         }
       ]
     },
@@ -84,67 +84,67 @@
       "icon": "🏠",
       "group": "자동화 채널",
       "status_note": null,
-      "last_activity": "2026-11-09",
+      "last_activity": "2026-11-10",
       "entry_count": 10,
       "entries": [
         {
-          "date": "2026-11-09",
+          "date": "2026-11-10",
           "hash": null,
-          "msg": "영상 생성: realestate_20261109_2109.mp4",
+          "msg": "영상 생성: realestate_20261110_1600.mp4",
           "src": "output"
         },
         {
-          "date": "2026-11-09",
+          "date": "2026-11-10",
           "hash": null,
-          "msg": "영상 생성: realestate_20261109_1600.mp4",
+          "msg": "영상 생성: realestate_20261110_1505.mp4",
           "src": "output"
         },
         {
-          "date": "2026-11-09",
+          "date": "2026-11-10",
           "hash": null,
-          "msg": "영상 생성: realestate_20261109_1500.mp4",
+          "msg": "영상 생성: realestate_20261110_1500.mp4",
           "src": "output"
         },
         {
-          "date": "2026-11-09",
+          "date": "2026-11-10",
           "hash": null,
-          "msg": "영상 생성: realestate_20261109_1400.mp4",
+          "msg": "영상 생성: realestate_20261110_1400.mp4",
           "src": "output"
         },
         {
-          "date": "2026-11-09",
+          "date": "2026-11-10",
           "hash": null,
-          "msg": "영상 생성: realestate_20261109_1300.mp4",
+          "msg": "영상 생성: realestate_20261110_1300.mp4",
           "src": "output"
         },
         {
-          "date": "2026-11-09",
+          "date": "2026-11-10",
           "hash": null,
-          "msg": "영상 생성: realestate_20261109_1200.mp4",
+          "msg": "영상 생성: realestate_20261110_1200.mp4",
           "src": "output"
         },
         {
-          "date": "2026-11-09",
+          "date": "2026-11-10",
           "hash": null,
-          "msg": "영상 생성: realestate_20261109_1100.mp4",
+          "msg": "영상 생성: realestate_20261110_1100.mp4",
           "src": "output"
         },
         {
-          "date": "2026-11-09",
+          "date": "2026-11-10",
           "hash": null,
-          "msg": "영상 생성: realestate_20261109_1030.mp4",
+          "msg": "영상 생성: realestate_20261110_1030.mp4",
           "src": "output"
         },
         {
-          "date": "2026-11-09",
+          "date": "2026-11-10",
           "hash": null,
-          "msg": "영상 생성: realestate_20261109_1000.mp4",
+          "msg": "영상 생성: realestate_20261110_1004.mp4",
           "src": "output"
         },
         {
-          "date": "2026-11-09",
+          "date": "2026-11-10",
           "hash": null,
-          "msg": "영상 생성: realestate_20261109_0931.mp4",
+          "msg": "영상 생성: realestate_20261110_1000.mp4",
           "src": "output"
         }
       ]
@@ -155,9 +155,33 @@
       "icon": "🌍",
       "group": "자동화 채널",
       "status_note": null,
-      "last_activity": "2026-11-09",
+      "last_activity": "2026-11-10",
       "entry_count": 10,
       "entries": [
+        {
+          "date": "2026-11-10",
+          "hash": null,
+          "msg": "영상 생성: koreaworld_20261110_2107.mp4",
+          "src": "output"
+        },
+        {
+          "date": "2026-11-10",
+          "hash": null,
+          "msg": "영상 생성: koreaworld_20261110_1403.mp4",
+          "src": "output"
+        },
+        {
+          "date": "2026-11-10",
+          "hash": null,
+          "msg": "영상 생성: koreaworld_20261110_1148.mp4",
+          "src": "output"
+        },
+        {
+          "date": "2026-11-10",
+          "hash": null,
+          "msg": "영상 생성: koreaworld_20261110_1002.mp4",
+          "src": "output"
+        },
         {
           "date": "2026-11-09",
           "hash": null,
@@ -192,30 +216,6 @@
           "date": "2026-11-09",
           "hash": null,
           "msg": "영상 생성: koreaworld_20261109_1003.mp4",
-          "src": "output"
-        },
-        {
-          "date": "2026-11-08",
-          "hash": null,
-          "msg": "영상 생성: koreaworld_20261108_2200.mp4",
-          "src": "output"
-        },
-        {
-          "date": "2026-11-08",
-          "hash": null,
-          "msg": "영상 생성: koreaworld_20261108_2103.mp4",
-          "src": "output"
-        },
-        {
-          "date": "2026-11-08",
-          "hash": null,
-          "msg": "영상 생성: koreaworld_20261108_2002.mp4",
-          "src": "output"
-        },
-        {
-          "date": "2026-11-08",
-          "hash": null,
-          "msg": "영상 생성: koreaworld_20261108_1403.mp4",
           "src": "output"
         }
       ]
@@ -284,9 +284,15 @@
       "icon": "🎭",
       "group": "자동화 채널",
       "status_note": null,
-      "last_activity": "2026-11-09",
+      "last_activity": "2026-11-10",
       "entry_count": 10,
       "entries": [
+        {
+          "date": "2026-11-10",
+          "hash": null,
+          "msg": "영상 생성: EP41_second_marriage_final.mp4",
+          "src": "output"
+        },
         {
           "date": "2026-11-09",
           "hash": null,
@@ -340,12 +346,6 @@
           "hash": null,
           "msg": "영상 생성: EP38_second_marriage_final.mp4",
           "src": "output"
-        },
-        {
-          "date": "2026-10-31",
-          "hash": null,
-          "msg": "영상 생성: EP37_mother_in_law_final.mp4",
-          "src": "output"
         }
       ]
     },
@@ -389,187 +389,187 @@
       "icon": "🤖",
       "group": "AI겨냥 사업",
       "status_note": null,
-      "last_activity": "2026-11-09",
+      "last_activity": "2026-11-10",
       "entry_count": 54,
       "entries": [
         {
-          "date": "2026-11-09",
-          "hash": "41721bd",
-          "msg": "AI 크롤링 사이트 — 지정학 리스크 차트 갱신 (11/09 23:01)",
+          "date": "2026-11-10",
+          "hash": "d18b933",
+          "msg": "속보 감지 자동게시 — 트럼프 트루스소셜 데일리 포스트 (11/10 22:33)",
           "src": "git"
         },
         {
-          "date": "2026-11-09",
-          "hash": "bfdcd40",
-          "msg": "AI 크롤링 사이트 — 금리·지표 갱신 (11/09 23:00)",
+          "date": "2026-11-10",
+          "hash": "dd93b25",
+          "msg": "AI 크롤링 사이트 — 지정학 리스크 차트 갱신 (11/10 23:01)",
           "src": "git"
         },
         {
-          "date": "2026-11-09",
-          "hash": "b54eb8f",
-          "msg": "AI 크롤링 사이트 — 공시(SEC) 갱신 (11/09 22:02)",
+          "date": "2026-11-10",
+          "hash": "7d2f6b7",
+          "msg": "AI 크롤링 사이트 — 금리·지표 갱신 (11/10 23:00)",
           "src": "git"
         },
         {
-          "date": "2026-11-09",
-          "hash": "7deb91e",
-          "msg": "AI 크롤링 사이트 — 종목별 현황 갱신 (11/09 22:02)",
+          "date": "2026-11-10",
+          "hash": "c6c05d6",
+          "msg": "AI 크롤링 사이트 — 공시(SEC) 갱신 (11/10 22:38)",
           "src": "git"
         },
         {
-          "date": "2026-11-09",
-          "hash": "b8d22b0",
-          "msg": "AI 크롤링 사이트 — 금리·지표 갱신 (11/09 22:02)",
+          "date": "2026-11-10",
+          "hash": "ae0819e",
+          "msg": "AI 크롤링 사이트 — 종목별 현황 갱신 (11/10 22:38)",
           "src": "git"
         },
         {
-          "date": "2026-11-09",
-          "hash": "f302654",
-          "msg": "AI 크롤링 사이트 자동발행 — 11/09 22:00",
+          "date": "2026-11-10",
+          "hash": "cc56c8f",
+          "msg": "AI 크롤링 사이트 — 금리·지표 갱신 (11/10 22:38)",
           "src": "git"
         },
         {
-          "date": "2026-11-09",
-          "hash": "daedbba",
-          "msg": "AI 크롤링 사이트 — 오늘 수집 현황 갱신 (11/09 22:01)",
+          "date": "2026-11-10",
+          "hash": "46e19db",
+          "msg": "AI 크롤링 사이트 자동발행 — 11/10 22:35",
           "src": "git"
         },
         {
-          "date": "2026-11-09",
-          "hash": "7197d93",
-          "msg": "AI 크롤링 사이트 — 지정학 리스크 차트 갱신 (11/09 22:01)",
+          "date": "2026-11-10",
+          "hash": "472e6e5",
+          "msg": "AI 크롤링 사이트 — 오늘 수집 현황 갱신 (11/10 22:37)",
           "src": "git"
         },
         {
-          "date": "2026-11-09",
-          "hash": "8e801b9",
-          "msg": "AI 크롤링 사이트 — 금리·지표 갱신 (11/09 22:00)",
+          "date": "2026-11-10",
+          "hash": "178342b",
+          "msg": "AI 크롤링 사이트 — 지정학 리스크 차트 갱신 (11/10 22:37)",
           "src": "git"
         },
         {
-          "date": "2026-11-09",
-          "hash": "f156a9d",
-          "msg": "AI 크롤링 사이트 — 지정학 리스크 차트 갱신 (11/09 17:01)",
+          "date": "2026-11-10",
+          "hash": "8e1dab9",
+          "msg": "AI 크롤링 사이트 — 금리·지표 갱신 (11/10 22:35)",
           "src": "git"
         },
         {
-          "date": "2026-11-09",
-          "hash": "410fe5f",
-          "msg": "AI 크롤링 사이트 — 금리·지표 갱신 (11/09 17:00)",
+          "date": "2026-11-10",
+          "hash": "7d607f6",
+          "msg": "AI 크롤링 사이트 — 지정학 리스크 차트 갱신 (11/10 17:01)",
           "src": "git"
         },
         {
-          "date": "2026-11-09",
-          "hash": "bf085ff",
-          "msg": "AI 크롤링 사이트 — 공시(SEC) 갱신 (11/09 16:02)",
+          "date": "2026-11-10",
+          "hash": "e49e5d1",
+          "msg": "AI 크롤링 사이트 — 금리·지표 갱신 (11/10 17:00)",
           "src": "git"
         },
         {
-          "date": "2026-11-09",
-          "hash": "32120d4",
-          "msg": "AI 크롤링 사이트 — 종목별 현황 갱신 (11/09 16:02)",
+          "date": "2026-11-10",
+          "hash": "e5d4d0e",
+          "msg": "AI 크롤링 사이트 — 공시(SEC) 갱신 (11/10 16:02)",
           "src": "git"
         },
         {
-          "date": "2026-11-09",
-          "hash": "ad4e83b",
-          "msg": "AI 크롤링 사이트 — 금리·지표 갱신 (11/09 16:02)",
+          "date": "2026-11-10",
+          "hash": "adad233",
+          "msg": "AI 크롤링 사이트 — 종목별 현황 갱신 (11/10 16:02)",
           "src": "git"
         },
         {
-          "date": "2026-11-09",
-          "hash": "479ab7f",
-          "msg": "AI 크롤링 사이트 자동발행 — 11/09 16:00",
+          "date": "2026-11-10",
+          "hash": "0f71b49",
+          "msg": "AI 크롤링 사이트 — 금리·지표 갱신 (11/10 16:02)",
           "src": "git"
         },
         {
-          "date": "2026-11-09",
-          "hash": "5580cbf",
-          "msg": "AI 크롤링 사이트 — 오늘 수집 현황 갱신 (11/09 16:01)",
+          "date": "2026-11-10",
+          "hash": "f9a7e1e",
+          "msg": "AI 크롤링 사이트 자동발행 — 11/10 16:00",
           "src": "git"
         },
         {
-          "date": "2026-11-09",
-          "hash": "9c7ac56",
-          "msg": "AI 크롤링 사이트 — 지정학 리스크 차트 갱신 (11/09 16:01)",
+          "date": "2026-11-10",
+          "hash": "3bfdd68",
+          "msg": "AI 크롤링 사이트 — 오늘 수집 현황 갱신 (11/10 16:01)",
           "src": "git"
         },
         {
-          "date": "2026-11-09",
-          "hash": "90fdd02",
-          "msg": "AI 크롤링 사이트 — 금리·지표 갱신 (11/09 16:00)",
+          "date": "2026-11-10",
+          "hash": "c7c5614",
+          "msg": "AI 크롤링 사이트 — 지정학 리스크 차트 갱신 (11/10 16:01)",
           "src": "git"
         },
         {
-          "date": "2026-11-09",
-          "hash": "f1256e5",
-          "msg": "AI 크롤링 사이트 — 지정학 리스크 차트 갱신 (11/09 15:01)",
+          "date": "2026-11-10",
+          "hash": "781fc9f",
+          "msg": "AI 크롤링 사이트 — 금리·지표 갱신 (11/10 16:00)",
           "src": "git"
         },
         {
-          "date": "2026-11-09",
-          "hash": "b63e598",
-          "msg": "AI 크롤링 사이트 — 금리·지표 갱신 (11/09 15:00)",
+          "date": "2026-11-10",
+          "hash": "7773967",
+          "msg": "AI 크롤링 사이트 — 지정학 리스크 차트 갱신 (11/10 15:01)",
           "src": "git"
         },
         {
-          "date": "2026-11-09",
-          "hash": "25cdfc4",
-          "msg": "AI 크롤링 사이트 — 지정학 리스크 차트 갱신 (11/09 14:01)",
+          "date": "2026-11-10",
+          "hash": "40666f9",
+          "msg": "AI 크롤링 사이트 — 금리·지표 갱신 (11/10 15:00)",
           "src": "git"
         },
         {
-          "date": "2026-11-09",
-          "hash": "1c4f97f",
-          "msg": "AI 크롤링 사이트 — 금리·지표 갱신 (11/09 14:00)",
+          "date": "2026-11-10",
+          "hash": "d87b55b",
+          "msg": "AI 크롤링 사이트 — 지정학 리스크 차트 갱신 (11/10 14:01)",
           "src": "git"
         },
         {
-          "date": "2026-11-09",
-          "hash": "8f7bfa0",
-          "msg": "AI 크롤링 사이트 — 지정학 리스크 차트 갱신 (11/09 13:01)",
+          "date": "2026-11-10",
+          "hash": "bad7b9c",
+          "msg": "AI 크롤링 사이트 — 금리·지표 갱신 (11/10 14:00)",
           "src": "git"
         },
         {
-          "date": "2026-11-09",
-          "hash": "181df12",
-          "msg": "AI 크롤링 사이트 — 금리·지표 갱신 (11/09 13:00)",
+          "date": "2026-11-10",
+          "hash": "2bb1034",
+          "msg": "AI 크롤링 사이트 — 지정학 리스크 차트 갱신 (11/10 13:01)",
           "src": "git"
         },
         {
-          "date": "2026-11-09",
-          "hash": "166856b",
-          "msg": "AI 크롤링 사이트 — 지정학 리스크 차트 갱신 (11/09 12:01)",
+          "date": "2026-11-10",
+          "hash": "7dbb4b9",
+          "msg": "AI 크롤링 사이트 — 금리·지표 갱신 (11/10 13:00)",
           "src": "git"
         },
         {
-          "date": "2026-11-09",
-          "hash": "557f596",
-          "msg": "AI 크롤링 사이트 — 금리·지표 갱신 (11/09 12:00)",
+          "date": "2026-11-10",
+          "hash": "4a0e83b",
+          "msg": "AI 크롤링 사이트 — 지정학 리스크 차트 갱신 (11/10 12:01)",
           "src": "git"
         },
         {
-          "date": "2026-11-09",
-          "hash": "6a6295e",
-          "msg": "AI 크롤링 사이트 — 지정학 리스크 차트 갱신 (11/09 11:01)",
+          "date": "2026-11-10",
+          "hash": "8306f54",
+          "msg": "AI 크롤링 사이트 — 금리·지표 갱신 (11/10 12:00)",
           "src": "git"
         },
         {
-          "date": "2026-11-09",
-          "hash": "5912b59",
-          "msg": "AI 크롤링 사이트 — 금리·지표 갱신 (11/09 11:00)",
+          "date": "2026-11-10",
+          "hash": "f4586a3",
+          "msg": "속보 감지 자동게시 — 트럼프 트루스소셜 데일리 포스트 (11/10 10:36)",
           "src": "git"
         },
         {
-          "date": "2026-11-09",
-          "hash": "2ec7075",
-          "msg": "AI 크롤링 사이트 — 지정학 리스크 차트 갱신 (11/09 10:01)",
+          "date": "2026-11-10",
+          "hash": "15e2990",
+          "msg": "AI 크롤링 사이트 — 지정학 리스크 차트 갱신 (11/10 11:01)",
           "src": "git"
         },
         {
-          "date": "2026-11-09",
-          "hash": "8a5f85f",
-          "msg": "AI 크롤링 사이트 — 금리·지표 갱신 (11/09 10:00)",
+          "date": "2026-11-10",
+          "hash": "9d19aeb",
+          "msg": "AI 크롤링 사이트 — 금리·지표 갱신 (11/10 11:00)",
           "src": "git"
         },
         {
@@ -795,9 +795,21 @@
       "icon": "🎮",
       "group": "인프라·도구",
       "status_note": null,
-      "last_activity": "2026-11-09",
+      "last_activity": "2026-11-10",
       "entry_count": 38,
       "entries": [
+        {
+          "date": "2026-11-10",
+          "hash": "bed1192",
+          "msg": "Auto-update leverage volume alerts",
+          "src": "git"
+        },
+        {
+          "date": "2026-11-09",
+          "hash": "89c8dc7",
+          "msg": "work_log: 자동 갱신 (2026-11-09 23:50)",
+          "src": "git"
+        },
         {
           "date": "2026-11-09",
           "hash": "3aefa5d",
@@ -964,18 +976,6 @@
           "date": "2026-10-29",
           "hash": "3191601",
           "msg": "Auto-update leverage volume alerts",
-          "src": "git"
-        },
-        {
-          "date": "2026-10-28",
-          "hash": "337eb6a",
-          "msg": "Auto-update leverage volume alerts",
-          "src": "git"
-        },
-        {
-          "date": "2026-10-28",
-          "hash": "17b0b3f",
-          "msg": "work_log: 10/13 이후 15일치 공지 미반영 — collect_history.py 재실행으로 최신화(10/28까지)",
           "src": "git"
         },
         {
