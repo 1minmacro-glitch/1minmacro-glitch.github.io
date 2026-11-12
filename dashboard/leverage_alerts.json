@@ -1211,5 +1211,39 @@
         "date": "2026-11-11"
       }
     ]
+  },
+  {
+    "date": "2026-11-12",
+    "checked_at_utc": "2026-11-12T17:00:14.597098+00:00",
+    "threshold": 8.0,
+    "hits": [
+      {
+        "ticker": "3LNV.L",
+        "name": "NVIDIA",
+        "latest_vol": 256938,
+        "avg_vol": 1555,
+        "ratio": 165.2,
+        "price": 13.885,
+        "date": "2026-11-12"
+      },
+      {
+        "ticker": "3SNV.L",
+        "name": "NVIDIA(숏)",
+        "latest_vol": 1849751,
+        "avg_vol": 24814,
+        "ratio": 74.5,
+        "price": 0.511,
+        "date": "2026-11-12"
+      },
+      {
+        "ticker": "3LGL.L",
+        "name": "Glencore",
+        "latest_vol": 26561,
+        "avg_vol": 512,
+        "ratio": 51.9,
+        "price": 1025.75,
+        "date": "2026-11-12"
+      }
+    ]
   }
 ]
