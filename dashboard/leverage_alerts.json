@@ -1424,5 +1424,30 @@
         "date": "2026-11-17"
       }
     ]
+  },
+  {
+    "date": "2026-11-18",
+    "checked_at_utc": "2026-11-18T17:00:14.502068+00:00",
+    "threshold": 8.0,
+    "hits": [
+      {
+        "ticker": "3LNV.L",
+        "name": "NVIDIA",
+        "latest_vol": 70408,
+        "avg_vol": 1555,
+        "ratio": 45.3,
+        "price": 10.76,
+        "date": "2026-11-18"
+      },
+      {
+        "ticker": "3SNV.L",
+        "name": "NVIDIA(숏)",
+        "latest_vol": 293998,
+        "avg_vol": 24160,
+        "ratio": 12.2,
+        "price": 0.63,
+        "date": "2026-11-18"
+      }
+    ]
   }
 ]
