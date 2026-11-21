@@ -637,6 +637,7 @@
             </div>
           </div>
         </div>
+        <div class="card marathon-panel" id="watchlistPanel" style="margin-bottom:14px;">불러오는 중...</div>
         <div class="card marathon-panel" id="positionStatusPanel" style="margin-bottom:14px;">불러오는 중...</div>
         <div class="card marathon-panel" id="dailySignalLivePanel" style="margin-bottom:14px;">불러오는 중...</div>
         <div class="card" id="leverageAlertPanel">불러오는 중...</div>
@@ -2321,6 +2322,39 @@ async function loadLeverageWinrate() {
   }
 }
 loadLeverageWinrate();
+
+// ── 검증된 매수후보 워치리스트 (승률표 중 [💪둘다좋음] 등급만 추려서 맨 위에 따로 보여줌 —
+// 2026-11-22 사장님 지시: "⚠표본적음도 매수후보로 같이 뜨면 헷갈리니, 이거 통과한 애들만 따로
+// 후보로 해야지" — 63행 전체를 스크롤/색으로 거르게 하지 말고 통과한 것만 바로 보이게 ──
+async function loadWatchlist() {
+  const panel = document.getElementById("watchlistPanel");
+  if (!panel) return;
+  try {
+    const res = await fetch(GH_API_URL_WINRATE, { cache: "no-store", headers: { "Accept": "application/vnd.github.raw+json" } });
+    if (!res.ok) { panel.innerHTML = `<h3>⭐ 검증된 매수후보 워치리스트</h3><div class="board-text" style="color:var(--text-muted);">아직 없음</div>`; return; }
+    const data = await res.json();
+    const table = data.win_rate_table || [];
+    const buyPass = table.filter(r => r.kind === "buy" && (r.grade || "").startsWith("💪")).sort((a,b) => b.winrate_pct - a.winrate_pct);
+    const avoidPass = table.filter(r => r.kind === "avoid" && (r.grade || "").startsWith("💪")).sort((a,b) => a.winrate_pct - b.winrate_pct);
+    const ma5Html = f => f ? `<b style="color:${f === "O" ? "var(--cat-asset)" : "#e05a5a"};">5일선 ${f}</b>` : `<span style="color:var(--text-muted);">5일선 ?</span>`;
+    const renderRow = r => `<div class="board-item">
+        <div class="board-date">${r.ticker} · ${ma5Html(r.ma5_flag)}</div>
+        <div class="board-text">승률 ${r.winrate_pct}% / 평균(5일후) ${r.mean_5d_pct > 0 ? "+" : ""}${r.mean_5d_pct}% (독립사건 ${r.episode_n}개)</div>
+      </div>`;
+    const buyHtml = buyPass.length ? buyPass.map(renderRow).join("") : `<div class="board-item"><div class="board-text" style="color:var(--text-muted);">지금 통과하는 종목 없음</div></div>`;
+    const avoidHtml = avoidPass.length ? avoidPass.map(renderRow).join("") : `<div class="board-item"><div class="board-text" style="color:var(--text-muted);">지금 통과하는 종목 없음</div></div>`;
+    panel.innerHTML = `
+      <h3>⭐ 검증된 매수후보 워치리스트</h3>
+      <div class="marathon-note">갱신: ${data.generated_at_utc || "?"} UTC · 체크리스트 ③번([💪둘다좋음]) 통과한 종목만, 아래 전체 승률표 재계산할 때마다 자동 갱신</div>
+      <div class="board-date" style="font-weight:700; margin-top:6px; color:var(--cat-asset);">🟢 매수후보 통과 (${buyPass.length}개)</div>
+      ${buyHtml}
+      <div class="board-date" style="font-weight:700; margin-top:10px; color:#e05a5a;">🔴 매수금지 확정 (${avoidPass.length}개)</div>
+      ${avoidHtml}`;
+  } catch (e) {
+    panel.innerHTML = `<h3>⭐ 검증된 매수후보 워치리스트</h3><div class="board-text" style="color:var(--text-muted);">불러오기 실패</div>`;
+  }
+}
+loadWatchlist();
 
 // ── 보유 포지션 손절 모니터 (position_stoploss_monitor.py가 매일 06:05 체크 → dashboard/
 // position_status.json 갱신. -15% 주의/-20% 위험, 과거 데이터 기준 회복율 같이 표시) ──
