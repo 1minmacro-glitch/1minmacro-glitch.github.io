@@ -626,6 +626,7 @@
           <div class="sub">단일종목 3배 ETP 56개 · 판단 아님, 사실만 기록</div>
         </header>
         <div class="card marathon-panel" id="positionStatusPanel" style="margin-bottom:14px;">불러오는 중...</div>
+        <div class="card marathon-panel" id="dailySignalLivePanel" style="margin-bottom:14px;">불러오는 중...</div>
         <div class="card" id="leverageAlertPanel">불러오는 중...</div>
         <div class="card marathon-panel" id="leverageWinratePanel" style="margin-top:14px;">불러오는 중...</div>
         <div class="card marathon-panel" id="bottomSignalPanel" style="margin-top:14px;">불러오는 중...</div>
@@ -2338,6 +2339,44 @@ async function loadPositionStatus() {
   }
 }
 loadPositionStatus();
+
+// ── 오늘의 신호체크 (daily_signal_check.py가 매일 06:00 실행 → dashboard/daily_signal_live.json.
+// 텔레그램엔 조합 뜰 때만 보내지만, 여기는 뜰 조합이 없는 날도 매번 갱신됨) ──
+const GH_PATH_DAILY = "dashboard/daily_signal_live.json";
+const GH_API_URL_DAILY = `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_PATH_DAILY}`;
+
+async function loadDailySignalLive() {
+  const panel = document.getElementById("dailySignalLivePanel");
+  if (!panel) return;
+  try {
+    const res = await fetch(GH_API_URL_DAILY, { cache: "no-store", headers: { "Accept": "application/vnd.github.raw+json" } });
+    if (!res.ok) { panel.innerHTML = `<h3>🔔 오늘의 신호체크</h3><div class="board-text" style="color:var(--text-muted);">아직 없음</div>`; return; }
+    const data = await res.json();
+    const gradeColor = g => g && g.startsWith("💪") ? "var(--cat-asset)" : g && g.startsWith("❌") ? "#e05a5a" : "var(--text-muted)";
+    const ma5Html = f => f ? `<b style="color:${f === "O" ? "var(--cat-asset)" : "#e05a5a"};">5일선 ${f}</b>` : `<span style="color:var(--text-muted);">5일선 ?</span>`;
+    const renderGroup = (list, label) => list.map(r => {
+      const s = r.stats;
+      const statText = s
+        ? `승률 ${s.winrate}% / 평균 ${s.mean >= 0 ? "+" : ""}${s.mean}% (표본 ${s.n}건) <b style="color:${gradeColor(s.grade)};">[${s.grade}]</b> · $1000 넣었으면 평균 ${s.dollar_per_1000 >= 0 ? "+" : ""}${s.dollar_per_1000}달러`
+        : "과거 데이터 없음(신규/표본0)";
+      return `<div class="board-item">
+        <div class="board-date">${label} · ${r.ticker}(${r.label}) · ${ma5Html(r.ma5_flag)}</div>
+        <div class="board-text">거래량 ${r.volume_ratio}배, 오늘 ${r.same_day_pct >= 0 ? "+" : ""}${r.same_day_pct}% — ${statText}</div>
+      </div>`;
+    }).join("");
+    const buy = data.buy_candidates || [];
+    const avoid = data.avoid_warnings || [];
+    const body = (buy.length || avoid.length)
+      ? renderGroup(buy, "🟢 매수후보") + renderGroup(avoid, "🔴 매수금지")
+      : `<div class="board-item"><div class="board-text" style="color:var(--text-muted);">오늘은 해당 조합(매수후보/매수금지) 없음</div></div>`;
+    panel.innerHTML = `<h3>🔔 오늘의 신호체크</h3>
+      <div class="marathon-note">갱신: ${data.generated_at_utc || "?"} UTC · 공포탐욕 ${data.fg_value != null ? data.fg_value.toFixed(1) : "?"}(${data.fg_bucket || "?"}) ${data.fg_stale_note || ""}</div>
+      ${body}`;
+  } catch (e) {
+    panel.innerHTML = `<h3>🔔 오늘의 신호체크</h3><div class="board-text" style="color:var(--text-muted);">불러오기 실패</div>`;
+  }
+}
+loadDailySignalLive();
 
 // ── 바닥신호 분석 ("손실폭 말고 다른 기준으로 더 안 빠질지 구분 가능한가" — analyze_bottom_signals.py
 // + export_bottom_signals_to_dashboard.py가 생성, 정기 실행 안 함) ──
