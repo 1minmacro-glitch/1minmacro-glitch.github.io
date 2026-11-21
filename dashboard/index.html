@@ -401,6 +401,13 @@
   details.board-item[open] .board-preview { display: none; }
   details.board-item[open] .board-text { margin-top: 3px; }
 
+  /* 2026-11-22: 사장님 요청 — 레버리지 탭만 글씨 키움(다른 탭엔 영향 안 주게 스코프 한정) */
+  #page-leverage .board-item { font-size: 15px; }
+  #page-leverage .board-item .board-date { font-size: 13px; }
+  #page-leverage h3 { font-size: 19px; }
+  #page-leverage .marathon-note { font-size: 13px; }
+  #page-leverage .sub { font-size: 14px; }
+
   #undo-toast {
     position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); background: var(--sidebar-bg);
     color: #fff; padding: 9px 16px; border-radius: 999px; font-size: 12px; display: none;
@@ -2267,9 +2274,12 @@ async function loadLeverageWinrate() {
     const EXAMPLE_AMOUNT = 1000; // "이때 샀다면 얼마 버는지" 체감용 기준금액(달러), 2026-11-21
     let rows = table.map(r => {
       const dollar = r.mean_5d_pct / 100 * EXAMPLE_AMOUNT;
+      const ma5Html = r.ma5_flag
+        ? `<b style="color:${r.ma5_flag === "O" ? "var(--cat-asset)" : "#e05a5a"};">5일선 ${r.ma5_flag}</b>`
+        : `<span style="color:var(--text-muted);">5일선 ?</span>`;
       return `
       <div class="board-item">
-        <div class="board-date">${r.ticker} · ${r.kind === "buy" ? "매수후보" : "매수금지"}</div>
+        <div class="board-date">${r.ticker} · ${r.kind === "buy" ? "매수후보" : "매수금지"} · ${ma5Html}</div>
         <div class="board-text">승률 ${r.winrate_pct}% / 평균(5일후) ${r.mean_5d_pct > 0 ? "+" : ""}${r.mean_5d_pct}% (표본 ${r.n}건)
           <b style="color:${gradeColor(r.grade)};">[${r.grade}]</b>
           <span style="color:var(--text-muted);"> · $${EXAMPLE_AMOUNT} 넣었으면 평균 ${dollar >= 0 ? "+" : ""}${dollar.toFixed(0)}달러</span></div>
@@ -2279,7 +2289,7 @@ async function loadLeverageWinrate() {
     const methodHtml = Object.entries(m).map(([k,v]) => `<div class="board-item"><div class="board-date">${k.replace(/_/g," ")}</div><div class="board-text" style="color:var(--text-muted);">${v}</div></div>`).join("");
     panel.innerHTML = `
       <h3>📊 레버리지ETF 신호 승률표 (전체)</h3>
-      <div class="marathon-note">갱신: ${data.generated_at_utc || "?"} UTC · 유료게이트엔 이 표만 올라감, 설명은 여기만</div>
+      <div class="marathon-note">갱신: ${data.generated_at_utc || "?"} UTC · 유료게이트엔 이 표만 올라감, 설명은 여기만 · 5일선 O=현재가 위/X=아래(단순 위치정보, 매수신호 아님)</div>
       <div class="board-scroll" style="max-height:420px; overflow-y:auto;">${rows}</div>
       <h3 style="margin-top:16px;">📐 어떻게 이 승률이 나왔는지(방법론)</h3>
       <div class="board-scroll" style="max-height:420px; overflow-y:auto;">${methodHtml}</div>`;
