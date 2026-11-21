@@ -1,0 +1,8 @@
+{
+  "generated_at_utc": "2026-11-21T14:38:36Z",
+  "positions": [],
+  "thresholds": {
+    "주의": -15.0,
+    "위험": -20.0
+  }
+}
