@@ -619,6 +619,7 @@
           <div class="sub">단일종목 3배 ETP 56개 · 판단 아님, 사실만 기록</div>
         </header>
         <div class="card" id="leverageAlertPanel">불러오는 중...</div>
+        <div class="card marathon-panel" id="leverageWinratePanel" style="margin-top:14px;">불러오는 중...</div>
       </div>
     </div>
   </div>
@@ -2244,6 +2245,42 @@ async function loadLeverageAlerts() {
   }
 }
 loadLeverageAlerts();
+
+// ── 레버리지ETF 신호 승률표 (daily_signal_check.py + export_leverage_methodology_to_dashboard.py가
+// 생성 → dashboard/leverage_signal_methodology.json, 정기 실행 안 함, 사장님이 다시 돌려달라고
+// 하면 그때 갱신) — 유료게이트(marketbriefwire.com)엔 이 중 승률표만 올라가고, 방법론/매핑표
+// 설명은 여기(개인 대시보드)에만 둠(2026-11-21 사장님 지시) ──
+const GH_PATH_WINRATE = "dashboard/leverage_signal_methodology.json";
+const GH_API_URL_WINRATE = `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_PATH_WINRATE}`;
+
+async function loadLeverageWinrate() {
+  const panel = document.getElementById("leverageWinratePanel");
+  if (!panel) return;
+  try {
+    const res = await fetch(GH_API_URL_WINRATE, { cache: "no-store", headers: { "Accept": "application/vnd.github.raw+json" } });
+    if (!res.ok) { panel.innerHTML = `<div class="board-text" style="color:var(--text-muted);">아직 없음</div>`; return; }
+    const data = await res.json();
+    const table = (data.win_rate_table || []).slice().sort((a,b)=>b.winrate_pct-a.winrate_pct);
+    const gradeColor = g => g.startsWith("💪") ? "var(--cat-asset)" : g.startsWith("❌") ? "#e05a5a" : "var(--text-muted)";
+    let rows = table.map(r => `
+      <div class="board-item">
+        <div class="board-date">${r.ticker} · ${r.kind === "buy" ? "매수후보" : "매수금지"}</div>
+        <div class="board-text">승률 ${r.winrate_pct}% / 평균(5일후) ${r.mean_5d_pct > 0 ? "+" : ""}${r.mean_5d_pct}% (표본 ${r.n}건)
+          <b style="color:${gradeColor(r.grade)};">[${r.grade}]</b></div>
+      </div>`).join("");
+    const m = data.methodology || {};
+    const methodHtml = Object.entries(m).map(([k,v]) => `<div class="board-item"><div class="board-date">${k.replace(/_/g," ")}</div><div class="board-text" style="color:var(--text-muted);">${v}</div></div>`).join("");
+    panel.innerHTML = `
+      <h3>📊 레버리지ETF 신호 승률표 (전체)</h3>
+      <div class="marathon-note">갱신: ${data.generated_at_utc || "?"} UTC · 유료게이트엔 이 표만 올라감, 설명은 여기만</div>
+      <div class="board-scroll" style="max-height:420px; overflow-y:auto;">${rows}</div>
+      <h3 style="margin-top:16px;">📐 어떻게 이 승률이 나왔는지(방법론)</h3>
+      <div class="board-scroll" style="max-height:420px; overflow-y:auto;">${methodHtml}</div>`;
+  } catch (e) {
+    panel.innerHTML = `<div class="board-text" style="color:var(--text-muted);">불러오기 실패</div>`;
+  }
+}
+loadLeverageWinrate();
 
 // ── 할 일 트래커 (자유 텍스트 추가/삭제, 완료 즉시 목록에서 빠지고 완료기록에 누적) ──
 const LS_TODOS = "jh_todos";
