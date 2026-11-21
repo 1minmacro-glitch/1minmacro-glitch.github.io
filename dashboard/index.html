@@ -2292,9 +2292,14 @@ async function loadLeverageWinrate() {
         : `<span style="color:var(--text-muted);">5일선 ?</span>`;
       const episodeN = r.episode_n != null ? r.episode_n : r.n;
       const episodeWarn = episodeN < 3 ? ` <span style="color:#e0a85a;">(독립사건은 ${episodeN}개뿐!)</span>` : "";
-      const kindHtml = r.kind === "buy"
-        ? `<b style="color:var(--cat-asset);">매수후보</b>`
-        : `<b style="color:#e05a5a;">매수금지</b>`;
+      // 2026-11-22: 사장님 지적 — "⚠표본적음/⚠독립사건적음인 애들도 매수후보라고 초록으로
+      // 뜨면 신뢰할만한 신호처럼 보임" → 등급이 [💪둘다좋음]인 것만 초록/빨강, 나머진 회색으로
+      // 구분(kind는 "조합 분류"일 뿐이고, 색은 "진짜 믿을만한가"를 따로 반영해야 함).
+      const reliable = r.grade.startsWith("💪");
+      const kindText = r.kind === "buy" ? "매수후보" : "매수금지";
+      const kindHtml = reliable
+        ? `<b style="color:${r.kind === "buy" ? "var(--cat-asset)" : "#e05a5a"};">${kindText}</b>`
+        : `<span style="color:var(--text-muted);">${kindText}</span>`;
       return `
       <div class="board-item">
         <div class="board-date">${r.ticker} · ${kindHtml} · ${ma5Html}</div>
