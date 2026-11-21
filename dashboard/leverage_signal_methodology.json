@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-11-21T17:41:56Z",
+  "generated_at_utc": "2026-11-21T20:50:53Z",
   "win_rate_table": [
     {
       "ticker": "BIB",
@@ -9,7 +9,34 @@
       "mean_5d_pct": 1.88,
       "winrate_pct": 56.4,
       "grade": "↔엇갈림(참고만)",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 39,
+          "mean": 0.76,
+          "winrate": 61.5
+        },
+        "3": {
+          "n": 39,
+          "mean": 0.85,
+          "winrate": 56.4
+        },
+        "5": {
+          "n": 39,
+          "mean": 1.88,
+          "winrate": 56.4
+        },
+        "10": {
+          "n": 39,
+          "mean": 1.94,
+          "winrate": 53.8
+        },
+        "20": {
+          "n": 39,
+          "mean": 4.06,
+          "winrate": 64.1
+        }
+      }
     },
     {
       "ticker": "CURE",
@@ -19,7 +46,34 @@
       "mean_5d_pct": -3.39,
       "winrate_pct": 50.0,
       "grade": "↔엇갈림(참고만)",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 22,
+          "mean": 0.19,
+          "winrate": 50.0
+        },
+        "3": {
+          "n": 22,
+          "mean": -1.22,
+          "winrate": 54.5
+        },
+        "5": {
+          "n": 22,
+          "mean": -3.39,
+          "winrate": 50.0
+        },
+        "10": {
+          "n": 22,
+          "mean": -4.0,
+          "winrate": 45.5
+        },
+        "20": {
+          "n": 22,
+          "mean": 1.17,
+          "winrate": 63.6
+        }
+      }
     },
     {
       "ticker": "DFEN",
@@ -29,7 +83,34 @@
       "mean_5d_pct": -5.78,
       "winrate_pct": 31.2,
       "grade": "💪둘다나쁨(회피확정)",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 16,
+          "mean": 0.87,
+          "winrate": 56.2
+        },
+        "3": {
+          "n": 16,
+          "mean": -3.77,
+          "winrate": 43.8
+        },
+        "5": {
+          "n": 16,
+          "mean": -5.78,
+          "winrate": 31.2
+        },
+        "10": {
+          "n": 16,
+          "mean": -5.5,
+          "winrate": 50.0
+        },
+        "20": {
+          "n": 16,
+          "mean": 7.31,
+          "winrate": 56.2
+        }
+      }
     },
     {
       "ticker": "DPST",
@@ -39,7 +120,34 @@
       "mean_5d_pct": -8.15,
       "winrate_pct": 52.2,
       "grade": "↔엇갈림(참고만)",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 23,
+          "mean": -1.17,
+          "winrate": 47.8
+        },
+        "3": {
+          "n": 23,
+          "mean": -5.76,
+          "winrate": 52.2
+        },
+        "5": {
+          "n": 23,
+          "mean": -8.15,
+          "winrate": 52.2
+        },
+        "10": {
+          "n": 23,
+          "mean": -2.4,
+          "winrate": 60.9
+        },
+        "20": {
+          "n": 23,
+          "mean": 1.22,
+          "winrate": 56.5
+        }
+      }
     },
     {
       "ticker": "DRN",
@@ -49,7 +157,34 @@
       "mean_5d_pct": -0.13,
       "winrate_pct": 46.2,
       "grade": "↔엇갈림(참고만)",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 39,
+          "mean": 0.88,
+          "winrate": 56.4
+        },
+        "3": {
+          "n": 39,
+          "mean": 1.12,
+          "winrate": 53.8
+        },
+        "5": {
+          "n": 39,
+          "mean": -0.13,
+          "winrate": 46.2
+        },
+        "10": {
+          "n": 39,
+          "mean": 5.3,
+          "winrate": 64.1
+        },
+        "20": {
+          "n": 39,
+          "mean": 6.49,
+          "winrate": 71.8
+        }
+      }
     },
     {
       "ticker": "DUSL",
@@ -59,7 +194,34 @@
       "mean_5d_pct": -7.39,
       "winrate_pct": 35.3,
       "grade": "💪둘다나쁨(회피확정)",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 17,
+          "mean": 1.48,
+          "winrate": 64.7
+        },
+        "3": {
+          "n": 17,
+          "mean": -2.34,
+          "winrate": 41.2
+        },
+        "5": {
+          "n": 17,
+          "mean": -7.39,
+          "winrate": 35.3
+        },
+        "10": {
+          "n": 17,
+          "mean": 1.76,
+          "winrate": 58.8
+        },
+        "20": {
+          "n": 16,
+          "mean": 2.73,
+          "winrate": 56.2
+        }
+      }
     },
     {
       "ticker": "ERX",
@@ -69,7 +231,34 @@
       "mean_5d_pct": -3.59,
       "winrate_pct": 52.9,
       "grade": "↔엇갈림(참고만)",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 34,
+          "mean": 0.79,
+          "winrate": 67.6
+        },
+        "3": {
+          "n": 34,
+          "mean": 0.25,
+          "winrate": 50.0
+        },
+        "5": {
+          "n": 34,
+          "mean": -3.59,
+          "winrate": 52.9
+        },
+        "10": {
+          "n": 34,
+          "mean": 1.3,
+          "winrate": 67.6
+        },
+        "20": {
+          "n": 34,
+          "mean": 3.79,
+          "winrate": 61.8
+        }
+      }
     },
     {
       "ticker": "FAS",
@@ -79,7 +268,34 @@
       "mean_5d_pct": -7.47,
       "winrate_pct": 43.5,
       "grade": "↔엇갈림(참고만)",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 23,
+          "mean": 0.52,
+          "winrate": 56.5
+        },
+        "3": {
+          "n": 23,
+          "mean": -3.95,
+          "winrate": 47.8
+        },
+        "5": {
+          "n": 23,
+          "mean": -7.47,
+          "winrate": 43.5
+        },
+        "10": {
+          "n": 23,
+          "mean": -2.29,
+          "winrate": 65.2
+        },
+        "20": {
+          "n": 23,
+          "mean": 2.7,
+          "winrate": 60.9
+        }
+      }
     },
     {
       "ticker": "GUSH",
@@ -89,7 +305,34 @@
       "mean_5d_pct": -3.77,
       "winrate_pct": 42.9,
       "grade": "↔엇갈림(참고만)",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 35,
+          "mean": -1.83,
+          "winrate": 42.9
+        },
+        "3": {
+          "n": 35,
+          "mean": 1.69,
+          "winrate": 45.7
+        },
+        "5": {
+          "n": 35,
+          "mean": -3.77,
+          "winrate": 42.9
+        },
+        "10": {
+          "n": 35,
+          "mean": -1.71,
+          "winrate": 54.3
+        },
+        "20": {
+          "n": 35,
+          "mean": 1.27,
+          "winrate": 42.9
+        }
+      }
     },
     {
       "ticker": "JNUG",
@@ -99,7 +342,34 @@
       "mean_5d_pct": -11.44,
       "winrate_pct": 31.2,
       "grade": "💪둘다나쁨(회피확정)",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 16,
+          "mean": -3.79,
+          "winrate": 50.0
+        },
+        "3": {
+          "n": 16,
+          "mean": -11.41,
+          "winrate": 43.8
+        },
+        "5": {
+          "n": 16,
+          "mean": -11.44,
+          "winrate": 31.2
+        },
+        "10": {
+          "n": 16,
+          "mean": -9.09,
+          "winrate": 43.8
+        },
+        "20": {
+          "n": 15,
+          "mean": 3.31,
+          "winrate": 66.7
+        }
+      }
     },
     {
       "ticker": "LABU",
@@ -109,7 +379,34 @@
       "mean_5d_pct": 0.68,
       "winrate_pct": 57.7,
       "grade": "↔엇갈림(참고만)",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 26,
+          "mean": -0.24,
+          "winrate": 53.8
+        },
+        "3": {
+          "n": 26,
+          "mean": -0.41,
+          "winrate": 46.2
+        },
+        "5": {
+          "n": 26,
+          "mean": 0.68,
+          "winrate": 57.7
+        },
+        "10": {
+          "n": 26,
+          "mean": 3.92,
+          "winrate": 53.8
+        },
+        "20": {
+          "n": 26,
+          "mean": 4.16,
+          "winrate": 42.3
+        }
+      }
     },
     {
       "ticker": "NAIL",
@@ -119,7 +416,34 @@
       "mean_5d_pct": -4.96,
       "winrate_pct": 42.1,
       "grade": "↔엇갈림(참고만)",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 19,
+          "mean": -1.05,
+          "winrate": 36.8
+        },
+        "3": {
+          "n": 19,
+          "mean": -2.82,
+          "winrate": 36.8
+        },
+        "5": {
+          "n": 19,
+          "mean": -4.96,
+          "winrate": 42.1
+        },
+        "10": {
+          "n": 19,
+          "mean": -4.93,
+          "winrate": 52.6
+        },
+        "20": {
+          "n": 19,
+          "mean": -0.65,
+          "winrate": 52.6
+        }
+      }
     },
     {
       "ticker": "NUGT",
@@ -129,7 +453,34 @@
       "mean_5d_pct": -1.62,
       "winrate_pct": 51.7,
       "grade": "↔엇갈림(참고만)",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 29,
+          "mean": -0.26,
+          "winrate": 65.5
+        },
+        "3": {
+          "n": 29,
+          "mean": -4.14,
+          "winrate": 44.8
+        },
+        "5": {
+          "n": 29,
+          "mean": -1.62,
+          "winrate": 51.7
+        },
+        "10": {
+          "n": 29,
+          "mean": -0.64,
+          "winrate": 55.2
+        },
+        "20": {
+          "n": 28,
+          "mean": 6.19,
+          "winrate": 57.1
+        }
+      }
     },
     {
       "ticker": "PILL",
@@ -139,7 +490,34 @@
       "mean_5d_pct": -5.59,
       "winrate_pct": 39.1,
       "grade": "💪둘다나쁨(회피확정)",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 23,
+          "mean": -0.69,
+          "winrate": 52.2
+        },
+        "3": {
+          "n": 23,
+          "mean": -2.66,
+          "winrate": 34.8
+        },
+        "5": {
+          "n": 23,
+          "mean": -5.59,
+          "winrate": 39.1
+        },
+        "10": {
+          "n": 23,
+          "mean": -6.54,
+          "winrate": 39.1
+        },
+        "20": {
+          "n": 22,
+          "mean": -3.09,
+          "winrate": 45.5
+        }
+      }
     },
     {
       "ticker": "QLD",
@@ -149,7 +527,34 @@
       "mean_5d_pct": 0.49,
       "winrate_pct": 61.5,
       "grade": "❌실제론괜찮음(이 종목만)",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 26,
+          "mean": 1.61,
+          "winrate": 73.1
+        },
+        "3": {
+          "n": 26,
+          "mean": 1.82,
+          "winrate": 65.4
+        },
+        "5": {
+          "n": 26,
+          "mean": 0.49,
+          "winrate": 61.5
+        },
+        "10": {
+          "n": 26,
+          "mean": -2.61,
+          "winrate": 53.8
+        },
+        "20": {
+          "n": 25,
+          "mean": 0.43,
+          "winrate": 48.0
+        }
+      }
     },
     {
       "ticker": "RETL",
@@ -159,7 +564,34 @@
       "mean_5d_pct": -1.33,
       "winrate_pct": 54.9,
       "grade": "↔엇갈림(참고만)",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 51,
+          "mean": 0.25,
+          "winrate": 60.8
+        },
+        "3": {
+          "n": 51,
+          "mean": 0.29,
+          "winrate": 52.9
+        },
+        "5": {
+          "n": 51,
+          "mean": -1.33,
+          "winrate": 54.9
+        },
+        "10": {
+          "n": 51,
+          "mean": 2.38,
+          "winrate": 66.7
+        },
+        "20": {
+          "n": 51,
+          "mean": 5.88,
+          "winrate": 66.7
+        }
+      }
     },
     {
       "ticker": "ROM",
@@ -169,7 +601,34 @@
       "mean_5d_pct": 1.78,
       "winrate_pct": 65.9,
       "grade": "❌실제론괜찮음(이 종목만)",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 44,
+          "mean": 1.04,
+          "winrate": 59.1
+        },
+        "3": {
+          "n": 44,
+          "mean": 2.05,
+          "winrate": 65.9
+        },
+        "5": {
+          "n": 44,
+          "mean": 1.78,
+          "winrate": 65.9
+        },
+        "10": {
+          "n": 43,
+          "mean": -0.56,
+          "winrate": 53.5
+        },
+        "20": {
+          "n": 43,
+          "mean": 2.86,
+          "winrate": 55.8
+        }
+      }
     },
     {
       "ticker": "SOXL",
@@ -179,7 +638,34 @@
       "mean_5d_pct": 7.54,
       "winrate_pct": 58.6,
       "grade": "↔엇갈림(참고만)",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 29,
+          "mean": 3.41,
+          "winrate": 69.0
+        },
+        "3": {
+          "n": 29,
+          "mean": 4.7,
+          "winrate": 62.1
+        },
+        "5": {
+          "n": 29,
+          "mean": 7.54,
+          "winrate": 58.6
+        },
+        "10": {
+          "n": 28,
+          "mean": 9.48,
+          "winrate": 75.0
+        },
+        "20": {
+          "n": 28,
+          "mean": 21.75,
+          "winrate": 60.7
+        }
+      }
     },
     {
       "ticker": "SPXL",
@@ -189,7 +675,34 @@
       "mean_5d_pct": -4.53,
       "winrate_pct": 44.1,
       "grade": "↔엇갈림(참고만)",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 34,
+          "mean": 0.84,
+          "winrate": 52.9
+        },
+        "3": {
+          "n": 34,
+          "mean": -1.93,
+          "winrate": 44.1
+        },
+        "5": {
+          "n": 34,
+          "mean": -4.53,
+          "winrate": 44.1
+        },
+        "10": {
+          "n": 34,
+          "mean": -0.24,
+          "winrate": 58.8
+        },
+        "20": {
+          "n": 34,
+          "mean": 1.84,
+          "winrate": 47.1
+        }
+      }
     },
     {
       "ticker": "SSO",
@@ -199,7 +712,34 @@
       "mean_5d_pct": -0.44,
       "winrate_pct": 50.0,
       "grade": "↔엇갈림(참고만)",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 28,
+          "mean": 0.79,
+          "winrate": 64.3
+        },
+        "3": {
+          "n": 28,
+          "mean": 0.3,
+          "winrate": 50.0
+        },
+        "5": {
+          "n": 28,
+          "mean": -0.44,
+          "winrate": 50.0
+        },
+        "10": {
+          "n": 28,
+          "mean": -1.78,
+          "winrate": 50.0
+        },
+        "20": {
+          "n": 27,
+          "mean": -0.69,
+          "winrate": 44.4
+        }
+      }
     },
     {
       "ticker": "TECL",
@@ -209,7 +749,34 @@
       "mean_5d_pct": 0.67,
       "winrate_pct": 51.9,
       "grade": "↔엇갈림(참고만)",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 27,
+          "mean": 1.34,
+          "winrate": 66.7
+        },
+        "3": {
+          "n": 27,
+          "mean": 1.92,
+          "winrate": 59.3
+        },
+        "5": {
+          "n": 27,
+          "mean": 0.67,
+          "winrate": 51.9
+        },
+        "10": {
+          "n": 27,
+          "mean": -1.05,
+          "winrate": 51.9
+        },
+        "20": {
+          "n": 26,
+          "mean": 5.12,
+          "winrate": 53.8
+        }
+      }
     },
     {
       "ticker": "TNA",
@@ -219,7 +786,34 @@
       "mean_5d_pct": -0.23,
       "winrate_pct": 46.7,
       "grade": "↔엇갈림(참고만)",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 15,
+          "mean": 3.44,
+          "winrate": 66.7
+        },
+        "3": {
+          "n": 15,
+          "mean": 3.18,
+          "winrate": 53.3
+        },
+        "5": {
+          "n": 15,
+          "mean": -0.23,
+          "winrate": 46.7
+        },
+        "10": {
+          "n": 15,
+          "mean": 2.35,
+          "winrate": 66.7
+        },
+        "20": {
+          "n": 15,
+          "mean": 9.35,
+          "winrate": 53.3
+        }
+      }
     },
     {
       "ticker": "TQQQ",
@@ -229,7 +823,34 @@
       "mean_5d_pct": 5.76,
       "winrate_pct": 76.2,
       "grade": "❌실제론괜찮음(이 종목만)",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 21,
+          "mean": 3.38,
+          "winrate": 66.7
+        },
+        "3": {
+          "n": 21,
+          "mean": 5.2,
+          "winrate": 71.4
+        },
+        "5": {
+          "n": 21,
+          "mean": 5.76,
+          "winrate": 76.2
+        },
+        "10": {
+          "n": 21,
+          "mean": 1.46,
+          "winrate": 71.4
+        },
+        "20": {
+          "n": 21,
+          "mean": 1.61,
+          "winrate": 57.1
+        }
+      }
     },
     {
       "ticker": "UDOW",
@@ -239,7 +860,34 @@
       "mean_5d_pct": -1.85,
       "winrate_pct": 43.8,
       "grade": "↔엇갈림(참고만)",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 32,
+          "mean": 1.95,
+          "winrate": 65.6
+        },
+        "3": {
+          "n": 32,
+          "mean": 0.97,
+          "winrate": 50.0
+        },
+        "5": {
+          "n": 32,
+          "mean": -1.85,
+          "winrate": 43.8
+        },
+        "10": {
+          "n": 32,
+          "mean": 1.79,
+          "winrate": 62.5
+        },
+        "20": {
+          "n": 32,
+          "mean": 8.34,
+          "winrate": 68.8
+        }
+      }
     },
     {
       "ticker": "UPRO",
@@ -249,7 +897,34 @@
       "mean_5d_pct": -4.52,
       "winrate_pct": 40.7,
       "grade": "↔엇갈림(참고만)",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 27,
+          "mean": -0.21,
+          "winrate": 40.7
+        },
+        "3": {
+          "n": 27,
+          "mean": -2.32,
+          "winrate": 40.7
+        },
+        "5": {
+          "n": 27,
+          "mean": -4.52,
+          "winrate": 40.7
+        },
+        "10": {
+          "n": 27,
+          "mean": -3.53,
+          "winrate": 51.9
+        },
+        "20": {
+          "n": 27,
+          "mean": -2.47,
+          "winrate": 37.0
+        }
+      }
     },
     {
       "ticker": "URE",
@@ -259,7 +934,34 @@
       "mean_5d_pct": 0.55,
       "winrate_pct": 53.5,
       "grade": "↔엇갈림(참고만)",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 43,
+          "mean": 0.96,
+          "winrate": 65.1
+        },
+        "3": {
+          "n": 43,
+          "mean": 0.96,
+          "winrate": 60.5
+        },
+        "5": {
+          "n": 43,
+          "mean": 0.55,
+          "winrate": 53.5
+        },
+        "10": {
+          "n": 43,
+          "mean": -1.1,
+          "winrate": 48.8
+        },
+        "20": {
+          "n": 41,
+          "mean": 3.69,
+          "winrate": 65.9
+        }
+      }
     },
     {
       "ticker": "USD",
@@ -269,7 +971,34 @@
       "mean_5d_pct": 2.47,
       "winrate_pct": 57.6,
       "grade": "↔엇갈림(참고만)",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 33,
+          "mean": 2.4,
+          "winrate": 72.7
+        },
+        "3": {
+          "n": 33,
+          "mean": 2.02,
+          "winrate": 57.6
+        },
+        "5": {
+          "n": 33,
+          "mean": 2.47,
+          "winrate": 57.6
+        },
+        "10": {
+          "n": 32,
+          "mean": 3.79,
+          "winrate": 65.6
+        },
+        "20": {
+          "n": 32,
+          "mean": 9.48,
+          "winrate": 65.6
+        }
+      }
     },
     {
       "ticker": "UTSL",
@@ -279,7 +1008,34 @@
       "mean_5d_pct": -2.65,
       "winrate_pct": 42.3,
       "grade": "↔엇갈림(참고만)",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 26,
+          "mean": 0.03,
+          "winrate": 46.2
+        },
+        "3": {
+          "n": 26,
+          "mean": -1.4,
+          "winrate": 50.0
+        },
+        "5": {
+          "n": 26,
+          "mean": -2.65,
+          "winrate": 42.3
+        },
+        "10": {
+          "n": 26,
+          "mean": -0.52,
+          "winrate": 46.2
+        },
+        "20": {
+          "n": 26,
+          "mean": 2.53,
+          "winrate": 61.5
+        }
+      }
     },
     {
       "ticker": "UWM",
@@ -289,7 +1045,34 @@
       "mean_5d_pct": -2.94,
       "winrate_pct": 63.6,
       "grade": "↔엇갈림(참고만)",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 22,
+          "mean": -0.74,
+          "winrate": 45.5
+        },
+        "3": {
+          "n": 22,
+          "mean": -1.09,
+          "winrate": 54.5
+        },
+        "5": {
+          "n": 22,
+          "mean": -2.94,
+          "winrate": 63.6
+        },
+        "10": {
+          "n": 22,
+          "mean": -3.53,
+          "winrate": 59.1
+        },
+        "20": {
+          "n": 21,
+          "mean": -1.69,
+          "winrate": 57.1
+        }
+      }
     },
     {
       "ticker": "UYG",
@@ -299,7 +1082,34 @@
       "mean_5d_pct": -3.06,
       "winrate_pct": 57.7,
       "grade": "↔엇갈림(참고만)",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 26,
+          "mean": -0.35,
+          "winrate": 57.7
+        },
+        "3": {
+          "n": 26,
+          "mean": -1.81,
+          "winrate": 46.2
+        },
+        "5": {
+          "n": 26,
+          "mean": -3.06,
+          "winrate": 57.7
+        },
+        "10": {
+          "n": 26,
+          "mean": -2.62,
+          "winrate": 53.8
+        },
+        "20": {
+          "n": 26,
+          "mean": -1.77,
+          "winrate": 53.8
+        }
+      }
     },
     {
       "ticker": "WANT",
@@ -309,7 +1119,34 @@
       "mean_5d_pct": 1.36,
       "winrate_pct": 50.0,
       "grade": "↔엇갈림(참고만)",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 24,
+          "mean": 2.66,
+          "winrate": 70.8
+        },
+        "3": {
+          "n": 24,
+          "mean": 2.17,
+          "winrate": 58.3
+        },
+        "5": {
+          "n": 24,
+          "mean": 1.36,
+          "winrate": 50.0
+        },
+        "10": {
+          "n": 23,
+          "mean": 4.65,
+          "winrate": 65.2
+        },
+        "20": {
+          "n": 22,
+          "mean": 15.36,
+          "winrate": 72.7
+        }
+      }
     },
     {
       "ticker": "YINN",
@@ -319,7 +1156,34 @@
       "mean_5d_pct": -3.98,
       "winrate_pct": 44.0,
       "grade": "↔엇갈림(참고만)",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 25,
+          "mean": 0.47,
+          "winrate": 52.0
+        },
+        "3": {
+          "n": 25,
+          "mean": -2.68,
+          "winrate": 36.0
+        },
+        "5": {
+          "n": 25,
+          "mean": -3.98,
+          "winrate": 44.0
+        },
+        "10": {
+          "n": 25,
+          "mean": -5.79,
+          "winrate": 44.0
+        },
+        "20": {
+          "n": 24,
+          "mean": -0.64,
+          "winrate": 41.7
+        }
+      }
     },
     {
       "ticker": "BIB",
@@ -329,7 +1193,34 @@
       "mean_5d_pct": 2.15,
       "winrate_pct": 76.9,
       "grade": "💪둘다좋음",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 13,
+          "mean": 0.82,
+          "winrate": 69.2
+        },
+        "3": {
+          "n": 13,
+          "mean": 1.37,
+          "winrate": 69.2
+        },
+        "5": {
+          "n": 13,
+          "mean": 2.15,
+          "winrate": 76.9
+        },
+        "10": {
+          "n": 13,
+          "mean": 3.75,
+          "winrate": 69.2
+        },
+        "20": {
+          "n": 13,
+          "mean": 6.51,
+          "winrate": 76.9
+        }
+      }
     },
     {
       "ticker": "CURE",
@@ -339,7 +1230,34 @@
       "mean_5d_pct": -0.43,
       "winrate_pct": 50.0,
       "grade": "↔엇갈림(참고만)",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 20,
+          "mean": -0.04,
+          "winrate": 50.0
+        },
+        "3": {
+          "n": 20,
+          "mean": 0.23,
+          "winrate": 65.0
+        },
+        "5": {
+          "n": 20,
+          "mean": -0.43,
+          "winrate": 50.0
+        },
+        "10": {
+          "n": 20,
+          "mean": 0.71,
+          "winrate": 70.0
+        },
+        "20": {
+          "n": 20,
+          "mean": 2.31,
+          "winrate": 75.0
+        }
+      }
     },
     {
       "ticker": "DFEN",
@@ -349,7 +1267,34 @@
       "mean_5d_pct": 0.21,
       "winrate_pct": 50.0,
       "grade": "⚠표본적음",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 6,
+          "mean": -0.58,
+          "winrate": 50.0
+        },
+        "3": {
+          "n": 6,
+          "mean": 0.45,
+          "winrate": 50.0
+        },
+        "5": {
+          "n": 6,
+          "mean": 0.21,
+          "winrate": 50.0
+        },
+        "10": {
+          "n": 6,
+          "mean": 4.51,
+          "winrate": 100.0
+        },
+        "20": {
+          "n": 6,
+          "mean": 1.34,
+          "winrate": 50.0
+        }
+      }
     },
     {
       "ticker": "DPST",
@@ -359,7 +1304,34 @@
       "mean_5d_pct": 4.32,
       "winrate_pct": 83.3,
       "grade": "⚠표본적음",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 6,
+          "mean": 0.4,
+          "winrate": 33.3
+        },
+        "3": {
+          "n": 6,
+          "mean": 1.48,
+          "winrate": 33.3
+        },
+        "5": {
+          "n": 6,
+          "mean": 4.32,
+          "winrate": 83.3
+        },
+        "10": {
+          "n": 6,
+          "mean": -0.58,
+          "winrate": 50.0
+        },
+        "20": {
+          "n": 6,
+          "mean": -3.15,
+          "winrate": 50.0
+        }
+      }
     },
     {
       "ticker": "DRN",
@@ -369,7 +1341,34 @@
       "mean_5d_pct": -2.51,
       "winrate_pct": 36.4,
       "grade": "❌실제론나쁨(이 종목만)",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 11,
+          "mean": -0.7,
+          "winrate": 27.3
+        },
+        "3": {
+          "n": 11,
+          "mean": -2.42,
+          "winrate": 36.4
+        },
+        "5": {
+          "n": 11,
+          "mean": -2.51,
+          "winrate": 36.4
+        },
+        "10": {
+          "n": 11,
+          "mean": -0.92,
+          "winrate": 45.5
+        },
+        "20": {
+          "n": 11,
+          "mean": -7.99,
+          "winrate": 36.4
+        }
+      }
     },
     {
       "ticker": "DUSL",
@@ -379,7 +1378,34 @@
       "mean_5d_pct": -0.58,
       "winrate_pct": 43.8,
       "grade": "↔엇갈림(참고만)",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 16,
+          "mean": 0.29,
+          "winrate": 50.0
+        },
+        "3": {
+          "n": 16,
+          "mean": -0.55,
+          "winrate": 31.2
+        },
+        "5": {
+          "n": 16,
+          "mean": -0.58,
+          "winrate": 43.8
+        },
+        "10": {
+          "n": 16,
+          "mean": 1.91,
+          "winrate": 68.8
+        },
+        "20": {
+          "n": 16,
+          "mean": -0.0,
+          "winrate": 50.0
+        }
+      }
     },
     {
       "ticker": "ERX",
@@ -389,7 +1415,34 @@
       "mean_5d_pct": 2.31,
       "winrate_pct": 80.0,
       "grade": "⚠표본적음",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 5,
+          "mean": 1.27,
+          "winrate": 80.0
+        },
+        "3": {
+          "n": 5,
+          "mean": 4.72,
+          "winrate": 80.0
+        },
+        "5": {
+          "n": 5,
+          "mean": 2.31,
+          "winrate": 80.0
+        },
+        "10": {
+          "n": 5,
+          "mean": 0.42,
+          "winrate": 60.0
+        },
+        "20": {
+          "n": 5,
+          "mean": 0.91,
+          "winrate": 60.0
+        }
+      }
     },
     {
       "ticker": "FAS",
@@ -399,7 +1452,34 @@
       "mean_5d_pct": 1.69,
       "winrate_pct": 71.4,
       "grade": "⚠표본적음",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 7,
+          "mean": -0.04,
+          "winrate": 42.9
+        },
+        "3": {
+          "n": 7,
+          "mean": 1.27,
+          "winrate": 71.4
+        },
+        "5": {
+          "n": 7,
+          "mean": 1.69,
+          "winrate": 71.4
+        },
+        "10": {
+          "n": 7,
+          "mean": 0.82,
+          "winrate": 71.4
+        },
+        "20": {
+          "n": 7,
+          "mean": -3.33,
+          "winrate": 28.6
+        }
+      }
     },
     {
       "ticker": "GUSH",
@@ -409,7 +1489,34 @@
       "mean_5d_pct": 6.11,
       "winrate_pct": 50.0,
       "grade": "⚠독립사건적음",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 2,
+          "mean": 0.17,
+          "winrate": 50.0
+        },
+        "3": {
+          "n": 2,
+          "mean": 4.6,
+          "winrate": 50.0
+        },
+        "5": {
+          "n": 2,
+          "mean": 6.11,
+          "winrate": 50.0
+        },
+        "10": {
+          "n": 2,
+          "mean": 13.3,
+          "winrate": 50.0
+        },
+        "20": {
+          "n": 2,
+          "mean": 13.16,
+          "winrate": 50.0
+        }
+      }
     },
     {
       "ticker": "JNUG",
@@ -419,7 +1526,34 @@
       "mean_5d_pct": 9.73,
       "winrate_pct": 100.0,
       "grade": "⚠독립사건적음",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 3,
+          "mean": -3.2,
+          "winrate": 33.3
+        },
+        "3": {
+          "n": 3,
+          "mean": 10.41,
+          "winrate": 66.7
+        },
+        "5": {
+          "n": 3,
+          "mean": 9.73,
+          "winrate": 100.0
+        },
+        "10": {
+          "n": 3,
+          "mean": 12.51,
+          "winrate": 100.0
+        },
+        "20": {
+          "n": 3,
+          "mean": 3.68,
+          "winrate": 33.3
+        }
+      }
     },
     {
       "ticker": "LABU",
@@ -429,7 +1563,34 @@
       "mean_5d_pct": 5.83,
       "winrate_pct": 33.3,
       "grade": "⚠표본적음",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 3,
+          "mean": 0.59,
+          "winrate": 33.3
+        },
+        "3": {
+          "n": 3,
+          "mean": 5.37,
+          "winrate": 66.7
+        },
+        "5": {
+          "n": 3,
+          "mean": 5.83,
+          "winrate": 33.3
+        },
+        "10": {
+          "n": 3,
+          "mean": -2.52,
+          "winrate": 33.3
+        },
+        "20": {
+          "n": 3,
+          "mean": 9.76,
+          "winrate": 100.0
+        }
+      }
     },
     {
       "ticker": "NAIL",
@@ -439,7 +1600,34 @@
       "mean_5d_pct": -1.64,
       "winrate_pct": 50.0,
       "grade": "↔엇갈림(참고만)",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 16,
+          "mean": 0.69,
+          "winrate": 68.8
+        },
+        "3": {
+          "n": 16,
+          "mean": 0.39,
+          "winrate": 62.5
+        },
+        "5": {
+          "n": 16,
+          "mean": -1.64,
+          "winrate": 50.0
+        },
+        "10": {
+          "n": 16,
+          "mean": -4.97,
+          "winrate": 37.5
+        },
+        "20": {
+          "n": 16,
+          "mean": -8.14,
+          "winrate": 37.5
+        }
+      }
     },
     {
       "ticker": "NUGT",
@@ -449,7 +1637,34 @@
       "mean_5d_pct": -1.36,
       "winrate_pct": 50.0,
       "grade": "↔엇갈림(참고만)",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 10,
+          "mean": -1.51,
+          "winrate": 30.0
+        },
+        "3": {
+          "n": 10,
+          "mean": -1.86,
+          "winrate": 40.0
+        },
+        "5": {
+          "n": 10,
+          "mean": -1.36,
+          "winrate": 50.0
+        },
+        "10": {
+          "n": 10,
+          "mean": 2.47,
+          "winrate": 40.0
+        },
+        "20": {
+          "n": 10,
+          "mean": 5.65,
+          "winrate": 40.0
+        }
+      }
     },
     {
       "ticker": "PILL",
@@ -459,7 +1674,34 @@
       "mean_5d_pct": 2.57,
       "winrate_pct": 63.6,
       "grade": "💪둘다좋음",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 11,
+          "mean": 1.35,
+          "winrate": 63.6
+        },
+        "3": {
+          "n": 11,
+          "mean": 1.59,
+          "winrate": 63.6
+        },
+        "5": {
+          "n": 11,
+          "mean": 2.57,
+          "winrate": 63.6
+        },
+        "10": {
+          "n": 11,
+          "mean": 5.65,
+          "winrate": 72.7
+        },
+        "20": {
+          "n": 11,
+          "mean": 5.68,
+          "winrate": 63.6
+        }
+      }
     },
     {
       "ticker": "QLD",
@@ -469,7 +1711,34 @@
       "mean_5d_pct": 0.49,
       "winrate_pct": 25.0,
       "grade": "⚠독립사건적음",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 4,
+          "mean": 1.06,
+          "winrate": 75.0
+        },
+        "3": {
+          "n": 4,
+          "mean": 1.19,
+          "winrate": 100.0
+        },
+        "5": {
+          "n": 4,
+          "mean": 0.49,
+          "winrate": 25.0
+        },
+        "10": {
+          "n": 4,
+          "mean": -3.38,
+          "winrate": 25.0
+        },
+        "20": {
+          "n": 4,
+          "mean": -5.72,
+          "winrate": 0.0
+        }
+      }
     },
     {
       "ticker": "RETL",
@@ -479,7 +1748,34 @@
       "mean_5d_pct": 2.23,
       "winrate_pct": 69.2,
       "grade": "💪둘다좋음",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 26,
+          "mean": 0.12,
+          "winrate": 50.0
+        },
+        "3": {
+          "n": 26,
+          "mean": 1.71,
+          "winrate": 73.1
+        },
+        "5": {
+          "n": 26,
+          "mean": 2.23,
+          "winrate": 69.2
+        },
+        "10": {
+          "n": 26,
+          "mean": 0.7,
+          "winrate": 61.5
+        },
+        "20": {
+          "n": 26,
+          "mean": 1.24,
+          "winrate": 57.7
+        }
+      }
     },
     {
       "ticker": "ROM",
@@ -489,7 +1785,34 @@
       "mean_5d_pct": 2.44,
       "winrate_pct": 83.3,
       "grade": "💪둘다좋음",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 12,
+          "mean": 0.4,
+          "winrate": 58.3
+        },
+        "3": {
+          "n": 12,
+          "mean": 1.55,
+          "winrate": 66.7
+        },
+        "5": {
+          "n": 12,
+          "mean": 2.44,
+          "winrate": 83.3
+        },
+        "10": {
+          "n": 12,
+          "mean": 4.36,
+          "winrate": 83.3
+        },
+        "20": {
+          "n": 12,
+          "mean": 4.7,
+          "winrate": 75.0
+        }
+      }
     },
     {
       "ticker": "SOXL",
@@ -499,7 +1822,34 @@
       "mean_5d_pct": 3.95,
       "winrate_pct": 80.0,
       "grade": "⚠표본적음",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 5,
+          "mean": 2.98,
+          "winrate": 60.0
+        },
+        "3": {
+          "n": 5,
+          "mean": 1.76,
+          "winrate": 60.0
+        },
+        "5": {
+          "n": 5,
+          "mean": 3.95,
+          "winrate": 80.0
+        },
+        "10": {
+          "n": 5,
+          "mean": -0.73,
+          "winrate": 60.0
+        },
+        "20": {
+          "n": 5,
+          "mean": 8.67,
+          "winrate": 40.0
+        }
+      }
     },
     {
       "ticker": "SPXL",
@@ -509,7 +1859,34 @@
       "mean_5d_pct": 1.45,
       "winrate_pct": 80.0,
       "grade": "⚠표본적음",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 5,
+          "mean": 0.71,
+          "winrate": 60.0
+        },
+        "3": {
+          "n": 5,
+          "mean": 1.83,
+          "winrate": 80.0
+        },
+        "5": {
+          "n": 5,
+          "mean": 1.45,
+          "winrate": 80.0
+        },
+        "10": {
+          "n": 5,
+          "mean": 2.2,
+          "winrate": 80.0
+        },
+        "20": {
+          "n": 5,
+          "mean": -1.63,
+          "winrate": 60.0
+        }
+      }
     },
     {
       "ticker": "SSO",
@@ -519,7 +1896,34 @@
       "mean_5d_pct": 0.11,
       "winrate_pct": 40.0,
       "grade": "⚠표본적음",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 5,
+          "mean": 0.41,
+          "winrate": 40.0
+        },
+        "3": {
+          "n": 5,
+          "mean": 0.09,
+          "winrate": 40.0
+        },
+        "5": {
+          "n": 5,
+          "mean": 0.11,
+          "winrate": 40.0
+        },
+        "10": {
+          "n": 5,
+          "mean": 0.98,
+          "winrate": 40.0
+        },
+        "20": {
+          "n": 5,
+          "mean": 0.15,
+          "winrate": 60.0
+        }
+      }
     },
     {
       "ticker": "TECL",
@@ -529,7 +1933,34 @@
       "mean_5d_pct": -0.15,
       "winrate_pct": 80.0,
       "grade": "⚠표본적음",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 5,
+          "mean": -0.7,
+          "winrate": 60.0
+        },
+        "3": {
+          "n": 5,
+          "mean": -0.7,
+          "winrate": 60.0
+        },
+        "5": {
+          "n": 5,
+          "mean": -0.15,
+          "winrate": 80.0
+        },
+        "10": {
+          "n": 5,
+          "mean": 0.96,
+          "winrate": 80.0
+        },
+        "20": {
+          "n": 5,
+          "mean": 7.0,
+          "winrate": 80.0
+        }
+      }
     },
     {
       "ticker": "TQQQ",
@@ -539,7 +1970,34 @@
       "mean_5d_pct": 1.14,
       "winrate_pct": 50.0,
       "grade": "⚠표본적음",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 4,
+          "mean": 0.91,
+          "winrate": 50.0
+        },
+        "3": {
+          "n": 4,
+          "mean": 0.95,
+          "winrate": 75.0
+        },
+        "5": {
+          "n": 4,
+          "mean": 1.14,
+          "winrate": 50.0
+        },
+        "10": {
+          "n": 4,
+          "mean": -3.38,
+          "winrate": 50.0
+        },
+        "20": {
+          "n": 4,
+          "mean": -1.87,
+          "winrate": 25.0
+        }
+      }
     },
     {
       "ticker": "UDOW",
@@ -549,7 +2007,34 @@
       "mean_5d_pct": 0.05,
       "winrate_pct": 57.1,
       "grade": "⚠표본적음",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 7,
+          "mean": -0.08,
+          "winrate": 42.9
+        },
+        "3": {
+          "n": 7,
+          "mean": 0.32,
+          "winrate": 57.1
+        },
+        "5": {
+          "n": 7,
+          "mean": 0.05,
+          "winrate": 57.1
+        },
+        "10": {
+          "n": 7,
+          "mean": -0.1,
+          "winrate": 57.1
+        },
+        "20": {
+          "n": 7,
+          "mean": -4.16,
+          "winrate": 42.9
+        }
+      }
     },
     {
       "ticker": "UPRO",
@@ -559,7 +2044,34 @@
       "mean_5d_pct": 0.21,
       "winrate_pct": 66.7,
       "grade": "⚠표본적음",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 3,
+          "mean": 0.32,
+          "winrate": 33.3
+        },
+        "3": {
+          "n": 3,
+          "mean": 1.61,
+          "winrate": 100.0
+        },
+        "5": {
+          "n": 3,
+          "mean": 0.21,
+          "winrate": 66.7
+        },
+        "10": {
+          "n": 3,
+          "mean": 1.79,
+          "winrate": 66.7
+        },
+        "20": {
+          "n": 3,
+          "mean": -6.66,
+          "winrate": 33.3
+        }
+      }
     },
     {
       "ticker": "URE",
@@ -569,7 +2081,34 @@
       "mean_5d_pct": -0.6,
       "winrate_pct": 42.9,
       "grade": "↔엇갈림(참고만)",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 28,
+          "mean": -0.31,
+          "winrate": 46.4
+        },
+        "3": {
+          "n": 28,
+          "mean": -0.86,
+          "winrate": 39.3
+        },
+        "5": {
+          "n": 28,
+          "mean": -0.6,
+          "winrate": 42.9
+        },
+        "10": {
+          "n": 28,
+          "mean": -0.11,
+          "winrate": 53.6
+        },
+        "20": {
+          "n": 28,
+          "mean": -2.22,
+          "winrate": 46.4
+        }
+      }
     },
     {
       "ticker": "USD",
@@ -579,7 +2118,34 @@
       "mean_5d_pct": 3.3,
       "winrate_pct": 90.5,
       "grade": "💪둘다좋음",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 21,
+          "mean": 1.08,
+          "winrate": 66.7
+        },
+        "3": {
+          "n": 21,
+          "mean": 1.82,
+          "winrate": 71.4
+        },
+        "5": {
+          "n": 21,
+          "mean": 3.3,
+          "winrate": 90.5
+        },
+        "10": {
+          "n": 21,
+          "mean": 3.86,
+          "winrate": 76.2
+        },
+        "20": {
+          "n": 21,
+          "mean": 3.82,
+          "winrate": 57.1
+        }
+      }
     },
     {
       "ticker": "UTSL",
@@ -589,7 +2155,34 @@
       "mean_5d_pct": 1.67,
       "winrate_pct": 52.4,
       "grade": "↔엇갈림(참고만)",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 21,
+          "mean": 0.11,
+          "winrate": 47.6
+        },
+        "3": {
+          "n": 21,
+          "mean": 0.14,
+          "winrate": 52.4
+        },
+        "5": {
+          "n": 21,
+          "mean": 1.67,
+          "winrate": 52.4
+        },
+        "10": {
+          "n": 21,
+          "mean": 2.78,
+          "winrate": 76.2
+        },
+        "20": {
+          "n": 21,
+          "mean": -1.27,
+          "winrate": 47.6
+        }
+      }
     },
     {
       "ticker": "UWM",
@@ -599,7 +2192,34 @@
       "mean_5d_pct": -0.32,
       "winrate_pct": 28.6,
       "grade": "⚠표본적음",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 7,
+          "mean": 0.03,
+          "winrate": 42.9
+        },
+        "3": {
+          "n": 7,
+          "mean": -0.34,
+          "winrate": 42.9
+        },
+        "5": {
+          "n": 7,
+          "mean": -0.32,
+          "winrate": 28.6
+        },
+        "10": {
+          "n": 7,
+          "mean": -1.07,
+          "winrate": 14.3
+        },
+        "20": {
+          "n": 7,
+          "mean": 1.77,
+          "winrate": 57.1
+        }
+      }
     },
     {
       "ticker": "UYG",
@@ -609,7 +2229,34 @@
       "mean_5d_pct": 0.26,
       "winrate_pct": 66.7,
       "grade": "↔엇갈림(참고만)",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 15,
+          "mean": -0.05,
+          "winrate": 53.3
+        },
+        "3": {
+          "n": 15,
+          "mean": 0.31,
+          "winrate": 66.7
+        },
+        "5": {
+          "n": 15,
+          "mean": 0.26,
+          "winrate": 66.7
+        },
+        "10": {
+          "n": 15,
+          "mean": 0.47,
+          "winrate": 73.3
+        },
+        "20": {
+          "n": 15,
+          "mean": 1.09,
+          "winrate": 66.7
+        }
+      }
     },
     {
       "ticker": "WANT",
@@ -619,7 +2266,34 @@
       "mean_5d_pct": 1.73,
       "winrate_pct": 100.0,
       "grade": "⚠표본적음",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 3,
+          "mean": -0.54,
+          "winrate": 33.3
+        },
+        "3": {
+          "n": 3,
+          "mean": 0.43,
+          "winrate": 66.7
+        },
+        "5": {
+          "n": 3,
+          "mean": 1.73,
+          "winrate": 100.0
+        },
+        "10": {
+          "n": 3,
+          "mean": 2.93,
+          "winrate": 100.0
+        },
+        "20": {
+          "n": 3,
+          "mean": -0.12,
+          "winrate": 66.7
+        }
+      }
     },
     {
       "ticker": "YINN",
@@ -629,7 +2303,34 @@
       "mean_5d_pct": -0.4,
       "winrate_pct": 52.9,
       "grade": "↔엇갈림(참고만)",
-      "ma5_flag": "X"
+      "ma5_flag": "X",
+      "horizons": {
+        "1": {
+          "n": 17,
+          "mean": 0.16,
+          "winrate": 47.1
+        },
+        "3": {
+          "n": 17,
+          "mean": -0.18,
+          "winrate": 52.9
+        },
+        "5": {
+          "n": 17,
+          "mean": -0.4,
+          "winrate": 52.9
+        },
+        "10": {
+          "n": 17,
+          "mean": -4.74,
+          "winrate": 41.2
+        },
+        "20": {
+          "n": 17,
+          "mean": -6.02,
+          "winrate": 23.5
+        }
+      }
     }
   ],
   "methodology": {
@@ -639,6 +2340,7 @@
     "④_5일선_OX": "O=현재가가 5일 이동평균선(최근5거래일 종가평균) 위, X=아래. 단순 '지금 위치'만 표시(돌파/크로스 뜻 아님). 돌파 순간만 따로 잡는 ma5_reclaim은 position_stoploss_monitor.py의 보유포지션 손절모니터에서만 씀(-30%↓구간 n=193·승률78.2% — 단, 이 신호도 실패율 21.8%: 2009금융위기·2016바이오폭락·2023 SVB은행위기처럼 '섹터 전체가 무너지는 중'엔 돌파해도 또 떨어짐).",
     "⑤_독립사건_판정(episode_n)": "사장님이 직접 의심해서(2026-11-22) 검증: 'JNUG 승률100%·ERX 80%가 혹시 섹터 하나 무너지면서 같은 사건이 중복집계된 거 아니냐?' → 실제로 확인해보니 일부는 맞았음. 같은 종목의 스파이크 날짜가 서로 10일(달력일) 이내면 '같은 사건'으로 묶어서 독립사건 1개로 셈(예: JNUG 2014-06-13·06-20은 7일 차이라 1개 사건, 2020-01-08은 별개 사건 → 원시표본 3건인데 실제 독립사건은 2개뿐). ERX도 원시 5건이 실제론 3개 사건. 반면 DPST·ROM·SOXL은 스파이크 날짜가 몇 달~몇 년씩 떨어져있어 원시건수=독립사건수로 동일(진짜 독립사건 맞음) — 그래서 모든 고승률이 섹터붕괴 중복은 아니고, 종목마다 다름.",
     "⑥_등급_기준": "① episode_n(독립사건수) 3 미만이면 raw n이 몇이든 무조건 '⚠독립사건적음'(믿지 말 것). ② 그 다음 표본 10건 미만이면 '⚠표본적음'. ③ 둘 다 통과하면: 승률60%↑ + 평균이 그 방향으로 1.5%p 이상이면 '💪둘다좋음'(매수후보) 또는 '💪둘다나쁨(회피확정)'(매수금지), 하나만 맞으면 '↔엇갈림(참고만)'.",
+    "⑦_보유기간별_비교(horizons)": "사장님 질문('한 달 들고 있다 팔면 되는 애들인가?')에 답하려고 2026-11-22 추가 — 5일 수치 하나만 보면 종목마다 다른 '최적 보유기간'을 알 수 없음. 1/3/5/10/20거래일(20일≈약 한 달) 후 각각의 승률/평균을 다 남겨둠. 확인해보니 종목마다 패턴이 다름: USD는 5일째가 피크(승률90.5%)고 20일까지 들고가면 승률 57.1%로 떨어짐(짧게 치고 빠지는 쪽), ROM·BIB는 20일까지도 승률·평균 둘 다 유지되거나 더 좋아짐(길게 들고가도 되는 쪽), RETL은 중간에 꺾였다 회복해서 뚜렷한 패턴 없음. 즉 '얼마나 들고 있을지'도 종목별로 따로 봐야 함 — 일괄 적용 금지.",
     "분할조정_버그_주의": "그래닛셰어즈 단일종목 ETP(56개)는 역분할이 잦아서 yfinance 원본에 50% 넘는 가짜 일일변동이 섞여있음 — 그 경계를 넘는 호라이즌은 계산에서 제외함(2026-11-21 3LNV.L에서 실제로 발견·수정).",
     "한계": "episode_n으로 '같은 사건 중복집계'는 걸러내지만, 왜 그 날 스파이크가 났는지(뉴스 등)까지는 이 데이터로 확인 불가. 독립사건이어도 전부 같은 시대(저금리기 등) 편향일 수 있음. 투자자문 아님, 과거 통계일 뿐."
   },
