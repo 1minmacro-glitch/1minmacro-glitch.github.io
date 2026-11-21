@@ -1,0 +1,798 @@
+{
+  "generated_at_utc": "2026-11-21T13:59:29Z",
+  "win_rate_table": [
+    {
+      "ticker": "BIB",
+      "kind": "avoid",
+      "n": 39,
+      "mean_5d_pct": 1.88,
+      "winrate_pct": 56.4,
+      "grade": "↔엇갈림(참고만)"
+    },
+    {
+      "ticker": "CURE",
+      "kind": "avoid",
+      "n": 22,
+      "mean_5d_pct": -3.39,
+      "winrate_pct": 50.0,
+      "grade": "↔엇갈림(참고만)"
+    },
+    {
+      "ticker": "DFEN",
+      "kind": "avoid",
+      "n": 16,
+      "mean_5d_pct": -5.78,
+      "winrate_pct": 31.2,
+      "grade": "💪둘다나쁨(회피확정)"
+    },
+    {
+      "ticker": "DPST",
+      "kind": "avoid",
+      "n": 23,
+      "mean_5d_pct": -8.15,
+      "winrate_pct": 52.2,
+      "grade": "↔엇갈림(참고만)"
+    },
+    {
+      "ticker": "DRN",
+      "kind": "avoid",
+      "n": 39,
+      "mean_5d_pct": -0.13,
+      "winrate_pct": 46.2,
+      "grade": "↔엇갈림(참고만)"
+    },
+    {
+      "ticker": "DUSL",
+      "kind": "avoid",
+      "n": 17,
+      "mean_5d_pct": -7.39,
+      "winrate_pct": 35.3,
+      "grade": "💪둘다나쁨(회피확정)"
+    },
+    {
+      "ticker": "ERX",
+      "kind": "avoid",
+      "n": 34,
+      "mean_5d_pct": -3.59,
+      "winrate_pct": 52.9,
+      "grade": "↔엇갈림(참고만)"
+    },
+    {
+      "ticker": "FAS",
+      "kind": "avoid",
+      "n": 23,
+      "mean_5d_pct": -7.47,
+      "winrate_pct": 43.5,
+      "grade": "↔엇갈림(참고만)"
+    },
+    {
+      "ticker": "GUSH",
+      "kind": "avoid",
+      "n": 35,
+      "mean_5d_pct": -3.77,
+      "winrate_pct": 42.9,
+      "grade": "↔엇갈림(참고만)"
+    },
+    {
+      "ticker": "JNUG",
+      "kind": "avoid",
+      "n": 16,
+      "mean_5d_pct": -11.44,
+      "winrate_pct": 31.2,
+      "grade": "💪둘다나쁨(회피확정)"
+    },
+    {
+      "ticker": "LABU",
+      "kind": "avoid",
+      "n": 26,
+      "mean_5d_pct": 0.68,
+      "winrate_pct": 57.7,
+      "grade": "↔엇갈림(참고만)"
+    },
+    {
+      "ticker": "NAIL",
+      "kind": "avoid",
+      "n": 19,
+      "mean_5d_pct": -4.96,
+      "winrate_pct": 42.1,
+      "grade": "↔엇갈림(참고만)"
+    },
+    {
+      "ticker": "NUGT",
+      "kind": "avoid",
+      "n": 29,
+      "mean_5d_pct": -1.62,
+      "winrate_pct": 51.7,
+      "grade": "↔엇갈림(참고만)"
+    },
+    {
+      "ticker": "PILL",
+      "kind": "avoid",
+      "n": 23,
+      "mean_5d_pct": -5.59,
+      "winrate_pct": 39.1,
+      "grade": "💪둘다나쁨(회피확정)"
+    },
+    {
+      "ticker": "QLD",
+      "kind": "avoid",
+      "n": 26,
+      "mean_5d_pct": 0.49,
+      "winrate_pct": 61.5,
+      "grade": "❌실제론괜찮음(이 종목만)"
+    },
+    {
+      "ticker": "RETL",
+      "kind": "avoid",
+      "n": 51,
+      "mean_5d_pct": -1.33,
+      "winrate_pct": 54.9,
+      "grade": "↔엇갈림(참고만)"
+    },
+    {
+      "ticker": "ROM",
+      "kind": "avoid",
+      "n": 44,
+      "mean_5d_pct": 1.78,
+      "winrate_pct": 65.9,
+      "grade": "❌실제론괜찮음(이 종목만)"
+    },
+    {
+      "ticker": "SOXL",
+      "kind": "avoid",
+      "n": 29,
+      "mean_5d_pct": 7.54,
+      "winrate_pct": 58.6,
+      "grade": "↔엇갈림(참고만)"
+    },
+    {
+      "ticker": "SPXL",
+      "kind": "avoid",
+      "n": 34,
+      "mean_5d_pct": -4.53,
+      "winrate_pct": 44.1,
+      "grade": "↔엇갈림(참고만)"
+    },
+    {
+      "ticker": "SSO",
+      "kind": "avoid",
+      "n": 28,
+      "mean_5d_pct": -0.44,
+      "winrate_pct": 50.0,
+      "grade": "↔엇갈림(참고만)"
+    },
+    {
+      "ticker": "TECL",
+      "kind": "avoid",
+      "n": 27,
+      "mean_5d_pct": 0.67,
+      "winrate_pct": 51.9,
+      "grade": "↔엇갈림(참고만)"
+    },
+    {
+      "ticker": "TNA",
+      "kind": "avoid",
+      "n": 15,
+      "mean_5d_pct": -0.23,
+      "winrate_pct": 46.7,
+      "grade": "↔엇갈림(참고만)"
+    },
+    {
+      "ticker": "TQQQ",
+      "kind": "avoid",
+      "n": 21,
+      "mean_5d_pct": 5.76,
+      "winrate_pct": 76.2,
+      "grade": "❌실제론괜찮음(이 종목만)"
+    },
+    {
+      "ticker": "UDOW",
+      "kind": "avoid",
+      "n": 32,
+      "mean_5d_pct": -1.85,
+      "winrate_pct": 43.8,
+      "grade": "↔엇갈림(참고만)"
+    },
+    {
+      "ticker": "UPRO",
+      "kind": "avoid",
+      "n": 27,
+      "mean_5d_pct": -4.52,
+      "winrate_pct": 40.7,
+      "grade": "↔엇갈림(참고만)"
+    },
+    {
+      "ticker": "URE",
+      "kind": "avoid",
+      "n": 43,
+      "mean_5d_pct": 0.55,
+      "winrate_pct": 53.5,
+      "grade": "↔엇갈림(참고만)"
+    },
+    {
+      "ticker": "USD",
+      "kind": "avoid",
+      "n": 33,
+      "mean_5d_pct": 2.47,
+      "winrate_pct": 57.6,
+      "grade": "↔엇갈림(참고만)"
+    },
+    {
+      "ticker": "UTSL",
+      "kind": "avoid",
+      "n": 26,
+      "mean_5d_pct": -2.65,
+      "winrate_pct": 42.3,
+      "grade": "↔엇갈림(참고만)"
+    },
+    {
+      "ticker": "UWM",
+      "kind": "avoid",
+      "n": 22,
+      "mean_5d_pct": -2.94,
+      "winrate_pct": 63.6,
+      "grade": "↔엇갈림(참고만)"
+    },
+    {
+      "ticker": "UYG",
+      "kind": "avoid",
+      "n": 26,
+      "mean_5d_pct": -3.06,
+      "winrate_pct": 57.7,
+      "grade": "↔엇갈림(참고만)"
+    },
+    {
+      "ticker": "WANT",
+      "kind": "avoid",
+      "n": 24,
+      "mean_5d_pct": 1.36,
+      "winrate_pct": 50.0,
+      "grade": "↔엇갈림(참고만)"
+    },
+    {
+      "ticker": "YINN",
+      "kind": "avoid",
+      "n": 25,
+      "mean_5d_pct": -3.98,
+      "winrate_pct": 44.0,
+      "grade": "↔엇갈림(참고만)"
+    },
+    {
+      "ticker": "BIB",
+      "kind": "buy",
+      "n": 13,
+      "mean_5d_pct": 2.15,
+      "winrate_pct": 76.9,
+      "grade": "💪둘다좋음"
+    },
+    {
+      "ticker": "CURE",
+      "kind": "buy",
+      "n": 20,
+      "mean_5d_pct": -0.43,
+      "winrate_pct": 50.0,
+      "grade": "↔엇갈림(참고만)"
+    },
+    {
+      "ticker": "DFEN",
+      "kind": "buy",
+      "n": 6,
+      "mean_5d_pct": 0.21,
+      "winrate_pct": 50.0,
+      "grade": "⚠표본적음"
+    },
+    {
+      "ticker": "DPST",
+      "kind": "buy",
+      "n": 6,
+      "mean_5d_pct": 4.32,
+      "winrate_pct": 83.3,
+      "grade": "⚠표본적음"
+    },
+    {
+      "ticker": "DRN",
+      "kind": "buy",
+      "n": 11,
+      "mean_5d_pct": -2.51,
+      "winrate_pct": 36.4,
+      "grade": "❌실제론나쁨(이 종목만)"
+    },
+    {
+      "ticker": "DUSL",
+      "kind": "buy",
+      "n": 16,
+      "mean_5d_pct": -0.58,
+      "winrate_pct": 43.8,
+      "grade": "↔엇갈림(참고만)"
+    },
+    {
+      "ticker": "ERX",
+      "kind": "buy",
+      "n": 5,
+      "mean_5d_pct": 2.31,
+      "winrate_pct": 80.0,
+      "grade": "⚠표본적음"
+    },
+    {
+      "ticker": "FAS",
+      "kind": "buy",
+      "n": 7,
+      "mean_5d_pct": 1.69,
+      "winrate_pct": 71.4,
+      "grade": "⚠표본적음"
+    },
+    {
+      "ticker": "GUSH",
+      "kind": "buy",
+      "n": 2,
+      "mean_5d_pct": 6.11,
+      "winrate_pct": 50.0,
+      "grade": "⚠표본적음"
+    },
+    {
+      "ticker": "JNUG",
+      "kind": "buy",
+      "n": 3,
+      "mean_5d_pct": 9.73,
+      "winrate_pct": 100.0,
+      "grade": "⚠표본적음"
+    },
+    {
+      "ticker": "LABU",
+      "kind": "buy",
+      "n": 3,
+      "mean_5d_pct": 5.83,
+      "winrate_pct": 33.3,
+      "grade": "⚠표본적음"
+    },
+    {
+      "ticker": "NAIL",
+      "kind": "buy",
+      "n": 16,
+      "mean_5d_pct": -1.64,
+      "winrate_pct": 50.0,
+      "grade": "↔엇갈림(참고만)"
+    },
+    {
+      "ticker": "NUGT",
+      "kind": "buy",
+      "n": 10,
+      "mean_5d_pct": -1.36,
+      "winrate_pct": 50.0,
+      "grade": "↔엇갈림(참고만)"
+    },
+    {
+      "ticker": "PILL",
+      "kind": "buy",
+      "n": 11,
+      "mean_5d_pct": 2.57,
+      "winrate_pct": 63.6,
+      "grade": "💪둘다좋음"
+    },
+    {
+      "ticker": "QLD",
+      "kind": "buy",
+      "n": 4,
+      "mean_5d_pct": 0.49,
+      "winrate_pct": 25.0,
+      "grade": "⚠표본적음"
+    },
+    {
+      "ticker": "RETL",
+      "kind": "buy",
+      "n": 26,
+      "mean_5d_pct": 2.23,
+      "winrate_pct": 69.2,
+      "grade": "💪둘다좋음"
+    },
+    {
+      "ticker": "ROM",
+      "kind": "buy",
+      "n": 12,
+      "mean_5d_pct": 2.44,
+      "winrate_pct": 83.3,
+      "grade": "💪둘다좋음"
+    },
+    {
+      "ticker": "SOXL",
+      "kind": "buy",
+      "n": 5,
+      "mean_5d_pct": 3.95,
+      "winrate_pct": 80.0,
+      "grade": "⚠표본적음"
+    },
+    {
+      "ticker": "SPXL",
+      "kind": "buy",
+      "n": 5,
+      "mean_5d_pct": 1.45,
+      "winrate_pct": 80.0,
+      "grade": "⚠표본적음"
+    },
+    {
+      "ticker": "SSO",
+      "kind": "buy",
+      "n": 5,
+      "mean_5d_pct": 0.11,
+      "winrate_pct": 40.0,
+      "grade": "⚠표본적음"
+    },
+    {
+      "ticker": "TECL",
+      "kind": "buy",
+      "n": 5,
+      "mean_5d_pct": -0.15,
+      "winrate_pct": 80.0,
+      "grade": "⚠표본적음"
+    },
+    {
+      "ticker": "TQQQ",
+      "kind": "buy",
+      "n": 4,
+      "mean_5d_pct": 1.14,
+      "winrate_pct": 50.0,
+      "grade": "⚠표본적음"
+    },
+    {
+      "ticker": "UDOW",
+      "kind": "buy",
+      "n": 7,
+      "mean_5d_pct": 0.05,
+      "winrate_pct": 57.1,
+      "grade": "⚠표본적음"
+    },
+    {
+      "ticker": "UPRO",
+      "kind": "buy",
+      "n": 3,
+      "mean_5d_pct": 0.21,
+      "winrate_pct": 66.7,
+      "grade": "⚠표본적음"
+    },
+    {
+      "ticker": "URE",
+      "kind": "buy",
+      "n": 28,
+      "mean_5d_pct": -0.6,
+      "winrate_pct": 42.9,
+      "grade": "↔엇갈림(참고만)"
+    },
+    {
+      "ticker": "USD",
+      "kind": "buy",
+      "n": 21,
+      "mean_5d_pct": 3.3,
+      "winrate_pct": 90.5,
+      "grade": "💪둘다좋음"
+    },
+    {
+      "ticker": "UTSL",
+      "kind": "buy",
+      "n": 21,
+      "mean_5d_pct": 1.67,
+      "winrate_pct": 52.4,
+      "grade": "↔엇갈림(참고만)"
+    },
+    {
+      "ticker": "UWM",
+      "kind": "buy",
+      "n": 7,
+      "mean_5d_pct": -0.32,
+      "winrate_pct": 28.6,
+      "grade": "⚠표본적음"
+    },
+    {
+      "ticker": "UYG",
+      "kind": "buy",
+      "n": 15,
+      "mean_5d_pct": 0.26,
+      "winrate_pct": 66.7,
+      "grade": "↔엇갈림(참고만)"
+    },
+    {
+      "ticker": "WANT",
+      "kind": "buy",
+      "n": 3,
+      "mean_5d_pct": 1.73,
+      "winrate_pct": 100.0,
+      "grade": "⚠표본적음"
+    },
+    {
+      "ticker": "YINN",
+      "kind": "buy",
+      "n": 17,
+      "mean_5d_pct": -0.4,
+      "winrate_pct": 52.9,
+      "grade": "↔엇갈림(참고만)"
+    }
+  ],
+  "methodology": {
+    "승률_계산식": "승률 = (수익률>0인 날 수) / (전체 스파이크일 수) × 100. 수익률 = (진입일+5거래일 후 종가 / 진입일 종가 - 1) × 100. 진입일은 스파이크일 '다음날'(알림이 장마감 후에 오므로 당일 종가 매수는 불가능 — 2026-11-21 이 가정으로 재계산, 전엔 승률이 더 높게 과장돼있었음).",
+    "거래량_스파이크_판정": "최신 거래일 거래량 vs 과거 20일 중 스파이크(중앙값 3배 초과날 제외)한 '평온한 날'들의 중앙값. 그 대비 N배(기본 2배) 이상이면 스파이크로 판정. 최소유동성(평소 500주 미만) 종목 제외.",
+    "방향_분류": "스파이크일 당일 종가가 전일보다 올랐으면 '상승스파이크', 내렸으면 '하락스파이크'로 분류. 매수후보=극단적탐욕(공포탐욕지수75+)+하락스파이크, 매수금지=극단적공포(지수25미만)+상승스파이크.",
+    "분할조정_버그_주의": "그래닛셰어즈 단일종목 ETP(56개)는 역분할이 잦아서 yfinance 원본에 50% 넘는 가짜 일일변동이 섞여있음 — 그 경계를 넘는 호라이즌은 계산에서 제외함(2026-11-21 3LNV.L에서 실제로 발견·수정).",
+    "둘다좋음_기준": "표본 10건 이상 + 승률60%↑ + 평균이 그 방향으로 1.5%p 이상이면 '💪둘다좋음'(매수후보) 또는 '💪둘다나쁨(회피확정)'(매수금지). 하나만 맞으면 '↔엇갈림(참고만)', 표본 10건 미만은 무조건 '⚠표본적음'.",
+    "한계": "표본이 날짜상 몇 개 사건에 뭉쳐있을 수 있어(예: PILL 11건이 2018/2019/2020/2023 4개 시기에 뭉침) 실질 독립표본은 더 적을 수 있음. 왜 그 날 스파이크가 났는지(뉴스 등)는 이 데이터로 확인 불가. 투자자문 아님, 과거 통계일 뿐."
+  },
+  "ticker_map_단일종목_to_ETF": [
+    {
+      "single_stock_long": "3LNV.L",
+      "single_stock_short": "3SNV.L",
+      "name": "NVIDIA",
+      "target_etf_bull": "SOXL",
+      "target_etf_bear": "SOXS",
+      "confidence": "강(실측검증됨)",
+      "note": "2026-11-21 실측: SOXL 거래량, NVIDIA ETP 스파이크일 26일 중 25일 평소대비 1.1~5.45배 동반상승. SOXX 교차검증으로 실제 반도체섹터 급락 확인."
+    },
+    {
+      "single_stock_long": "3LAM.L",
+      "single_stock_short": "3SMD.L",
+      "name": "AMD",
+      "target_etf_bull": "SOXL",
+      "target_etf_bear": "SOXS",
+      "confidence": "강(구조적, 미실측)",
+      "note": "AMD도 SOX 지수 구성종목 — NVIDIA와 같은 섹터 메커니즘일 가능성 높으나 개별 실측은 아직 안 함."
+    },
+    {
+      "single_stock_long": "3LAP.L",
+      "single_stock_short": "3SAP.L",
+      "name": "Apple",
+      "target_etf_bull": "TQQQ",
+      "target_etf_bear": "SQQQ",
+      "confidence": "강(구조적, 미실측)",
+      "note": "나스닥100 최대 비중 종목. TECL/TECS(기술섹터)도 대안."
+    },
+    {
+      "single_stock_long": "3LMS.L",
+      "single_stock_short": "3SMS.L",
+      "name": "Microsoft",
+      "target_etf_bull": "TQQQ",
+      "target_etf_bear": "SQQQ",
+      "confidence": "강(구조적, 미실측)",
+      "note": ""
+    },
+    {
+      "single_stock_long": "3LFB.L",
+      "single_stock_short": "3SFB.L",
+      "name": "Meta",
+      "target_etf_bull": "TQQQ",
+      "target_etf_bear": "SQQQ",
+      "confidence": "보통(구조적, 미실측)",
+      "note": ""
+    },
+    {
+      "single_stock_long": "3LZN.L",
+      "single_stock_short": "3SZN.L",
+      "name": "Amazon",
+      "target_etf_bull": "TQQQ",
+      "target_etf_bear": "SQQQ",
+      "confidence": "보통(구조적, 미실측)",
+      "note": ""
+    },
+    {
+      "single_stock_long": "3LNF.L",
+      "single_stock_short": "3SNF.L",
+      "name": "Netflix",
+      "target_etf_bull": "TQQQ",
+      "target_etf_bear": "SQQQ",
+      "confidence": "보통(구조적, 미실측)",
+      "note": ""
+    },
+    {
+      "single_stock_long": "3LAL.L",
+      "single_stock_short": "3SAL.L",
+      "name": "Alphabet",
+      "target_etf_bull": "TQQQ",
+      "target_etf_bear": "SQQQ",
+      "confidence": "강(구조적, 미실측)",
+      "note": ""
+    },
+    {
+      "single_stock_long": "3LTS.L",
+      "single_stock_short": "3STS.L",
+      "name": "Tesla",
+      "target_etf_bull": "TQQQ",
+      "target_etf_bear": "SQQQ",
+      "confidence": "약(간접적)",
+      "note": "나스닥100 구성종목이긴 하나 전기차 전용 레버리지 ETF가 추적목록에 없어 대체재일 뿐."
+    },
+    {
+      "single_stock_long": "3FNG.L",
+      "single_stock_short": null,
+      "name": "FAANG Index",
+      "target_etf_bull": "TQQQ",
+      "target_etf_bear": "SQQQ",
+      "confidence": "강(구조적, 미실측)",
+      "note": "구성 로직이 나스닥100 대형기술주와 거의 겹침."
+    },
+    {
+      "single_stock_long": "3LNI.L",
+      "single_stock_short": "3SNI.L",
+      "name": "NIO",
+      "target_etf_bull": "YINN",
+      "target_etf_bear": "YANG",
+      "confidence": "보통(구조적, 미실측)",
+      "note": ""
+    },
+    {
+      "single_stock_long": "3LAA.L",
+      "single_stock_short": "3SAA.L",
+      "name": "Alibaba",
+      "target_etf_bull": "YINN",
+      "target_etf_bear": "YANG",
+      "confidence": "강(구조적, 미실측)",
+      "note": ""
+    },
+    {
+      "single_stock_long": "3LMO.L",
+      "single_stock_short": "3SMO.L",
+      "name": "Moderna",
+      "target_etf_bull": "LABU",
+      "target_etf_bear": "LABD",
+      "confidence": "보통(구조적, 미실측)",
+      "note": ""
+    },
+    {
+      "single_stock_long": "3LAZ.L",
+      "single_stock_short": "3SAZ.L",
+      "name": "AstraZeneca",
+      "target_etf_bull": "PILL",
+      "target_etf_bear": null,
+      "confidence": "보통(구조적, 미실측)",
+      "note": "PILL은 숏 상품 없음(바이오/제약 롱온리 3배)."
+    },
+    {
+      "single_stock_long": "3LRD.L",
+      "single_stock_short": "3SRD.L",
+      "name": "Shell",
+      "target_etf_bull": "ERX",
+      "target_etf_bear": "ERY",
+      "confidence": "보통(구조적, 미실측)",
+      "note": ""
+    },
+    {
+      "single_stock_long": "3LBP.L",
+      "single_stock_short": "3SBP.L",
+      "name": "BP",
+      "target_etf_bull": "ERX",
+      "target_etf_bear": "ERY",
+      "confidence": "보통(구조적, 미실측)",
+      "note": ""
+    },
+    {
+      "single_stock_long": "3LBA.L",
+      "single_stock_short": "3SBA.L",
+      "name": "BAE Systems",
+      "target_etf_bull": "DFEN",
+      "target_etf_bear": null,
+      "confidence": "약(지역 불일치)",
+      "note": "DFEN은 미국 방산 위주 — 영국 방산주와 구성이 다름, 매크로 동조 정도만 기대."
+    },
+    {
+      "single_stock_long": "3LRR.L",
+      "single_stock_short": "3SRR.L",
+      "name": "Rolls-Royce",
+      "target_etf_bull": "DFEN",
+      "target_etf_bear": null,
+      "confidence": "약(지역 불일치)",
+      "note": "BAE와 동일 사유."
+    },
+    {
+      "single_stock_long": "3LLL.L",
+      "single_stock_short": "3SLL.L",
+      "name": "Lloyds",
+      "target_etf_bull": "FAS",
+      "target_etf_bear": "FAZ",
+      "confidence": "약(지역 불일치)",
+      "note": "FAS/FAZ는 미국 금융섹터 위주 — 영국 은행주와 구성 다름."
+    },
+    {
+      "single_stock_long": "3LBC.L",
+      "single_stock_short": "3SBC.L",
+      "name": "Barclays",
+      "target_etf_bull": "FAS",
+      "target_etf_bear": "FAZ",
+      "confidence": "약(지역 불일치)",
+      "note": "Lloyds와 동일 사유."
+    },
+    {
+      "single_stock_long": "3LSQ.L",
+      "single_stock_short": "3SSQ.L",
+      "name": "Block(Square)",
+      "target_etf_bull": "FAS",
+      "target_etf_bear": "FAZ",
+      "confidence": "약(핀테크≠은행)",
+      "note": ""
+    },
+    {
+      "single_stock_long": "3LPP.L",
+      "single_stock_short": null,
+      "name": "PayPal",
+      "target_etf_bull": "FAS",
+      "target_etf_bear": "FAZ",
+      "confidence": "약(핀테크≠은행)",
+      "note": ""
+    },
+    {
+      "single_stock_long": "3LPA.L",
+      "single_stock_short": "3SPA.L",
+      "name": "Palantir",
+      "target_etf_bull": "TQQQ",
+      "target_etf_bear": "SQQQ",
+      "confidence": "약(비중 작음)",
+      "note": "나스닥100 구성종목이나 비중이 작아 지수 레버리지ETF에 미치는 영향 제한적."
+    },
+    {
+      "single_stock_long": "3LCO.L",
+      "single_stock_short": null,
+      "name": "Coinbase",
+      "target_etf_bull": null,
+      "target_etf_bear": null,
+      "confidence": "없음",
+      "note": "추적목록(ETF_TICKERS)에 코인베이스/암호화폐거래소 전용 레버리지ETF 없음."
+    },
+    {
+      "single_stock_long": "3LMI.L",
+      "single_stock_short": "3SMI.L",
+      "name": "MicroStrategy",
+      "target_etf_bull": null,
+      "target_etf_bear": null,
+      "confidence": "없음",
+      "note": "비트코인 프록시 종목 — 추적목록에 적합한 레버리지ETF 없음."
+    },
+    {
+      "single_stock_long": "3LGL.L",
+      "single_stock_short": "3SGL.L",
+      "name": "Glencore",
+      "target_etf_bull": null,
+      "target_etf_bear": null,
+      "confidence": "없음",
+      "note": "NUGT/DUST는 금광주 전용이라 다각화 광물기업(Glencore)과 안 맞음."
+    },
+    {
+      "single_stock_long": "3LRI.L",
+      "single_stock_short": "3SRI.L",
+      "name": "Rio Tinto",
+      "target_etf_bull": null,
+      "target_etf_bear": null,
+      "confidence": "없음",
+      "note": "Glencore와 동일 사유."
+    },
+    {
+      "single_stock_long": "3LVO.L",
+      "single_stock_short": "3SVO.L",
+      "name": "Vodafone",
+      "target_etf_bull": null,
+      "target_etf_bear": null,
+      "confidence": "없음",
+      "note": "추적목록에 통신섹터 레버리지ETF 없음."
+    },
+    {
+      "single_stock_long": "3LDO.L",
+      "single_stock_short": "3SDO.L",
+      "name": "Diageo",
+      "target_etf_bull": null,
+      "target_etf_bear": null,
+      "confidence": "없음",
+      "note": "추적목록에 필수소비재 레버리지ETF 없음."
+    },
+    {
+      "single_stock_long": "3LUB.L",
+      "single_stock_short": null,
+      "name": "Uber",
+      "target_etf_bull": null,
+      "target_etf_bear": null,
+      "confidence": "없음",
+      "note": "추적목록에 해당 섹터 레버리지ETF 없음."
+    },
+    {
+      "single_stock_long": "3LPO.L",
+      "single_stock_short": null,
+      "name": "Spotify",
+      "target_etf_bull": null,
+      "target_etf_bear": null,
+      "confidence": "없음",
+      "note": "Uber와 동일 사유."
+    }
+  ]
+}
