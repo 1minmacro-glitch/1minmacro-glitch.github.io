@@ -2337,15 +2337,18 @@ async function loadWatchlist() {
     const buyPass = table.filter(r => r.kind === "buy" && (r.grade || "").startsWith("💪")).sort((a,b) => b.winrate_pct - a.winrate_pct);
     const avoidPass = table.filter(r => r.kind === "avoid" && (r.grade || "").startsWith("💪")).sort((a,b) => a.winrate_pct - b.winrate_pct);
     const ma5Html = f => f ? `<b style="color:${f === "O" ? "var(--cat-asset)" : "#e05a5a"};">5일선 ${f}</b>` : `<span style="color:var(--text-muted);">5일선 ?</span>`;
+    // 2026-11-22: 사장님 요청 — 웹크롤링 사이트(marketbriefwire.com)에 이미 ETF별 정보페이지가
+    // /etf/{티커}.html 로 존재(유료게이트 아님, 무료) → 워치리스트 티커에서 바로 연결.
+    const etfInfoLink = t => `<a href="https://marketbriefwire.com/etf/${t.toLowerCase()}.html" target="_blank" rel="noopener" style="color:var(--accent); text-decoration:underline;">${t}</a>`;
     const renderRow = r => `<div class="board-item">
-        <div class="board-date">${r.ticker} · ${ma5Html(r.ma5_flag)}</div>
+        <div class="board-date">${etfInfoLink(r.ticker)} · ${ma5Html(r.ma5_flag)}</div>
         <div class="board-text">승률 ${r.winrate_pct}% / 평균(5일후) ${r.mean_5d_pct > 0 ? "+" : ""}${r.mean_5d_pct}% (독립사건 ${r.episode_n}개)</div>
       </div>`;
     const buyHtml = buyPass.length ? buyPass.map(renderRow).join("") : `<div class="board-item"><div class="board-text" style="color:var(--text-muted);">지금 통과하는 종목 없음</div></div>`;
     const avoidHtml = avoidPass.length ? avoidPass.map(renderRow).join("") : `<div class="board-item"><div class="board-text" style="color:var(--text-muted);">지금 통과하는 종목 없음</div></div>`;
     panel.innerHTML = `
       <h3>⭐ 검증된 매수후보 워치리스트</h3>
-      <div class="marathon-note">갱신: ${data.generated_at_utc || "?"} UTC · 체크리스트 ③번([💪둘다좋음]) 통과한 종목만, 아래 전체 승률표 재계산할 때마다 자동 갱신</div>
+      <div class="marathon-note">갱신: ${data.generated_at_utc || "?"} UTC · 체크리스트 ③번([💪둘다좋음]) 통과한 종목만, 아래 전체 승률표 재계산할 때마다 자동 갱신 · 티커 클릭하면 뭐하는 ETF인지 정보페이지로 이동</div>
       <div class="board-date" style="font-weight:700; margin-top:6px; color:var(--cat-asset);">🟢 매수후보 통과 (${buyPass.length}개)</div>
       ${buyHtml}
       <div class="board-date" style="font-weight:700; margin-top:10px; color:#e05a5a;">🔴 매수금지 확정 (${avoidPass.length}개)</div>
