@@ -2278,10 +2278,12 @@ async function loadLeverageWinrate() {
       const ma5Html = r.ma5_flag
         ? `<b style="color:${r.ma5_flag === "O" ? "var(--cat-asset)" : "#e05a5a"};">5일선 ${r.ma5_flag}</b>`
         : `<span style="color:var(--text-muted);">5일선 ?</span>`;
+      const episodeN = r.episode_n != null ? r.episode_n : r.n;
+      const episodeWarn = episodeN < 3 ? ` <span style="color:#e0a85a;">(독립사건은 ${episodeN}개뿐!)</span>` : "";
       return `
       <div class="board-item">
         <div class="board-date">${r.ticker} · ${r.kind === "buy" ? "매수후보" : "매수금지"} · ${ma5Html}</div>
-        <div class="board-text">승률 ${r.winrate_pct}% / 평균(5일후) ${r.mean_5d_pct > 0 ? "+" : ""}${r.mean_5d_pct}% (표본 ${r.n}건)
+        <div class="board-text">승률 ${r.winrate_pct}% / 평균(5일후) ${r.mean_5d_pct > 0 ? "+" : ""}${r.mean_5d_pct}% (표본 ${r.n}건, 독립사건 ${episodeN}개${episodeWarn})
           <b style="color:${gradeColor(r.grade)};">[${r.grade}]</b>
           <span style="color:var(--text-muted);"> · $${EXAMPLE_AMOUNT} 넣었으면 평균 ${dollar >= 0 ? "+" : ""}${dollar.toFixed(0)}달러</span></div>
       </div>`;
@@ -2290,7 +2292,7 @@ async function loadLeverageWinrate() {
     const methodHtml = Object.entries(m).map(([k,v]) => `<div class="board-item"><div class="board-date">${k.replace(/_/g," ")}</div><div class="board-text" style="color:var(--text-muted);">${v}</div></div>`).join("");
     panel.innerHTML = `
       <h3>📊 레버리지ETF 신호 승률표 (전체)</h3>
-      <div class="marathon-note">갱신: ${data.generated_at_utc || "?"} UTC · 유료게이트엔 이 표만 올라감, 설명은 여기만 · 5일선 O=현재가 위/X=아래(단순 위치정보, 매수신호 아님)</div>
+      <div class="marathon-note">갱신: ${data.generated_at_utc || "?"} UTC · 유료게이트엔 이 표만 올라감, 설명은 여기만 · 5일선 O=현재가 위/X=아래(단순 위치정보, 매수신호 아님) · 독립사건=같은 사건 중복집계 걸러낸 실제 횟수</div>
       <div class="board-scroll" style="max-height:420px; overflow-y:auto;">${rows}</div>
       <h3 style="margin-top:16px;">📐 어떻게 이 승률이 나왔는지(방법론)</h3>
       <div class="board-scroll" style="max-height:420px; overflow-y:auto;">${methodHtml}</div>`;
@@ -2357,7 +2359,7 @@ async function loadDailySignalLive() {
     const renderGroup = (list, label) => list.map(r => {
       const s = r.stats;
       const statText = s
-        ? `승률 ${s.winrate}% / 평균 ${s.mean >= 0 ? "+" : ""}${s.mean}% (표본 ${s.n}건) <b style="color:${gradeColor(s.grade)};">[${s.grade}]</b> · $1000 넣었으면 평균 ${s.dollar_per_1000 >= 0 ? "+" : ""}${s.dollar_per_1000}달러`
+        ? `승률 ${s.winrate}% / 평균 ${s.mean >= 0 ? "+" : ""}${s.mean}% (표본 ${s.n}건, 독립사건 ${s.episode_n != null ? s.episode_n : s.n}개) <b style="color:${gradeColor(s.grade)};">[${s.grade}]</b> · $1000 넣었으면 평균 ${s.dollar_per_1000 >= 0 ? "+" : ""}${s.dollar_per_1000}달러`
         : "과거 데이터 없음(신규/표본0)";
       return `<div class="board-item">
         <div class="board-date">${label} · ${r.ticker}(${r.label}) · ${ma5Html(r.ma5_flag)}</div>
