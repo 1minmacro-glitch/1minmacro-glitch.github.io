@@ -621,6 +621,7 @@
         <div class="card marathon-panel" id="positionStatusPanel" style="margin-bottom:14px;">불러오는 중...</div>
         <div class="card" id="leverageAlertPanel">불러오는 중...</div>
         <div class="card marathon-panel" id="leverageWinratePanel" style="margin-top:14px;">불러오는 중...</div>
+        <div class="card marathon-panel" id="bottomSignalPanel" style="margin-top:14px;">불러오는 중...</div>
       </div>
     </div>
   </div>
@@ -2309,10 +2310,14 @@ async function loadPositionStatus() {
     const EXAMPLE_SHARES_NOTE = "1주 기준"; // 실제 보유수량은 모르니 1주 환산 금액만 참고용으로 표시
     let rows = positions.map(p => {
       const dollarPerShare = p.current_price - p.entry_price;
+      const bottomNote = p.bottom_signal_ma5_reclaim
+        ? `<div class="board-text" style="color:var(--cat-asset);">📶 5일 이평선 상향돌파 감지 — -30%대 구간 과거표본(n=193) 기준 5일후 승률78.2%·평균+10.4%(일반대비+21.3p/+5.7p). 단일신호일 뿐, 매수신호 아님.</div>`
+        : "";
       return `<div class="board-item">
         <div class="board-date">${p.ticker} · 매수가 ${p.entry_price}(${p.entry_date})</div>
         <div class="board-text">현재가 ${p.current_price} → <b style="color:${tierColor(p.tier)};">${p.drawdown_pct > 0 ? "+" : ""}${p.drawdown_pct}% [${p.tier}]</b>
           <span style="color:var(--text-muted);"> · ${EXAMPLE_SHARES_NOTE} ${dollarPerShare >= 0 ? "+" : ""}${dollarPerShare.toFixed(2)}달러</span></div>
+        ${bottomNote}
       </div>`;
     }).join("");
     panel.innerHTML = `<h3>💼 보유 포지션 손절모니터</h3>
@@ -2323,6 +2328,48 @@ async function loadPositionStatus() {
   }
 }
 loadPositionStatus();
+
+// ── 바닥신호 분석 ("손실폭 말고 다른 기준으로 더 안 빠질지 구분 가능한가" — analyze_bottom_signals.py
+// + export_bottom_signals_to_dashboard.py가 생성, 정기 실행 안 함) ──
+const GH_PATH_BOTTOM = "dashboard/bottom_signal_analysis.json";
+const GH_API_URL_BOTTOM = `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_PATH_BOTTOM}`;
+
+async function loadBottomSignalAnalysis() {
+  const panel = document.getElementById("bottomSignalPanel");
+  if (!panel) return;
+  try {
+    const res = await fetch(GH_API_URL_BOTTOM, { cache: "no-store", headers: { "Accept": "application/vnd.github.raw+json" } });
+    if (!res.ok) { panel.innerHTML = `<h3>📶 바닥신호 분석</h3><div class="board-text" style="color:var(--text-muted);">아직 없음</div>`; return; }
+    const data = await res.json();
+    const gradeColor = g => g.startsWith("💪") ? "var(--cat-asset)" : g.startsWith("❌") ? "#e05a5a" : "var(--text-muted)";
+    const buckets = data.by_bucket || {};
+    const bucketOrder = ["0~-10%", "-10~-20%", "-20~-30%", "-30%이상"];
+    let bucketHtml = bucketOrder.filter(b => buckets[b]).map(b => {
+      const bd = buckets[b];
+      const sigRows = Object.entries(bd.signals || {}).map(([sig, s]) => `
+        <div class="board-item">
+          <div class="board-date">${sig}</div>
+          <div class="board-text">n=${s.n} · 승률${s.winrate}%(구간기준대비${s.lift_winrate_p >= 0 ? "+" : ""}${s.lift_winrate_p}p) ·
+            평균${s.mean >= 0 ? "+" : ""}${s.mean}%(${s.lift_mean_p >= 0 ? "+" : ""}${s.lift_mean_p}p) ·
+            5일내추가하락${s.further_drop_pct}%(${s.lift_further_drop_p >= 0 ? "+" : ""}${s.lift_further_drop_p}p)
+            <b style="color:${gradeColor(s.grade)};">[${s.grade}]</b></div>
+        </div>`).join("");
+      return `<div class="board-item" style="border-left:3px solid var(--cat-asset); padding-left:10px; margin-bottom:8px;">
+        <div class="board-date" style="font-weight:600;">구간 ${b} — 구간 자체 기준: n=${bd.base_n}, 승률${bd.base_winrate}%, 평균${bd.base_mean >= 0 ? "+" : ""}${bd.base_mean}%, 5일내추가하락확률${bd.base_further_drop_pct}%</div>
+        ${sigRows}
+      </div>`;
+    }).join("");
+    panel.innerHTML = `
+      <h3>📶 바닥신호 분석 (손실폭 말고 다른 기준)</h3>
+      <div class="marathon-note">갱신: ${data.generated_at_utc || "?"} UTC · ${data.질문 || ""}</div>
+      <div class="board-item"><div class="board-text" style="color:var(--text-muted);">${data.결론 || ""}</div></div>
+      <div class="board-scroll" style="max-height:480px; overflow-y:auto; margin-top:8px;">${bucketHtml}</div>
+      <div class="board-item"><div class="board-text" style="color:var(--text-muted);">⚠ ${data.한계 || ""}</div></div>`;
+  } catch (e) {
+    panel.innerHTML = `<h3>📶 바닥신호 분석</h3><div class="board-text" style="color:var(--text-muted);">불러오기 실패</div>`;
+  }
+}
+loadBottomSignalAnalysis();
 
 // ── 할 일 트래커 (자유 텍스트 추가/삭제, 완료 즉시 목록에서 빠지고 완료기록에 누적) ──
 const LS_TODOS = "jh_todos";
