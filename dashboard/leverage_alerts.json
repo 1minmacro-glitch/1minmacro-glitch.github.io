@@ -1583,5 +1583,39 @@
         "date": "2026-11-23"
       }
     ]
+  },
+  {
+    "date": "2026-11-24",
+    "checked_at_utc": "2026-11-24T17:00:15.887760+00:00",
+    "threshold": 8.0,
+    "hits": [
+      {
+        "ticker": "3SNV.L",
+        "name": "NVIDIA(숏)",
+        "latest_vol": 35824103,
+        "avg_vol": 118706,
+        "ratio": 301.8,
+        "price": 0.0335,
+        "date": "2026-11-24"
+      },
+      {
+        "ticker": "3LCO.L",
+        "name": "Coinbase",
+        "latest_vol": 1974249,
+        "avg_vol": 110248,
+        "ratio": 17.9,
+        "price": 0.0145,
+        "date": "2026-11-24"
+      },
+      {
+        "ticker": "3SPA.L",
+        "name": "Palantir(숏)",
+        "latest_vol": 123627,
+        "avg_vol": 12938,
+        "ratio": 9.6,
+        "price": 0.5008,
+        "date": "2026-11-24"
+      }
+    ]
   }
 ]
