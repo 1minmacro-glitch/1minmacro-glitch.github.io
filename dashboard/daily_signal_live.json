@@ -1,8 +1,10 @@
 {
-  "generated_at_utc": "2026-11-25T03:58:12Z",
-  "fg_value": 17.4212454212454,
+  "generated_at_utc": "2026-11-25T11:53:42Z",
+  "fg_value": 12.6943942133816,
   "fg_bucket": "극단적공포",
   "fg_stale_note": "",
+  "risk_flag_active": false,
+  "risk_flag_reason": "",
   "buy_candidates": [],
   "avoid_warnings": [
     {
@@ -65,15 +67,17 @@
           4.579999999999999
         ],
         "max_abs_same_day_pct": 12.22,
-        "grade": "↔엇갈림(참고만)",
-        "dollar_per_1000": 19,
+        "raw_grade": "↔엇갈림(참고만)",
+        "risk_flag": false,
         "adjusted": {
           "winrate": 61.5,
           "mean": 2.53,
           "n": 13,
           "basis": "당일변동폭 large구간 매칭",
           "outlier": false
-        }
+        },
+        "grade": "↔엇갈림(참고만)",
+        "dollar_per_1000": 19
       }
     }
   ]
