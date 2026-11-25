@@ -2276,6 +2276,28 @@ loadWeather();
 const GH_PATH_LEVERAGE = "dashboard/leverage_alerts.json";
 const GH_API_URL_LEVERAGE = `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_PATH_LEVERAGE}`;
 
+// 2026-11-25: 스파이크 당일 종가 대비 1일차/2일차/... 진행률(leverage_volume_alert.py의
+// update_followups()가 매일 빈칸을 채움). 채워진 날까지만 보여주고, 안 끝났으면(resolved
+// 아니면) 다음 칸을 "대기중"으로 표시 — 20일 전부 미리 그리면 너무 길어져서 그렇게 안 함.
+function renderFollowupHtml(h) {
+  const f = h.followup || {};
+  const filledDays = Object.keys(f).map(Number).sort((a, b) => a - b);
+  if (filledDays.length === 0 && !h.resolved) {
+    return `<div class="board-text" style="font-size:0.85em; color:var(--text-muted); margin-top:4px;">1일차: 대기중(다음 거래일 갱신)</div>`;
+  }
+  if (filledDays.length === 0) return "";
+  const parts = filledDays.map(d => {
+    const v = f[String(d)];
+    const color = v >= 0 ? "var(--good)" : "var(--cat-invest)";
+    return `${d}일차 <span style="color:${color}; font-weight:700;">${v >= 0 ? "+" : ""}${v}%</span>`;
+  });
+  if (!h.resolved) {
+    const nextDay = filledDays[filledDays.length - 1] + 1;
+    parts.push(`<span style="color:var(--text-muted);">${nextDay}일차: 대기중</span>`);
+  }
+  return `<div class="board-text" style="font-size:0.85em; color:var(--text-muted); margin-top:4px;">${parts.join(" · ")}</div>`;
+}
+
 async function loadLeverageAlerts() {
   const panel = document.getElementById("leverageAlertPanel");
   if (!panel) return;
@@ -2296,6 +2318,7 @@ async function loadLeverageAlerts() {
           inner += `<div class="board-item">
             <div class="board-date">${day.date} · 기준 ${day.threshold}배</div>
             <div class="board-text"><b>${h.ticker}</b>(${h.name}): 평균 대비 <b style="color:var(--cat-asset);">${h.ratio}배</b> (${h.latest_vol.toLocaleString()} vs 20일평균 ${h.avg_vol.toLocaleString()}), 종가 ${h.price}</div>
+            ${renderFollowupHtml(h)}
           </div>`;
         });
       }
@@ -2471,13 +2494,23 @@ async function loadDailySignalLive() {
     const res = await fetch(GH_API_URL_DAILY, { cache: "no-store", headers: { "Accept": "application/vnd.github.raw+json" } });
     if (!res.ok) { panel.innerHTML = `<h3>🔔 오늘의 신호체크</h3><div class="board-text" style="color:var(--text-muted);">아직 없음</div>`; return; }
     const data = await res.json();
-    const gradeColor = g => g && g.startsWith("💪") ? "var(--cat-asset)" : g && g.startsWith("❌") ? "#e05a5a" : "var(--text-muted)";
+    const gradeColor = g => g && g.startsWith("💪") ? "var(--cat-asset)" : g && g.startsWith("❌") ? "#e05a5a" : g && g.startsWith("⚠") ? "var(--cat-dn8)" : "var(--text-muted)";
     const ma5Html = f => f ? `<b style="color:${f === "O" ? "var(--cat-asset)" : "#e05a5a"};">5일선 ${f}</b>` : `<span style="color:var(--text-muted);">5일선 ?</span>`;
+    // 2026-11-25: 경고플래그(섹터동시다발/수동) 켜지면 등급을 강제 하향 + 예시금액 축소(daily_signal_check.py
+    // 쪽 로직). 원래등급은 취소선으로 같이 보여줘서 "숫자를 지운 게 아니라 판단만 보류"인 걸 투명하게.
     const renderGroup = (list, label) => list.map(r => {
       const s = r.stats;
-      const statText = s
-        ? `승률 ${s.winrate}% / 평균 ${s.mean >= 0 ? "+" : ""}${s.mean}% (표본 ${s.n}건, 독립사건 ${s.episode_n != null ? s.episode_n : s.n}개) <b style="color:${gradeColor(s.grade)};">[${s.grade}]</b> · $1000 넣었으면 평균 ${s.dollar_per_1000 >= 0 ? "+" : ""}${s.dollar_per_1000}달러`
-        : "과거 데이터 없음(신규/표본0)";
+      let statText = "과거 데이터 없음(신규/표본0)";
+      if (s) {
+        const gradeHtml = s.risk_flag
+          ? `<span style="color:var(--text-muted); text-decoration:line-through;">[${s.raw_grade}]</span> → <b style="color:${gradeColor(s.grade)};">[${s.grade}]</b>`
+          : `<b style="color:${gradeColor(s.grade)};">[${s.grade}]</b>`;
+        statText = `승률 ${s.winrate}% / 평균 ${s.mean >= 0 ? "+" : ""}${s.mean}% (표본 ${s.n}건, 독립사건 ${s.episode_n != null ? s.episode_n : s.n}개) ${gradeHtml} · $1000 기준 평균 ${s.dollar_per_1000 >= 0 ? "+" : ""}${s.dollar_per_1000}달러${s.risk_flag ? " (특수상황 축소)" : ""}`;
+        if (s.adjusted && s.adjusted.basis !== "전체평균") {
+          const a = s.adjusted;
+          statText += `<div style="font-size:0.85em; color:var(--text-muted); margin-top:3px;">↳ 오늘같은 당일폭(${r.same_day_pct >= 0 ? "+" : ""}${r.same_day_pct}%) 기준 조정: 승률 ${a.winrate}% / 평균 ${a.mean >= 0 ? "+" : ""}${a.mean}% (${a.basis}, n=${a.n})</div>`;
+        }
+      }
       return `<div class="board-item">
         <div class="board-date">${label} · ${r.ticker}(${r.label}) · ${ma5Html(r.ma5_flag)}</div>
         <div class="board-text">거래량 ${r.volume_ratio}배, 오늘 ${r.same_day_pct >= 0 ? "+" : ""}${r.same_day_pct}% — ${statText}</div>
@@ -2488,8 +2521,15 @@ async function loadDailySignalLive() {
     const body = (buy.length || avoid.length)
       ? renderGroup(buy, "🟢 매수후보") + renderGroup(avoid, "🔴 매수금지")
       : `<div class="board-item"><div class="board-text" style="color:var(--text-muted);">오늘은 해당 조합(매수후보/매수금지) 없음</div></div>`;
+    const riskBanner = data.risk_flag_active
+      ? `<div class="board-item" style="border-left:3px solid var(--cat-invest);">
+          <div class="board-text"><b style="color:var(--cat-invest);">⚠️⚠️ 특수상황 경고 ACTIVE</b> — ${data.risk_flag_reason || ""}
+          <br><span style="color:var(--text-muted); font-size:0.85em;">모든 신호 등급이 판단보류로 강제 하향되고 예시금액도 절반 축소됨</span></div>
+        </div>`
+      : "";
     panel.innerHTML = `<h3>🔔 오늘의 신호체크</h3>
       <div class="marathon-note">갱신: ${data.generated_at_utc || "?"} UTC · 공포탐욕 ${data.fg_value != null ? data.fg_value.toFixed(1) : "?"}(${data.fg_bucket || "?"}) ${data.fg_stale_note || ""}</div>
+      ${riskBanner}
       ${body}`;
   } catch (e) {
     panel.innerHTML = `<h3>🔔 오늘의 신호체크</h3><div class="board-text" style="color:var(--text-muted);">불러오기 실패</div>`;
@@ -2611,6 +2651,15 @@ if (!load("jh_todos_seed_1031", false)) {
   todos = todos.concat(items1031);
   save(LS_TODOS, todos);
   save("jh_todos_seed_1031", true);
+}
+// 2026-11-24: 필로스 자율 일기 아이디어, 1회성 추가 (당장 안 함 — 아이디어만 기록)
+if (!load("jh_todos_seed_1124", false)) {
+  const items1124 = [
+    { id: "pd1", text: "[필로스일기] 하루 3~4회 깨어나서 짧은 생각/일기 쓰는 자율 루틴 — KNUAI 크레딧으로 로컬 Task Scheduler 스크립트 돌리는 방식, bot/19. PhilosDiary/에 markdown append. 당장 안 함, 아이디어만 기록" },
+  ];
+  todos = todos.concat(items1124);
+  save(LS_TODOS, todos);
+  save("jh_todos_seed_1124", true);
 }
 let todoLog = load(LS_TODO_LOG, []);
 let lastRemovedTodo = null, lastRemovedLog = null, undoTimer = null;
