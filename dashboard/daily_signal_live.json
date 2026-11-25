@@ -1,6 +1,6 @@
 {
-  "generated_at_utc": "2026-11-24T21:00:06Z",
-  "fg_value": 16.7692307692308,
+  "generated_at_utc": "2026-11-25T03:58:12Z",
+  "fg_value": 17.4212454212454,
   "fg_bucket": "극단적공포",
   "fg_stale_note": "",
   "buy_candidates": [],
@@ -9,7 +9,7 @@
       "ticker": "BIB",
       "label": "바이오2배",
       "volume_ratio": 2.4,
-      "same_day_pct": 10.39,
+      "same_day_pct": 10.43,
       "ma5_flag": "O",
       "stats": {
         "n": 39,
@@ -43,8 +43,37 @@
             "winrate": 64.1
           }
         },
+        "magnitude_buckets": {
+          "small": {
+            "n": 13,
+            "mean": 2.11,
+            "winrate": 61.5
+          },
+          "medium": {
+            "n": 13,
+            "mean": 1.0,
+            "winrate": 46.2
+          },
+          "large": {
+            "n": 13,
+            "mean": 2.53,
+            "winrate": 61.5
+          }
+        },
+        "magnitude_edges": [
+          2.2866666666666666,
+          4.579999999999999
+        ],
+        "max_abs_same_day_pct": 12.22,
         "grade": "↔엇갈림(참고만)",
-        "dollar_per_1000": 19
+        "dollar_per_1000": 19,
+        "adjusted": {
+          "winrate": 61.5,
+          "mean": 2.53,
+          "n": 13,
+          "basis": "당일변동폭 large구간 매칭",
+          "outlier": false
+        }
       }
     }
   ]
