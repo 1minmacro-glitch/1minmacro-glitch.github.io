@@ -1,7 +1,7 @@
 [
   {
     "date": "2026-11-26",
-    "checked_at_utc": "2026-11-26T08:08:33.256023+00:00",
+    "checked_at_utc": "2026-11-26T20:45:09.412688+00:00",
     "threshold": 8.0,
     "hits": [],
     "source": "realtime_preclose_us_etf"
