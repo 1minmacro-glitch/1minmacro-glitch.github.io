@@ -1,10 +1,10 @@
 {
-  "generated_at_utc": "2026-11-25T21:00:06Z",
-  "fg_value": 14.3638336347197,
+  "generated_at_utc": "2026-11-26T00:05:20Z",
+  "fg_value": 15.2253164556962,
   "fg_bucket": "극단적공포",
   "fg_stale_note": "",
-  "risk_flag_active": false,
-  "risk_flag_reason": "",
+  "risk_flag_active": true,
+  "risk_flag_reason": "섹터동시다발(3/12개 동시스파이크: SOXL,TQQQ,BIB)",
   "buy_candidates": [],
   "avoid_warnings": []
 }
