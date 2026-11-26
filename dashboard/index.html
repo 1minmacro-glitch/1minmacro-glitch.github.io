@@ -2392,7 +2392,7 @@ async function loadWatchlist() {
   if (!panel) return;
   try {
     const res = await fetch(GH_API_URL_WINRATE, { cache: "no-store", headers: { "Accept": "application/vnd.github.raw+json" } });
-    if (!res.ok) { panel.innerHTML = `<h3>⭐ 검증된 매수후보 워치리스트</h3><div class="board-text" style="color:var(--text-muted);">아직 없음</div>`; return; }
+    if (!res.ok) { panel.innerHTML = `<h3>⭐ 과거검증 매수후보 워치리스트</h3><div class="board-text" style="color:var(--text-muted);">아직 없음</div>`; return; }
     const data = await res.json();
     const table = data.win_rate_table || [];
     const buyPass = table.filter(r => r.kind === "buy" && (r.grade || "").startsWith("💪")).sort((a,b) => b.winrate_pct - a.winrate_pct);
@@ -2429,15 +2429,16 @@ async function loadWatchlist() {
       </div>`;
     const proxyHtml = proxyList.length ? proxyList.map(renderProxyRow).join("") : "";
     panel.innerHTML = `
-      <h3>⭐ 검증된 매수후보 워치리스트</h3>
+      <h3>⭐ 과거검증 매수후보 워치리스트</h3>
+      <div class="marathon-note" style="color:var(--cat-invest); font-weight:600;">⚠️ 오늘 실제로 뜬 신호 아님 — 해당 조건(공포탐욕지수 구간 + 거래량스파이크)이 "다시 발생했을 때" 참고할 과거검증 결과임. 오늘 실제 신호는 아래 "🔔 오늘의 신호체크" 패널 참고.</div>
       <div class="marathon-note">갱신: ${data.generated_at_utc || "?"} UTC · 체크리스트 ③번([💪둘다좋음]) 통과한 종목만, 아래 전체 승률표 재계산할 때마다 자동 갱신 · 티커 클릭하면 뭐하는 ETF인지 정보페이지로 이동</div>
-      <div class="board-date" style="font-weight:700; margin-top:6px; color:var(--cat-asset);">🟢 매수후보 통과 (${buyPass.length}개)</div>
+      <div class="board-date" style="font-weight:700; margin-top:6px; color:var(--cat-asset);">🟢 매수후보(조건충족시, 과거검증) (${buyPass.length}개)</div>
       ${buyHtml}
       ${proxyList.length ? `<div class="board-date" style="font-weight:700; margin-top:10px; color:#5a9ee0;">🔗 간접검증(섹터 대리, 직접신호 아님) (${proxyList.length}개)</div>${proxyHtml}` : ""}
-      <div class="board-date" style="font-weight:700; margin-top:10px; color:#e05a5a;">🔴 매수금지 확정 (${avoidPass.length}개)</div>
+      <div class="board-date" style="font-weight:700; margin-top:10px; color:#e05a5a;">🔴 매수금지(조건충족시, 과거검증) (${avoidPass.length}개)</div>
       ${avoidHtml}`;
   } catch (e) {
-    panel.innerHTML = `<h3>⭐ 검증된 매수후보 워치리스트</h3><div class="board-text" style="color:var(--text-muted);">불러오기 실패</div>`;
+    panel.innerHTML = `<h3>⭐ 과거검증 매수후보 워치리스트</h3><div class="board-text" style="color:var(--text-muted);">불러오기 실패</div>`;
   }
 }
 loadWatchlist();
