@@ -2357,6 +2357,40 @@ const WR_CATS = [
   { name: "유가·에너지",   color: "var(--cat-asset)" },
 ];
 
+// 데이터가 며칠 안 쌓였을 때(초반) 30일 추이 라인차트를 그리면 점 하나만 찍히고 대부분
+// 빈 공간으로 보임("텅텅비었다" 2026-11-27 피드백) — 그 대신 "오늘 카테고리별 점수"를
+// 막대그래프로 꽉 채워 보여주고, 데이터가 MIN_DAYS_FOR_TREND일 이상 쌓이면 추이선으로 전환.
+const MIN_DAYS_FOR_TREND = 5;
+
+function renderWorldRiskBars(today) {
+  const W = 800, H = 220, padL = 32, padT = 16, padB = 28, padR = 16;
+  const plotW = W - padL - padR, plotH = H - padT - padB;
+  const yFor = v => padT + plotH - (plotH * v) / 100;
+  const n = WR_CATS.length;
+  const slot = plotW / n, barW = slot * 0.5;
+
+  let gridHtml = "";
+  [0, 25, 50, 75, 100].forEach(v => {
+    const y = yFor(v);
+    gridHtml += `<line x1="${padL}" y1="${y}" x2="${W - padR}" y2="${y}" stroke="var(--gridline, var(--border))" stroke-width="1"/>`;
+    gridHtml += `<text x="${padL - 6}" y="${y + 3}" font-size="9" fill="var(--text-muted)" text-anchor="end">${v}</text>`;
+  });
+
+  let barsHtml = "";
+  WR_CATS.forEach((cat, i) => {
+    const c = today.categories && today.categories[cat.name];
+    const score = c && c.avg_score != null ? c.avg_score : 0;
+    const cx = padL + slot * i + slot / 2;
+    const yTop = yFor(score);
+    const yBase = yFor(0);
+    barsHtml += `<rect x="${cx - barW / 2}" y="${yTop}" width="${barW}" height="${Math.max(0, yBase - yTop)}" rx="3" fill="${cat.color}" opacity="${c && c.avg_score != null ? 1 : 0.25}"/>`;
+    barsHtml += `<text x="${cx}" y="${yTop - 6}" font-size="11" font-weight="700" text-anchor="middle" fill="${cat.color}">${c && c.avg_score != null ? c.avg_score : "N/A"}</text>`;
+    barsHtml += `<text x="${cx}" y="${H - padB + 13}" font-size="9" text-anchor="middle" fill="var(--text-muted)">${cat.name}</text>`;
+  });
+
+  return `<svg viewBox="0 0 ${W} ${H}" style="width:100%; height:auto; display:block;">${gridHtml}${barsHtml}</svg>`;
+}
+
 function renderWorldRiskChart(days) {
   const W = 800, H = 280, padL = 32, padR = 108, padT = 12, padB = 24;
   const plotW = W - padL - padR, plotH = H - padT - padB;
@@ -2460,7 +2494,13 @@ async function loadWorldRisk() {
     kpiHtml += `</div>`;
     kpiPanel.innerHTML = kpiHtml;
 
-    chartPanel.innerHTML = `<h3>📈 최근 추이</h3>` + renderWorldRiskChart(days.slice(-30));
+    if (days.length < MIN_DAYS_FOR_TREND) {
+      chartPanel.innerHTML = `<h3>📊 오늘 카테고리별 점수</h3>
+        <div class="marathon-note">추이 그래프는 ${MIN_DAYS_FOR_TREND}일치 데이터가 쌓이면 자동 전환됩니다 — 현재 ${days.length}일치</div>`
+        + renderWorldRiskBars(today);
+    } else {
+      chartPanel.innerHTML = `<h3>📈 최근 추이</h3>` + renderWorldRiskChart(days.slice(-30));
+    }
 
     if (today.composite_alert) {
       alertPanel.innerHTML = `<div class="board-item" style="border-left:3px solid var(--cat-invest); padding-left:10px;">
