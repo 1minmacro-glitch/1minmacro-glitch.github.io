@@ -657,7 +657,8 @@
         <div class="card marathon-panel" id="worldRiskGaugePanel" style="margin-bottom:14px;">불러오는 중...</div>
         <div class="card marathon-panel" id="worldRiskKpiPanel" style="margin-bottom:14px;">불러오는 중...</div>
         <div class="card marathon-panel" id="worldRiskChartPanel" style="margin-bottom:14px;">불러오는 중...</div>
-        <div class="card marathon-panel" id="worldRiskAlertPanel">불러오는 중...</div>
+        <div class="card marathon-panel" id="worldRiskAlertPanel" style="margin-bottom:14px;">불러오는 중...</div>
+        <div class="card marathon-panel" id="vixBacktestPanel">불러오는 중...</div>
       </div>
     </div>
   </div>
@@ -2568,6 +2569,58 @@ async function loadWorldRisk() {
   }
 }
 loadWorldRisk();
+
+// ── VIX 공포구간 실측 백테스트 (vix_fear_backtest.py, 수동 재실행 — daily 아님). "뉴스게이지가
+// 빨강일 땐 이미 터진 뒤 아니냐"는 2026-11-27 사장님 지적에 대한 실측 답변: VIX 구간별로 과거
+// 실제 SOXL/TQQQ 이후 수익률을 직접 집계함. 뉴스게이지(오락용, 미검증)와 분리해서 보여줌 —
+// 이쪽은 10년치 실데이터 기반, 독립사건 수까지 표시(레버리지승률표와 동일 신뢰도 기준). ──
+const GH_PATH_VIXBT = "dashboard/vix_fear_backtest.json";
+const GH_API_URL_VIXBT = `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_PATH_VIXBT}`;
+
+async function loadVixBacktest() {
+  const panel = document.getElementById("vixBacktestPanel");
+  if (!panel) return;
+  try {
+    const res = await fetch(GH_API_URL_VIXBT, { cache: "no-store", headers: { "Accept": "application/vnd.github.raw+json" } });
+    if (!res.ok) { panel.innerHTML = `<div class="board-text" style="color:var(--text-muted);">아직 없음</div>`; return; }
+    const data = await res.json();
+    let html = `<h3>🧪 VIX 공포구간 실측 백테스트</h3>
+      <div class="marathon-note">${data.methodology || ""} · 갱신: ${(data.generated_at_utc || "?").slice(0, 10)}</div>`;
+    Object.values(data.results || {}).forEach(r => {
+      html += `<div style="margin-top:10px; font-weight:700;">${r.ticker} <span style="font-weight:400; color:var(--text-muted); font-size:11.5px;">(${r.data_from} ~ ${r.data_to}, ${r.n_total_days}일) · 베이스라인(무조건부) 20일후 ${r.baseline.fwd_20d_mean}% / 승률 ${r.baseline.win_rate_20d}%</span></div>`;
+      html += `<table style="width:100%; border-collapse:collapse; margin-top:4px; font-size:12.5px;">
+        <thead><tr style="color:var(--text-muted);">
+          <th style="text-align:left; padding:3px 6px;">VIX구간</th>
+          <th style="padding:3px 6px;">일수</th>
+          <th style="padding:3px 6px;">독립사건</th>
+          <th style="padding:3px 6px;">5일후</th>
+          <th style="padding:3px 6px;">20일후</th>
+          <th style="padding:3px 6px;">60일후</th>
+          <th style="padding:3px 6px;">20일후승률</th>
+        </tr></thead><tbody>`;
+      r.bands.forEach(b => {
+        const warnStyle = b.low_confidence ? "color:var(--text-muted);" : "";
+        const pctColor = v => v == null ? "var(--text-muted)" : (v >= 0 ? "var(--good)" : "var(--cat-invest)");
+        html += `<tr style="border-top:1px solid var(--border); ${warnStyle}">
+          <td style="padding:3px 6px;">${b.band}${b.low_confidence ? " ⚠" : ""}</td>
+          <td style="text-align:center; padding:3px 6px;">${b.n_days}</td>
+          <td style="text-align:center; padding:3px 6px;">${b.n_independent_episodes}</td>
+          <td style="text-align:center; padding:3px 6px; color:${pctColor(b.fwd_5d_mean)};">${b.fwd_5d_mean != null ? b.fwd_5d_mean + "%" : "N/A"}</td>
+          <td style="text-align:center; padding:3px 6px; color:${pctColor(b.fwd_20d_mean)}; font-weight:700;">${b.fwd_20d_mean != null ? b.fwd_20d_mean + "%" : "N/A"}</td>
+          <td style="text-align:center; padding:3px 6px; color:${pctColor(b.fwd_60d_mean)};">${b.fwd_60d_mean != null ? b.fwd_60d_mean + "%" : "N/A"}</td>
+          <td style="text-align:center; padding:3px 6px;">${b.win_rate_20d != null ? b.win_rate_20d + "%" : "N/A"}</td>
+        </tr>`;
+      });
+      html += `</tbody></table>`;
+    });
+    html += `<div class="marathon-note" style="margin-top:8px;">⚠ 표시 = 독립사건 ${MIN_INDEPENDENT_EPISODES_DISPLAY}개 미만(참고용) · 일수=중첩표본(연속구간 포함) · 매매신호 아님, 과거 통계일 뿐 — 최종판단은 본인 몫.</div>`;
+    panel.innerHTML = html;
+  } catch (e) {
+    panel.innerHTML = `<div class="board-text" style="color:var(--text-muted);">불러오기 실패</div>`;
+  }
+}
+const MIN_INDEPENDENT_EPISODES_DISPLAY = 5;
+loadVixBacktest();
 
 // ── 레버리지ETF 신호 승률표 (daily_signal_check.py + export_leverage_methodology_to_dashboard.py가
 // 생성 → dashboard/leverage_signal_methodology.json, 정기 실행 안 함, 사장님이 다시 돌려달라고
