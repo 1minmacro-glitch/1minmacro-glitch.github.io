@@ -654,6 +654,7 @@
           <h1>🌍 월드 리스크 지수</h1>
           <div class="sub">관세·전쟁·금리·정치·유가 뉴스 키워드 누적 — 오락용, 투자판단/예측모델 아님</div>
         </header>
+        <div class="card marathon-panel" id="worldRiskGaugePanel" style="margin-bottom:14px;">불러오는 중...</div>
         <div class="card marathon-panel" id="worldRiskKpiPanel" style="margin-bottom:14px;">불러오는 중...</div>
         <div class="card marathon-panel" id="worldRiskChartPanel" style="margin-bottom:14px;">불러오는 중...</div>
         <div class="card marathon-panel" id="worldRiskAlertPanel">불러오는 중...</div>
@@ -2357,6 +2358,50 @@ const WR_CATS = [
   { name: "유가·에너지",   color: "var(--cat-asset)" },
 ];
 
+// 종합점수 게이지 — 카테고리 5개를 따로 보지 말고 "하나로 뭉뚱그려서" 한눈에 판단하고 싶다는
+// 2026-11-27 요청으로 추가. world_risk_index.py가 각 카테고리를 자기 base 대비 %로 정규화해
+// 평균낸 composite_score(0~100)를 공포탐욕지수 스타일 반원 게이지(바늘+색상밴드)로 그림.
+const WR_BANDS = [
+  { max: 20,  label: "안전",   color: "var(--good)" },
+  { max: 40,  label: "주의",   color: "var(--cat-dn8)" },
+  { max: 60,  label: "경계",   color: "var(--cat-happy)" },
+  { max: 80,  label: "위험",   color: "var(--cat-invest)" },
+  { max: 100, label: "매우위험", color: "var(--cat-love)" },
+];
+
+function renderWorldRiskGauge(score, label) {
+  const W = 320, H = 190, cx = 160, cy = 165, r = 130, thickness = 22;
+  const angleFor = v => Math.PI * (1 - v / 100); // v=0→180°(왼쪽), v=100→0°(오른쪽), 위로 반원
+  const pointAt = (v, radius) => {
+    const a = angleFor(v);
+    return { x: cx + radius * Math.cos(a), y: cy - radius * Math.sin(a) };
+  };
+
+  let bandsHtml = "";
+  let prevMax = 0;
+  WR_BANDS.forEach(b => {
+    const p1 = pointAt(prevMax, r), p2 = pointAt(b.max, r);
+    bandsHtml += `<path d="M ${p1.x} ${p1.y} A ${r} ${r} 0 0 1 ${p2.x} ${p2.y}" fill="none" stroke="${b.color}" stroke-width="${thickness}" stroke-linecap="${prevMax === 0 ? 'round' : 'butt'}"/>`;
+    prevMax = b.max;
+  });
+
+  let needleHtml = "";
+  if (score != null) {
+    const tip = pointAt(score, r - thickness / 2 - 4);
+    needleHtml = `<line x1="${cx}" y1="${cy}" x2="${tip.x}" y2="${tip.y}" stroke="var(--text-primary, #333)" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="${cx}" cy="${cy}" r="7" fill="var(--text-primary, #333)"/>`;
+  }
+
+  const scoreText = score != null
+    ? `<text x="${cx}" y="${cy - 28}" font-size="40" font-weight="800" text-anchor="middle" fill="var(--text-primary, #222)">${score}</text>
+       <text x="${cx}" y="${cy - 4}" font-size="15" font-weight="700" text-anchor="middle" fill="var(--text-muted)">${label}</text>`
+    : `<text x="${cx}" y="${cy - 10}" font-size="18" text-anchor="middle" fill="var(--text-muted)">데이터 부족</text>`;
+
+  return `<svg viewBox="0 0 ${W} ${H}" style="width:100%; max-width:360px; height:auto; display:block; margin:0 auto;">
+    ${bandsHtml}${needleHtml}${scoreText}
+  </svg>`;
+}
+
 // 데이터가 며칠 안 쌓였을 때(초반) 30일 추이 라인차트를 그리면 점 하나만 찍히고 대부분
 // 빈 공간으로 보임("텅텅비었다" 2026-11-27 피드백) — 그 대신 "오늘 카테고리별 점수"를
 // 막대그래프로 꽉 채워 보여주고, 데이터가 MIN_DAYS_FOR_TREND일 이상 쌓이면 추이선으로 전환.
@@ -2464,15 +2509,16 @@ function renderWorldRiskChart(days) {
 }
 
 async function loadWorldRisk() {
+  const gaugePanel = document.getElementById("worldRiskGaugePanel");
   const kpiPanel = document.getElementById("worldRiskKpiPanel");
   const chartPanel = document.getElementById("worldRiskChartPanel");
   const alertPanel = document.getElementById("worldRiskAlertPanel");
-  if (!kpiPanel || !chartPanel || !alertPanel) return;
+  if (!gaugePanel || !kpiPanel || !chartPanel || !alertPanel) return;
   try {
     const res = await fetch(GH_API_URL_WORLDRISK, { cache: "no-store", headers: { "Accept": "application/vnd.github.raw+json" } });
     if (!res.ok) {
       const msg = `<div class="board-text" style="color:var(--text-muted);">아직 기록 없음(첫 실행 전)</div>`;
-      kpiPanel.innerHTML = msg; chartPanel.innerHTML = ""; alertPanel.innerHTML = msg;
+      gaugePanel.innerHTML = msg; kpiPanel.innerHTML = msg; chartPanel.innerHTML = ""; alertPanel.innerHTML = msg;
       return;
     }
     const days = await res.json();
@@ -2480,7 +2526,13 @@ async function loadWorldRisk() {
     days.sort((a, b) => a.date.localeCompare(b.date));
     const today = days[days.length - 1];
 
-    let kpiHtml = `<h3>🌍 오늘(${today.date}) 카테고리별 점수</h3><div class="kpi-row" style="display:flex; flex-wrap:wrap; gap:8px; margin-top:8px;">`;
+    const compositeScore = today.composite_score != null ? today.composite_score : null;
+    const compositeLabel = today.composite_label || "데이터 부족";
+    gaugePanel.innerHTML = `<h3>🌍 종합 리스크 점수(${today.date})</h3>
+      <div class="marathon-note">5개 카테고리를 하나로 합친 종합지수 — 오락용, 투자판단/예측모델 아님</div>`
+      + renderWorldRiskGauge(compositeScore, compositeLabel);
+
+    let kpiHtml = `<h3>📋 카테고리별 세부점수</h3><div class="kpi-row" style="display:flex; flex-wrap:wrap; gap:8px; margin-top:8px;">`;
     WR_CATS.forEach(cat => {
       const c = today.categories && today.categories[cat.name];
       const scoreText = (c && c.avg_score != null) ? c.avg_score : "N/A";
@@ -2511,8 +2563,8 @@ async function loadWorldRisk() {
       alertPanel.innerHTML = `<div class="board-text" style="color:var(--text-muted);">복합경보 없음</div>`;
     }
   } catch (e) {
-    kpiPanel.innerHTML = `<div class="board-text" style="color:var(--text-muted);">불러오기 실패</div>`;
-    chartPanel.innerHTML = ""; alertPanel.innerHTML = "";
+    gaugePanel.innerHTML = `<div class="board-text" style="color:var(--text-muted);">불러오기 실패</div>`;
+    kpiPanel.innerHTML = ""; chartPanel.innerHTML = ""; alertPanel.innerHTML = "";
   }
 }
 loadWorldRisk();
