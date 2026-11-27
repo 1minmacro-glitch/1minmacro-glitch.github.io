@@ -1,7 +1,7 @@
 [
   {
     "date": "2026-11-27",
-    "checked_at_utc": "2026-11-27T08:40:37.881116+00:00",
+    "checked_at_utc": "2026-11-27T09:26:49.054055+00:00",
     "categories": {
       "관세·무역전쟁": {
         "avg_score": 30.0,
@@ -9,6 +9,11 @@
         "matched": [
           {
             "title": "트럼프, 中 관세 40% 인상 경고…시진핑과 무역협상 지렛대로 활용 - 더구루",
+            "direction": "악화",
+            "score": 30
+          },
+          {
+            "title": "인도 \"美 무역협상 타결 임박\"...트럼프 '25% 관세 폭탄' 예고 이틀 만 - 뉴스핌",
             "direction": "악화",
             "score": 30
           },
@@ -33,22 +38,17 @@
             "score": 30
           },
           {
+            "title": "U.S. tariff-hike threats pile pressure on partners to sign trade deals - CNBC",
+            "direction": "악화",
+            "score": 30
+          },
+          {
             "title": "Trump Is Hiking Tariffs Again. Here Are the New Tariff Rates on 14 Countries - Yahoo Finance",
             "direction": "악화",
             "score": 30
           },
           {
-            "title": "China and other US trading partners hit back at Trump's new tariff plans - TelegraphHerald.com",
-            "direction": "악화",
-            "score": 30
-          },
-          {
             "title": "Trump administration proposes new tariffs on goods from major U.S. trading partners - NPR",
-            "direction": "악화",
-            "score": 30
-          },
-          {
-            "title": "U.S. tariff-hike threats pile pressure on partners to sign trade deals - CNBC",
             "direction": "악화",
             "score": 30
           }
@@ -76,17 +76,17 @@
         "headline_count": 40,
         "matched": [
           {
+            "title": "금값 하락..연준 금리 인상 우려 - TradingView",
+            "direction": "악화",
+            "score": 25
+          },
+          {
             "title": "美 연준, 기술주 급락에도 12월 금리인상 전망…물가 압력 경계 - 뉴시스",
             "direction": "악화",
             "score": 25
           },
           {
             "title": "호주 달러 소폭 상승…연준 금리 인상 전망에 0.6700 돌파 제한 - www.tmgm.com",
-            "direction": "악화",
-            "score": 25
-          },
-          {
-            "title": "금값 하락..연준 금리 인상 우려 - TradingView",
             "direction": "악화",
             "score": 25
           },
@@ -106,6 +106,11 @@
             "score": 25
           },
           {
+            "title": "금값 하락..연준 금리 인상 우려 - TradingView",
+            "direction": "악화",
+            "score": 25
+          },
+          {
             "title": "금값, 연준 금리 인상 전망에 매수세 주춤하며 3,570달러 부근서 정체 - www.tmgm.com",
             "direction": "악화",
             "score": 25
@@ -116,12 +121,12 @@
             "score": 25
           },
           {
-            "title": "\"젠슨 황 이탈은 금리 3번 인상 충격\"...미국 경제의 민낯 - YTN",
+            "title": "월가 \"美 신규 관세에 연준 추가 금리 인상 가능성 커져\" - 연합인포맥스",
             "direction": "악화",
             "score": 25
           },
           {
-            "title": "월가 \"美 신규 관세에 연준 추가 금리 인상 가능성 커져\" - 연합인포맥스",
+            "title": "\"젠슨 황 이탈은 금리 3번 인상 충격\"...미국 경제의 민낯 - YTN",
             "direction": "악화",
             "score": 25
           },
@@ -142,11 +147,6 @@
           },
           {
             "title": "Gold Edges Lower as US Inflation Data Fuels Bets for Rate Hikes - Bloomberg.com",
-            "direction": "악화",
-            "score": 25
-          },
-          {
-            "title": "Fed's preferred gauge of inflation climbs ahead of possible rate hike - ABC News - Breaking News, Latest News and Videos",
             "direction": "악화",
             "score": 25
           }
@@ -185,6 +185,11 @@
             "score": 20
           },
           {
+            "title": "조희대 탄핵 반대 42%·찬성 35%…비상계엄 ‘내란’ 인식 57% - 뉴스21일간",
+            "direction": "악화",
+            "score": 20
+          },
+          {
             "title": "[데일리 정치 브리핑] (11월 27일) 입법 속도전과 청문회 단독 처리, 정년·탄핵·계엄 전선이 절차의 한계를 묻다 - 미디어피아",
             "direction": "악화",
             "score": 20
@@ -205,6 +210,11 @@
             "score": 20
           },
           {
+            "title": "민주당, 다음달 3일 ‘계엄 2년’ 연석회의…조희대 탄핵 등 설명 - 헤럴드경제",
+            "direction": "악화",
+            "score": 20
+          },
+          {
             "title": "민주당티비_조희대 탄핵론에 스페인·파키스탄 소환한 전용기, 왜? - 평화나무",
             "direction": "악화",
             "score": 20
@@ -220,17 +230,12 @@
             "score": 20
           },
           {
+            "title": "김용태 \"12월 3일 무거운 마음‥우리 당 배출 대통령이 불법 계엄\" - MBC 뉴스",
+            "direction": "악화",
+            "score": 20
+          },
+          {
             "title": "與, 계엄 2년 내달 3일 연석회의 개최...조희대 탄핵 논의 - 아주경제",
-            "direction": "악화",
-            "score": 20
-          },
-          {
-            "title": "민주당, ‘계엄 2년’ 맞아 내달 3일 연석회의…조희대 탄핵 논의 - 이투데이",
-            "direction": "악화",
-            "score": 20
-          },
-          {
-            "title": "국민의힘, '계엄 2주년'에 대법원장 탄핵 추진 규탄 장외집회 검토 - YTN",
             "direction": "악화",
             "score": 20
           },
@@ -245,17 +250,12 @@
             "score": 20
           },
           {
-            "title": "개혁신당 “조희대 탄핵, 尹 비상계엄 못지않은 미친 짓”…국힘에 연대 제안 - 주간조선",
+            "title": "민주당, ‘계엄 2년’ 맞아 내달 3일 연석회의…조희대 탄핵 논의 - 이투데이",
             "direction": "악화",
             "score": 20
           },
           {
-            "title": "비상계엄 때 침묵한 법관회의, 조희대 탄핵 추진엔 입장 주목 - 경향신문",
-            "direction": "악화",
-            "score": 20
-          },
-          {
-            "title": "윤석열 비상계엄 ‘내란이다’ 57%·‘아니다’ 31%…2년 새 14%p 감소 [갤럽] - 신문고뉴스",
+            "title": "국민의힘, '계엄 2주년'에 대법원장 탄핵 추진 규탄 장외집회 검토 - YTN",
             "direction": "악화",
             "score": 20
           },
@@ -285,11 +285,6 @@
             "score": 20
           },
           {
-            "title": "Ramaphosa's Phala Phala impeachment battle: What the High Court ruling could mean - EWN",
-            "direction": "악화",
-            "score": 20
-          },
-          {
             "title": "UPDATE | Ramaphosa wins: Phala Phala impeachment report set aside, parliamentary process stops - News24",
             "direction": "악화",
             "score": 20
@@ -300,12 +295,7 @@
             "score": 20
           },
           {
-            "title": "WSJ editor spells out why Trump's ‘misdemeanors’ could mean impeachment - AlterNet",
-            "direction": "악화",
-            "score": 20
-          },
-          {
-            "title": "Court Sets Aside Phala Phala Report, Halting Ramaphosa Impeachment - https://streamlinefeed.co.ke/",
+            "title": "WSJ editor spells out why Trump's ‘misdemeanors’ could mean impeachment - Alternet",
             "direction": "악화",
             "score": 20
           }
@@ -329,12 +319,22 @@
             "score": -25
           },
           {
+            "title": "국제유가, 3주 하락세 마침표...중동긴장 악화·공급우려 - BBS불교방송",
+            "direction": "완화",
+            "score": -25
+          },
+          {
             "title": "후티, 사우디 정유시설 공격에…국제유가 급등 - 뉴스토마토",
             "direction": "악화",
             "score": 25
           },
           {
             "title": "유가 하락에 호르무즈 통제 고삐‥주변국 공격도 - MBC 뉴스",
+            "direction": "완화",
+            "score": -25
+          },
+          {
+            "title": "중동 석유시설 피습에 국제유가 상승…3주 하락세 마침표 전망 - 서울경제",
             "direction": "완화",
             "score": -25
           },
@@ -355,6 +355,8 @@
       }
     },
     "warn_categories": [],
-    "composite_alert": false
+    "composite_alert": false,
+    "composite_score": 80,
+    "composite_label": "매우위험"
   }
 ]
