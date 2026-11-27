@@ -2404,7 +2404,7 @@ function renderWorldRiskChart(days) {
   });
 
   // 라벨 y좌표 겹침방지: y값(=점수) 순으로 정렬 후 최소 간격(12px) 확보되게 아래로 밀어내기
-  const MIN_LABEL_GAP = 12;
+  const MIN_LABEL_GAP = 15;
   endPoints.sort((a, b) => a.y - b.y);
   for (let i = 1; i < endPoints.length; i++) {
     if (endPoints[i].labelY - endPoints[i - 1].labelY < MIN_LABEL_GAP) {
