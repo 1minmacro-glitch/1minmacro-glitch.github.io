@@ -1,0 +1,156 @@
+{
+  "generated_at_utc": "2026-11-27T09:39:19.649511+00:00",
+  "methodology": "VIX 구간별로 과거 N일후 실제 수익률(일별 중첩 표본) — 연속구간은 1개 독립사건으로 묶어서 별도 표시. 매매신호 아님, 과거 통계일 뿐.",
+  "results": {
+    "SOXL": {
+      "ticker": "SOXL",
+      "period": "10y",
+      "data_from": "2016-11-28",
+      "data_to": "2026-11-25",
+      "n_total_days": 2513,
+      "baseline": {
+        "fwd_5d_mean": 1.46,
+        "fwd_20d_mean": 6.04,
+        "fwd_60d_mean": 19.5,
+        "win_rate_20d": 58.3
+      },
+      "bands": [
+        {
+          "band": "<15 안심",
+          "vix_min": 0,
+          "vix_max": 15,
+          "n_days": 820,
+          "n_independent_episodes": 63,
+          "low_confidence": false,
+          "fwd_5d_mean": 1.21,
+          "fwd_20d_mean": 4.04,
+          "fwd_60d_mean": 5.65,
+          "win_rate_20d": 61.5
+        },
+        {
+          "band": "15-20 보통",
+          "vix_min": 15,
+          "vix_max": 20,
+          "n_days": 901,
+          "n_independent_episodes": 148,
+          "low_confidence": false,
+          "fwd_5d_mean": 0.26,
+          "fwd_20d_mean": 3.63,
+          "fwd_60d_mean": 14.91,
+          "win_rate_20d": 53.8
+        },
+        {
+          "band": "20-25 주의",
+          "vix_min": 20,
+          "vix_max": 25,
+          "n_days": 419,
+          "n_independent_episodes": 130,
+          "low_confidence": false,
+          "fwd_5d_mean": 2.7,
+          "fwd_20d_mean": 5.12,
+          "fwd_60d_mean": 28.37,
+          "win_rate_20d": 51.3
+        },
+        {
+          "band": "25-30 경계",
+          "vix_min": 25,
+          "vix_max": 30,
+          "n_days": 218,
+          "n_independent_episodes": 76,
+          "low_confidence": false,
+          "fwd_5d_mean": 2.94,
+          "fwd_20d_mean": 14.01,
+          "fwd_60d_mean": 47.76,
+          "win_rate_20d": 65.1
+        },
+        {
+          "band": "30+ 공포",
+          "vix_min": 30,
+          "vix_max": null,
+          "n_days": 155,
+          "n_independent_episodes": 29,
+          "low_confidence": false,
+          "fwd_5d_mean": 4.41,
+          "fwd_20d_mean": 22.16,
+          "fwd_60d_mean": 55.54,
+          "win_rate_20d": 76.8
+        }
+      ]
+    },
+    "TQQQ": {
+      "ticker": "TQQQ",
+      "period": "10y",
+      "data_from": "2016-11-28",
+      "data_to": "2026-11-25",
+      "n_total_days": 2513,
+      "baseline": {
+        "fwd_5d_mean": 0.98,
+        "fwd_20d_mean": 4.04,
+        "fwd_60d_mean": 12.35,
+        "win_rate_20d": 63.8
+      },
+      "bands": [
+        {
+          "band": "<15 안심",
+          "vix_min": 0,
+          "vix_max": 15,
+          "n_days": 820,
+          "n_independent_episodes": 63,
+          "low_confidence": false,
+          "fwd_5d_mean": 0.91,
+          "fwd_20d_mean": 3.51,
+          "fwd_60d_mean": 6.6,
+          "win_rate_20d": 69.1
+        },
+        {
+          "band": "15-20 보통",
+          "vix_min": 15,
+          "vix_max": 20,
+          "n_days": 901,
+          "n_independent_episodes": 148,
+          "low_confidence": false,
+          "fwd_5d_mean": 0.34,
+          "fwd_20d_mean": 2.11,
+          "fwd_60d_mean": 10.77,
+          "win_rate_20d": 60.0
+        },
+        {
+          "band": "20-25 주의",
+          "vix_min": 20,
+          "vix_max": 25,
+          "n_days": 419,
+          "n_independent_episodes": 130,
+          "low_confidence": false,
+          "fwd_5d_mean": 1.45,
+          "fwd_20d_mean": 3.21,
+          "fwd_60d_mean": 13.14,
+          "win_rate_20d": 56.6
+        },
+        {
+          "band": "25-30 경계",
+          "vix_min": 25,
+          "vix_max": 30,
+          "n_days": 218,
+          "n_independent_episodes": 76,
+          "low_confidence": false,
+          "fwd_5d_mean": 0.72,
+          "fwd_20d_mean": 5.94,
+          "fwd_60d_mean": 18.56,
+          "win_rate_20d": 62.8
+        },
+        {
+          "band": "30+ 공포",
+          "vix_min": 30,
+          "vix_max": null,
+          "n_days": 155,
+          "n_independent_episodes": 29,
+          "low_confidence": false,
+          "fwd_5d_mean": 4.21,
+          "fwd_20d_mean": 17.73,
+          "fwd_60d_mean": 40.88,
+          "win_rate_20d": 78.7
+        }
+      ]
+    }
+  }
+}
