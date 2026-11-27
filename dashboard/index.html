@@ -444,6 +444,9 @@
     <button class="nav-btn" data-page="page-leverage" onclick="activatePage('page-leverage')">
       <span class="nav-icon">📈</span><span class="nav-label">레버리지</span>
     </button>
+    <button class="nav-btn" data-page="page-worldrisk" onclick="activatePage('page-worldrisk')">
+      <span class="nav-icon">🌍</span><span class="nav-label">월드리스크</span>
+    </button>
   </div>
 </nav>
 
@@ -644,6 +647,16 @@
         <div class="card" id="leverageAlertPanel">불러오는 중...</div>
         <div class="card marathon-panel" id="leverageWinratePanel" style="margin-top:14px;">불러오는 중...</div>
         <div class="card marathon-panel" id="bottomSignalPanel" style="margin-top:14px;">불러오는 중...</div>
+      </div>
+
+      <div class="app-page" id="page-worldrisk" hidden>
+        <header>
+          <h1>🌍 월드 리스크 지수</h1>
+          <div class="sub">관세·전쟁·금리·정치·유가 뉴스 키워드 누적 — 오락용, 투자판단/예측모델 아님</div>
+        </header>
+        <div class="card marathon-panel" id="worldRiskKpiPanel" style="margin-bottom:14px;">불러오는 중...</div>
+        <div class="card marathon-panel" id="worldRiskChartPanel" style="margin-bottom:14px;">불러오는 중...</div>
+        <div class="card marathon-panel" id="worldRiskAlertPanel">불러오는 중...</div>
       </div>
     </div>
   </div>
@@ -2329,6 +2342,116 @@ async function loadLeverageAlerts() {
   }
 }
 loadLeverageAlerts();
+
+// ── 월드 리스크 지수 (world_risk_index.py가 매일 1회 실행 → dashboard/world_risk_index.json에
+// append → git push). 관세/전쟁/Fed금리/정치불안/유가 5개 카테고리의 구글뉴스 키워드 매칭 점수를
+// 누적해서 "평소(30일 이동평균) 대비 오늘 얼마나 이례적인지"만 보여줌. 2개 이상 카테고리가
+// 동시에 이례적으로 뜨면 복합경보. 투자판단/예측모델 아님 — 오락용 세계정세 지수(2026-11-27). ──
+const GH_PATH_WORLDRISK = "dashboard/world_risk_index.json";
+const GH_API_URL_WORLDRISK = `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_PATH_WORLDRISK}`;
+const WR_CATS = [
+  { name: "관세·무역전쟁", color: "var(--cat-invest)" },
+  { name: "전쟁·지정학",   color: "var(--cat-dn8)" },
+  { name: "Fed·금리",      color: "var(--cat-ai)" },
+  { name: "정치불안·선거", color: "var(--cat-love)" },
+  { name: "유가·에너지",   color: "var(--cat-asset)" },
+];
+
+function renderWorldRiskChart(days) {
+  const W = 800, H = 280, padL = 32, padR = 108, padT = 12, padB = 24;
+  const plotW = W - padL - padR, plotH = H - padT - padB;
+  const n = days.length;
+  const xFor = i => padL + (n <= 1 ? 0 : (plotW * i) / (n - 1));
+  const yFor = v => padT + plotH - (plotH * v) / 100;
+
+  let gridHtml = "";
+  [0, 25, 50, 75, 100].forEach(v => {
+    const y = yFor(v);
+    gridHtml += `<line x1="${padL}" y1="${y}" x2="${W - padR}" y2="${y}" stroke="var(--gridline, var(--border))" stroke-width="1"/>`;
+    gridHtml += `<text x="${padL - 6}" y="${y + 3}" font-size="9" fill="var(--text-muted)" text-anchor="end">${v}</text>`;
+  });
+
+  // x축 라벨: 너무 촘촘해지지 않게 최대 6개만 간격 두고 표시
+  const xLabelStep = Math.max(1, Math.ceil(n / 6));
+  let xLabelHtml = "";
+  days.forEach((d, i) => {
+    if (i % xLabelStep === 0 || i === n - 1) {
+      xLabelHtml += `<text x="${xFor(i)}" y="${H - padB + 13}" font-size="9" fill="var(--text-muted)" text-anchor="middle">${d.date.slice(5)}</text>`;
+    }
+  });
+
+  let linesHtml = "";
+  WR_CATS.forEach(cat => {
+    let pathD = "";
+    let drawing = false;
+    let lastPoint = null;
+    days.forEach((d, i) => {
+      const score = d.categories && d.categories[cat.name] ? d.categories[cat.name].avg_score : null;
+      if (score == null) { drawing = false; return; }
+      const x = xFor(i), y = yFor(score);
+      pathD += (drawing ? " L " : " M ") + x + " " + y;
+      drawing = true;
+      lastPoint = { x, y };
+    });
+    if (pathD) {
+      linesHtml += `<path d="${pathD.trim()}" fill="none" stroke="${cat.color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>`;
+      if (lastPoint) {
+        linesHtml += `<circle cx="${lastPoint.x}" cy="${lastPoint.y}" r="3" fill="${cat.color}"/>`;
+        linesHtml += `<text x="${lastPoint.x + 7}" y="${lastPoint.y + 3}" font-size="10" fill="${cat.color}" font-weight="700">${cat.name}</text>`;
+      }
+    }
+  });
+
+  return `<svg viewBox="0 0 ${W} ${H}" style="width:100%; height:auto; display:block;">${gridHtml}${xLabelHtml}${linesHtml}</svg>`;
+}
+
+async function loadWorldRisk() {
+  const kpiPanel = document.getElementById("worldRiskKpiPanel");
+  const chartPanel = document.getElementById("worldRiskChartPanel");
+  const alertPanel = document.getElementById("worldRiskAlertPanel");
+  if (!kpiPanel || !chartPanel || !alertPanel) return;
+  try {
+    const res = await fetch(GH_API_URL_WORLDRISK, { cache: "no-store", headers: { "Accept": "application/vnd.github.raw+json" } });
+    if (!res.ok) {
+      const msg = `<div class="board-text" style="color:var(--text-muted);">아직 기록 없음(첫 실행 전)</div>`;
+      kpiPanel.innerHTML = msg; chartPanel.innerHTML = ""; alertPanel.innerHTML = msg;
+      return;
+    }
+    const days = await res.json();
+    if (!days.length) { kpiPanel.innerHTML = `<div class="board-text" style="color:var(--text-muted);">아직 기록 없음</div>`; return; }
+    days.sort((a, b) => a.date.localeCompare(b.date));
+    const today = days[days.length - 1];
+
+    let kpiHtml = `<h3>🌍 오늘(${today.date}) 카테고리별 점수</h3><div class="kpi-row" style="display:flex; flex-wrap:wrap; gap:8px; margin-top:8px;">`;
+    WR_CATS.forEach(cat => {
+      const c = today.categories && today.categories[cat.name];
+      const scoreText = (c && c.avg_score != null) ? c.avg_score : "N/A";
+      const warn = c && c.is_warn;
+      kpiHtml += `<div class="kpi" style="border-left:3px solid ${cat.color};">
+        <div class="label">${cat.name}${warn ? " ⚠️" : ""}</div>
+        <div class="value" style="color:${cat.color};">${scoreText}</div>
+        <div class="sub">30일평균 ${c && c.moving_avg_30d != null ? c.moving_avg_30d : "N/A"}</div>
+      </div>`;
+    });
+    kpiHtml += `</div>`;
+    kpiPanel.innerHTML = kpiHtml;
+
+    chartPanel.innerHTML = `<h3>📈 최근 추이</h3>` + renderWorldRiskChart(days.slice(-30));
+
+    if (today.composite_alert) {
+      alertPanel.innerHTML = `<div class="board-item" style="border-left:3px solid var(--cat-invest); padding-left:10px;">
+        <div class="board-date" style="color:var(--cat-invest); font-weight:700;">🚨 복합경보</div>
+        <div class="board-text">${(today.warn_categories || []).join(", ")} — 동시에 평소 대비 이례적 상승. 여러 리스크가 겹치면 체감 충격이 커진다는 걸 규칙화한 것, 매매신호 아님.</div>
+      </div>`;
+    } else {
+      alertPanel.innerHTML = `<div class="board-text" style="color:var(--text-muted);">복합경보 없음</div>`;
+    }
+  } catch (e) {
+    kpiPanel.innerHTML = `<div class="board-text" style="color:var(--text-muted);">불러오기 실패</div>`;
+    chartPanel.innerHTML = ""; alertPanel.innerHTML = "";
+  }
+}
+loadWorldRisk();
 
 // ── 레버리지ETF 신호 승률표 (daily_signal_check.py + export_leverage_methodology_to_dashboard.py가
 // 생성 → dashboard/leverage_signal_methodology.json, 정기 실행 안 함, 사장님이 다시 돌려달라고
