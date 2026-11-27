@@ -2380,7 +2380,8 @@ function renderWorldRiskChart(days) {
     }
   });
 
-  let linesHtml = "";
+  let pathsHtml = "";
+  const endPoints = []; // 끝점 라벨은 겹침방지 후 한번에 그림(초기 데이터 적을 때 5개 점수가 가까워서 겹치는 문제, 2026-11-27 확인)
   WR_CATS.forEach(cat => {
     let pathD = "";
     let drawing = false;
@@ -2394,15 +2395,38 @@ function renderWorldRiskChart(days) {
       lastPoint = { x, y };
     });
     if (pathD) {
-      linesHtml += `<path d="${pathD.trim()}" fill="none" stroke="${cat.color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>`;
+      pathsHtml += `<path d="${pathD.trim()}" fill="none" stroke="${cat.color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>`;
       if (lastPoint) {
-        linesHtml += `<circle cx="${lastPoint.x}" cy="${lastPoint.y}" r="3" fill="${cat.color}"/>`;
-        linesHtml += `<text x="${lastPoint.x + 7}" y="${lastPoint.y + 3}" font-size="10" fill="${cat.color}" font-weight="700">${cat.name}</text>`;
+        pathsHtml += `<circle cx="${lastPoint.x}" cy="${lastPoint.y}" r="3" fill="${cat.color}"/>`;
+        endPoints.push({ name: cat.name, color: cat.color, x: lastPoint.x, y: lastPoint.y, labelY: lastPoint.y });
       }
     }
   });
 
-  return `<svg viewBox="0 0 ${W} ${H}" style="width:100%; height:auto; display:block;">${gridHtml}${xLabelHtml}${linesHtml}</svg>`;
+  // 라벨 y좌표 겹침방지: y값(=점수) 순으로 정렬 후 최소 간격(12px) 확보되게 아래로 밀어내기
+  const MIN_LABEL_GAP = 12;
+  endPoints.sort((a, b) => a.y - b.y);
+  for (let i = 1; i < endPoints.length; i++) {
+    if (endPoints[i].labelY - endPoints[i - 1].labelY < MIN_LABEL_GAP) {
+      endPoints[i].labelY = endPoints[i - 1].labelY + MIN_LABEL_GAP;
+    }
+  }
+  const maxLabelY = H - padB - 2;
+  if (endPoints.length && endPoints[endPoints.length - 1].labelY > maxLabelY) {
+    const overflow = endPoints[endPoints.length - 1].labelY - maxLabelY;
+    endPoints.forEach(p => { p.labelY -= overflow; });
+  }
+
+  let labelsHtml = "";
+  endPoints.forEach(p => {
+    // 점과 라벨 위치가 많이 벌어지면(겹침방지로 밀려남) 가는 연결선을 그어 어떤 라벨이 어떤 점인지 표시
+    if (Math.abs(p.labelY - p.y) > 2) {
+      labelsHtml += `<line x1="${p.x + 4}" y1="${p.y}" x2="${p.x + 7}" y2="${p.labelY}" stroke="${p.color}" stroke-width="1" opacity="0.5"/>`;
+    }
+    labelsHtml += `<text x="${p.x + 8}" y="${p.labelY + 3}" font-size="10" fill="${p.color}" font-weight="700">${p.name}</text>`;
+  });
+
+  return `<svg viewBox="0 0 ${W} ${H}" style="width:100%; height:auto; display:block;">${gridHtml}${xLabelHtml}${pathsHtml}${labelsHtml}</svg>`;
 }
 
 async function loadWorldRisk() {
