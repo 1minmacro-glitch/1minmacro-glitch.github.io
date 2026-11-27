@@ -1,10 +1,84 @@
 {
-  "generated_at_utc": "2026-11-26T21:00:08Z",
-  "fg_value": 14.9967450271248,
+  "generated_at_utc": "2026-11-27T21:00:09Z",
+  "fg_value": 24.8857142857143,
   "fg_bucket": "극단적공포",
   "fg_stale_note": "",
-  "risk_flag_active": true,
-  "risk_flag_reason": "섹터동시다발(3/12개 동시스파이크: SOXL,TQQQ,BIB)",
+  "risk_flag_active": false,
+  "risk_flag_reason": "",
   "buy_candidates": [],
-  "avoid_warnings": []
+  "avoid_warnings": [
+    {
+      "ticker": "YINN",
+      "label": "중국3배",
+      "volume_ratio": 2.1,
+      "same_day_pct": 6.51,
+      "ma5_flag": "O",
+      "stats": {
+        "n": 25,
+        "mean": -3.98,
+        "winrate": 44.0,
+        "episode_n": 16,
+        "horizons": {
+          "1": {
+            "n": 25,
+            "mean": 0.47,
+            "winrate": 52.0
+          },
+          "3": {
+            "n": 25,
+            "mean": -2.68,
+            "winrate": 36.0
+          },
+          "5": {
+            "n": 25,
+            "mean": -3.98,
+            "winrate": 44.0
+          },
+          "10": {
+            "n": 25,
+            "mean": -5.79,
+            "winrate": 44.0
+          },
+          "20": {
+            "n": 24,
+            "mean": -0.64,
+            "winrate": 41.7
+          }
+        },
+        "magnitude_buckets": {
+          "small": {
+            "n": 9,
+            "mean": -5.64,
+            "winrate": 44.4
+          },
+          "medium": {
+            "n": 8,
+            "mean": -1.88,
+            "winrate": 50.0
+          },
+          "large": {
+            "n": 8,
+            "mean": -4.2,
+            "winrate": 37.5
+          }
+        },
+        "magnitude_edges": [
+          4.2,
+          7.25
+        ],
+        "max_abs_same_day_pct": 19.86,
+        "raw_grade": "↔엇갈림(참고만)",
+        "risk_flag": false,
+        "adjusted": {
+          "winrate": 50.0,
+          "mean": -1.88,
+          "n": 8,
+          "basis": "당일변동폭 medium구간 매칭",
+          "outlier": false
+        },
+        "grade": "↔엇갈림(참고만)",
+        "dollar_per_1000": -40
+      }
+    }
+  ]
 }
