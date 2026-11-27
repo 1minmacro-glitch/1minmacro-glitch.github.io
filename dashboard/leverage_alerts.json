@@ -4069,68 +4069,20 @@
   },
   {
     "date": "2026-11-27",
-    "checked_at_utc": "2026-11-27T16:15:35.325159+00:00",
+    "checked_at_utc": "2026-11-27T17:00:41.549396+00:00",
     "threshold": 8.0,
     "hits": [
       {
         "ticker": "3LCO.L",
         "name": "Coinbase",
-        "latest_vol": 2148422,
+        "latest_vol": 2150922,
         "avg_vol": 113752,
         "ratio": 18.9,
-        "price": 0.0155,
+        "price": 0.0165,
         "date": "2026-11-27",
         "followup": {},
-        "resolved": false,
-        "opportunity": {
-          "ticker": "3LCO.L",
-          "fetched_at_utc": "2026-11-27T16:15:34.700926+00:00",
-          "as_of_candle": "2026-11-27",
-          "opportunity_score": 73.21,
-          "components": {
-            "rvol": {
-              "score": 30.0,
-              "ratio": 18.89,
-              "max": 30,
-              "source": "yfinance Volume"
-            },
-            "trend": {
-              "score": 6.25,
-              "max": 25,
-              "source": "yfinance OHLC",
-              "rsi": 24.71,
-              "macd_hist": 0.0011,
-              "price_sma20_gap_pct": -43.94,
-              "high_52w_distance_pct": -99.15
-            },
-            "vol_price_match": {
-              "score": 15.0,
-              "max": 15,
-              "same_day_pct": 3.33,
-              "source": "yfinance OHLCV"
-            },
-            "relative_strength": {
-              "score": null,
-              "max": 15,
-              "source": "yfinance(ETF+benchmark)"
-            },
-            "short_squeeze": {
-              "score": null,
-              "max": 10,
-              "source": "yfinance .info(FINRA 집계)"
-            }
-          },
-          "flags": {
-            "event_distance": null,
-            "regime_vol": {
-              "vix": 25.34,
-              "vix_3mo_avg": 18.52,
-              "regime": "변동성 확대"
-            }
-          }
-        }
+        "resolved": false
       }
-    ],
-    "source": "realtime_preclose"
+    ]
   }
 ]
