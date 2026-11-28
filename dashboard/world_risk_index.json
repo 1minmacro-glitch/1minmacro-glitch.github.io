@@ -4,7 +4,7 @@
     "checked_at_utc": "2026-11-27T09:26:49.054055+00:00",
     "categories": {
       "관세·무역전쟁": {
-        "avg_score": 30.0,
+        "avg_score": 6.8,
         "headline_count": 40,
         "matched": [
           {
@@ -58,7 +58,7 @@
         "is_warn": false
       },
       "전쟁·지정학": {
-        "avg_score": 35.0,
+        "avg_score": 0.9,
         "headline_count": 40,
         "matched": [
           {
@@ -72,7 +72,7 @@
         "is_warn": false
       },
       "Fed·금리": {
-        "avg_score": 25.0,
+        "avg_score": 9.4,
         "headline_count": 40,
         "matched": [
           {
@@ -156,7 +156,7 @@
         "is_warn": false
       },
       "정치불안·선거": {
-        "avg_score": 20.0,
+        "avg_score": 14.0,
         "headline_count": 40,
         "matched": [
           {
@@ -356,39 +356,29 @@
     },
     "warn_categories": [],
     "composite_alert": false,
-    "composite_score": 80,
-    "composite_label": "매우위험"
+    "composite_score": 27,
+    "composite_label": "주의"
   },
   {
     "date": "2026-11-28",
-    "checked_at_utc": "2026-11-27T23:00:28.248238+00:00",
+    "checked_at_utc": "2026-11-28T02:13:37.079004+00:00",
     "categories": {
       "관세·무역전쟁": {
-        "avg_score": 30.0,
+        "avg_score": 3.8,
         "headline_count": 40,
         "matched": [
+          {
+            "title": "일본 정부, 한국·중국산 용융아연도금강판에 최대 55.3% 반덤핑 관세 5년 부과 결정 - 글로벌이코노믹",
+            "direction": "악화",
+            "score": 30
+          },
           {
             "title": "[김대호 진단] 호남 반도체와 트럼프 관세폭탄 - 글로벌이코노믹",
             "direction": "악화",
             "score": 30
           },
           {
-            "title": "“대통령이 경제적 자해를 했다”…저축까지 관세인상 핑계삼은 트럼프 - 매일경제",
-            "direction": "악화",
-            "score": 30
-          },
-          {
-            "title": "“물가 뛰는데 관세 추가 부과…트럼프, 경제적 자해행위” - 동아일보",
-            "direction": "악화",
-            "score": 30
-          },
-          {
-            "title": "1.6조 관세 폭탄 맞은 폭스바겐…印 소송서 기아·벤츠 끌어들였다 - 한국신용신문",
-            "direction": "악화",
-            "score": 30
-          },
-          {
-            "title": "New Tariffs on China Risk Undermining Trade Truce With U.S. - WSJ",
+            "title": "美 관세 25% 인상 여지…대미 투자 이행 압박 커지나 - 스페셜경제",
             "direction": "악화",
             "score": 30
           },
@@ -398,49 +388,34 @@
             "score": 30
           },
           {
-            "title": "Why Trump’s New Tariff Probably Won’t Hurt Taiwan - https://dominotheory.com/",
-            "direction": "악화",
-            "score": 30
-          },
-          {
-            "title": "Five takeaways from Trump’s new tariffs - DatamarNews",
-            "direction": "악화",
-            "score": 30
-          },
-          {
-            "title": "USTR's New Tariffs Would Hit Ag Markets - Western Ag Network",
+            "title": "U.S. tariff-hike threats pile pressure on partners to sign trade deals - CNBC",
             "direction": "악화",
             "score": 30
           }
         ],
-        "moving_avg_30d": 30.0,
-        "deviation": 0.0,
+        "moving_avg_30d": 6.8,
+        "deviation": -3.0,
         "is_warn": false
       },
       "전쟁·지정학": {
         "avg_score": 0.0,
         "headline_count": 40,
         "matched": [],
-        "moving_avg_30d": 35.0,
-        "deviation": -35.0,
+        "moving_avg_30d": 0.9,
+        "deviation": -0.9,
         "is_warn": false
       },
       "Fed·금리": {
-        "avg_score": 22.4,
+        "avg_score": 11.9,
         "headline_count": 40,
         "matched": [
           {
-            "title": "금리 인상 확률이 98%인데, 10년 국채 금리는 왜 내려갈까? - CME Group",
+            "title": "“한은 금리 인상, 이제 시작일 뿐?”…다시 빨라진 글로벌 ‘긴축 시계’ - 매일경제 마켓",
             "direction": "악화",
             "score": 25
           },
           {
             "title": "[뉴욕환시] 달러, 위험선호 회복·연준 긴축 전망에 상승 - KB Think",
-            "direction": "악화",
-            "score": 25
-          },
-          {
-            "title": "“한은 금리 인상, 이제 시작일 뿐?”…다시 빨라진 글로벌 ‘긴축 시계’ - 매일경제 마켓",
             "direction": "악화",
             "score": 25
           },
@@ -460,12 +435,12 @@
             "score": 25
           },
           {
-            "title": "나스닥100 변동성 2025년 4월 이후 최대…연준 금리 인상 임박 - BeInCrypto",
+            "title": "연준 목표 2배로 치솟은 미국 물가 3.8% 인상률...\"금리 인상 가능성 99%\" - YTN",
             "direction": "악화",
             "score": 25
           },
           {
-            "title": "연준 목표 2배로 치솟은 미국 물가 3.8% 인상률...\"금리 인상 가능성 99%\" - YTN",
+            "title": "나스닥100 변동성 2025년 4월 이후 최대…연준 금리 인상 임박 - BeInCrypto",
             "direction": "악화",
             "score": 25
           },
@@ -475,27 +450,37 @@
             "score": 25
           },
           {
-            "title": "미 달러화: 노동시장 견조세에 연준 두 차례 금리 인상 전망 – 코메르츠방크 - www.tmgm.com",
-            "direction": "악화",
-            "score": 25
-          },
-          {
-            "title": "금리 인상폭 어디까지?...연준서 나온 '빅스텝론' [자막뉴스] - YTN",
-            "direction": "악화",
-            "score": 25
-          },
-          {
             "title": "월가 \"美 신규 관세에 연준 추가 금리 인상 가능성 커져\" - 연합인포맥스",
             "direction": "악화",
             "score": 25
           },
           {
-            "title": "미국 연준 ‘물가 압력’ 경고…12월 금리 인상 무게 - KBS 뉴스",
+            "title": "미 달러화: 노동시장 견조세에 연준 두 차례 금리 인상 전망 – 코메르츠방크 - www.tmgm.com",
             "direction": "악화",
             "score": 25
           },
           {
-            "title": "연준 금리 인상 전망에 유로화 1.0950 부근으로 하락…데 코스, 차기 ECB 총재 유력 - www.tmgm.com",
+            "title": "금값 하락..연준 금리 인상 우려 - TradingView",
+            "direction": "악화",
+            "score": 25
+          },
+          {
+            "title": "한은 금통위, 기준금리 3.25%로 인상…성장률 전망 크게 올려 - 조선일보",
+            "direction": "악화",
+            "score": 25
+          },
+          {
+            "title": "\"젠슨 황 이탈은 금리 3번 인상 충격\"...미국 경제의 민낯 - YTN",
+            "direction": "악화",
+            "score": 25
+          },
+          {
+            "title": "Fed Rate Hike Odds Rise To Almost 100%: Can AI Selloff Force A Rethink? - TalkMarkets - Howl.Link",
+            "direction": "악화",
+            "score": 25
+          },
+          {
+            "title": "Markets Bet on Fed, ECB and BOE Rate Hikes Over the Next 12 Months as High Rates Could Last Until 2031 - KuCoin",
             "direction": "악화",
             "score": 25
           },
@@ -510,28 +495,23 @@
             "score": 25
           },
           {
-            "title": "Gold Rebounds for the Week, but Fed Rate Hike Fears Keep Bears in Control - Investing.com",
+            "title": "Gold slips, silver gains as Fed rate hike expectations persist in holiday trading - Kitco PM Report - Kitco",
             "direction": "악화",
             "score": 25
           },
           {
-            "title": "Is the U.S. stock market crash the Federal Reserve’s fault? Former Goldman Sachs strategist urges prompt dovish signals - 富途牛牛",
-            "direction": "완화",
-            "score": -25
-          },
-          {
-            "title": "Gold slips, silver gains as Fed rate hike expectations persist in holiday trading - Kitco PM Report - Kitco",
+            "title": "Gold Rebounds for the Week, but Fed Rate Hike Fears Keep Bears in Control - Investing.com",
             "direction": "악화",
             "score": 25
           }
         ],
-        "moving_avg_30d": 25.0,
-        "deviation": -2.6,
+        "moving_avg_30d": 9.4,
+        "deviation": 2.5,
         "is_warn": false
       },
       "정치불안·선거": {
-        "avg_score": 20.0,
-        "headline_count": 40,
+        "avg_score": 13.0,
+        "headline_count": 37,
         "matched": [
           {
             "title": "“12·3 계엄은 내란 아니다” 31%, 2년 새 내란인식 14%P 줄어···조희대 탄핵 찬성 35%·반대 42%[한국갤럽] - 경향신문",
@@ -554,11 +534,6 @@
             "score": 20
           },
           {
-            "title": "민주당, ‘계엄 2년’ 다음 달 3일 연석회의 개최…‘조희대 탄핵’ 등 논의 - KBS 뉴스",
-            "direction": "악화",
-            "score": 20
-          },
-          {
             "title": "‘계엄 2년’ 앞두고 조희대 탄핵 정국…국힘, ‘사법부 독립’ 여론전 - 이투데이",
             "direction": "악화",
             "score": 20
@@ -569,7 +544,7 @@
             "score": 20
           },
           {
-            "title": "與, '계엄 2년' 내달 3일 연석회의…'曺 탄핵' 등 현안 설명 - 연합뉴스",
+            "title": "민주당, ‘계엄 2년’ 다음 달 3일 연석회의 개최…‘조희대 탄핵’ 등 논의 - KBS 뉴스",
             "direction": "악화",
             "score": 20
           },
@@ -579,7 +554,7 @@
             "score": 20
           },
           {
-            "title": "[주간정국분석] 12·3 계엄 2주기, 조희대 탄핵 공방, 최민희 당원권 2년 정지 - 강릉뉴스",
+            "title": "국힘, '계엄 2주년'에 대법원장 탄핵 추진 규탄 장외집회 검토 - 연합뉴스",
             "direction": "악화",
             "score": 20
           },
@@ -594,37 +569,7 @@
             "score": 20
           },
           {
-            "title": "與, 계엄 2년 내달 3일 연석회의 개최...조희대 탄핵 논의 - 아주경제",
-            "direction": "악화",
-            "score": 20
-          },
-          {
-            "title": "'12·3 비상계엄은 내란' 2년새 14%p 감소 - OhmyNews",
-            "direction": "악화",
-            "score": 20
-          },
-          {
-            "title": "민주당이 조희대 ‘계엄 당시 침묵’ 꺼낸 까닭 - 시사위크",
-            "direction": "악화",
-            "score": 20
-          },
-          {
-            "title": "국힘, ’계엄 2주년’에 曺 탄핵 추진 규탄 장외집회 검토 - 연합뉴스TV",
-            "direction": "악화",
-            "score": 20
-          },
-          {
-            "title": "민주당, 다음달 3일 ‘계엄 2년’ 연석회의…조희대 탄핵 등 설명 - 헤럴드경제",
-            "direction": "악화",
-            "score": 20
-          },
-          {
-            "title": "계엄 2주기, 계파갈등 조짐에…국힘 당권파 ‘보수재건 프로젝트’ 세결집 - 채널A",
-            "direction": "악화",
-            "score": 20
-          },
-          {
-            "title": "국민의힘, ‘계엄 2년’ 당일 서울 도심 장외집회 검토…“대법원장 탄핵 규탄” - KBS 뉴스",
+            "title": "[주간정국분석] 12·3 계엄 2주기, 조희대 탄핵 공방, 최민희 당원권 2년 정지 - 강릉뉴스",
             "direction": "악화",
             "score": 20
           },
@@ -634,17 +579,42 @@
             "score": 20
           },
           {
+            "title": "민주당, 다음달 3일 ‘계엄 2년’ 연석회의…조희대 탄핵 등 설명 - 헤럴드경제",
+            "direction": "악화",
+            "score": 20
+          },
+          {
+            "title": "국힘, ’계엄 2주년’에 曺 탄핵 추진 규탄 장외집회 검토 - 연합뉴스TV",
+            "direction": "악화",
+            "score": 20
+          },
+          {
+            "title": "與, '계엄 2년' 내달 3일 연석회의…'曺 탄핵' 등 현안 설명 - 연합뉴스",
+            "direction": "악화",
+            "score": 20
+          },
+          {
+            "title": "국민의힘, ‘계엄 2년’ 당일 서울 도심 장외집회 검토…“대법원장 탄핵 규탄” - KBS 뉴스",
+            "direction": "악화",
+            "score": 20
+          },
+          {
+            "title": "與, 계엄 2년 내달 3일 연석회의 개최...조희대 탄핵 논의 - 아주경제",
+            "direction": "악화",
+            "score": 20
+          },
+          {
+            "title": "국힘, '계엄 2주년'에 조희대 탄핵 추진 규탄 장외집회 검토 - BBS불교방송",
+            "direction": "악화",
+            "score": 20
+          },
+          {
+            "title": "국힘, '비상계엄 2년' 당일 서울 장외 집회 검토 중 - MBC 뉴스",
+            "direction": "악화",
+            "score": 20
+          },
+          {
             "title": "Democratic Party Builds Coalition for Jo Hee-de Impeachment - 조선일보",
-            "direction": "악화",
-            "score": 20
-          },
-          {
-            "title": "South African President Cyril Ramaphosa has dramatically emerged from the impeachment crisis hours b.. - 매일경제",
-            "direction": "악화",
-            "score": 20
-          },
-          {
-            "title": "Ex-Cale88 co-owner, BOC official to testify in Sara Duterte impeachment trial Former Cale88 Foods Corporation co-owner Dr. Lourdes Tingson-Lebosada is expected to testify during Vice President Sara Duterte’s impeachment trial. Full story: https://www.rappl - Facebook",
             "direction": "악화",
             "score": 20
           },
@@ -659,13 +629,13 @@
             "score": 20
           },
           {
-            "title": "Democratic Party Advances Chief Justice Jo's Impeachment with Five-Party Alliance - 조선일보",
+            "title": "Court Sets Aside Phala Phala Report, Halting Ramaphosa Impeachment - https://streamlinefeed.co.ke/",
             "direction": "악화",
             "score": 20
           }
         ],
-        "moving_avg_30d": 20.0,
-        "deviation": 0.0,
+        "moving_avg_30d": 14.0,
+        "deviation": -1.0,
         "is_warn": false
       },
       "유가·에너지": {
@@ -683,7 +653,27 @@
             "score": -25
           },
           {
+            "title": "뉴욕증시, AI 강세에 일제히 상승… 국제유가는 하락 - 천지일보",
+            "direction": "완화",
+            "score": -25
+          },
+          {
+            "title": "국제유가, 1% 안팎 하락 마감⋯OPEC+ 회의 앞두고 관망 [상보] - 이투데이",
+            "direction": "완화",
+            "score": -25
+          },
+          {
             "title": "[국제유가] 1% 안팎 하락…브렌트유, 주간 3% 상승 - 파이낸셜뉴스",
+            "direction": "완화",
+            "score": -25
+          },
+          {
+            "title": "주유소 기름값 28주째↓…국제유가도 동반 하락 - 세계일보",
+            "direction": "완화",
+            "score": -25
+          },
+          {
+            "title": "중동 긴장 고조로 최근 유가 하락세에 제동-CNN - 뉴시스",
             "direction": "완화",
             "score": -25
           },
@@ -708,21 +698,6 @@
             "score": -25
           },
           {
-            "title": "유럽 LCC 노르스 애틀랜틱, 파산 신청…유가 급등에 자금난 - KB Think",
-            "direction": "악화",
-            "score": 25
-          },
-          {
-            "title": "국제유가, 1% 안팎 하락 마감⋯OPEC+ 회의 앞두고 관망 [상보] - 이투데이",
-            "direction": "완화",
-            "score": -25
-          },
-          {
-            "title": "[인도증시] 차익 실현·중동발 유가 급등에 1%대 하락...IT·금융주 동반 약세 - 뉴스핌",
-            "direction": "악화",
-            "score": 25
-          },
-          {
             "title": "Oil Surge Pushes Indonesia to Mull First Subsidized Fuel Price Hike in Years - Crude Oil Prices Today | OilPrice.com",
             "direction": "악화",
             "score": 25
@@ -735,7 +710,7 @@
     },
     "warn_categories": [],
     "composite_alert": false,
-    "composite_score": 58,
-    "composite_label": "경계"
+    "composite_score": 25,
+    "composite_label": "주의"
   }
 ]
