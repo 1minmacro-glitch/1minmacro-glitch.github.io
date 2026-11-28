@@ -655,6 +655,7 @@
           <div class="sub">관세·전쟁·금리·정치·유가 뉴스 키워드 누적 — 오락용, 투자판단/예측모델 아님</div>
         </header>
         <div class="card marathon-panel" id="worldRiskGaugePanel" style="margin-bottom:14px;">불러오는 중...</div>
+        <div class="card marathon-panel" id="worldRiskVixSignalPanel" style="margin-bottom:14px;">불러오는 중...</div>
         <div class="card marathon-panel" id="worldRiskKpiPanel" style="margin-bottom:14px;">불러오는 중...</div>
         <div class="card marathon-panel" id="worldRiskChartPanel" style="margin-bottom:14px;">불러오는 중...</div>
         <div class="card marathon-panel" id="worldRiskAlertPanel" style="margin-bottom:14px;">불러오는 중...</div>
@@ -2511,15 +2512,16 @@ function renderWorldRiskChart(days) {
 
 async function loadWorldRisk() {
   const gaugePanel = document.getElementById("worldRiskGaugePanel");
+  const vixSignalPanel = document.getElementById("worldRiskVixSignalPanel");
   const kpiPanel = document.getElementById("worldRiskKpiPanel");
   const chartPanel = document.getElementById("worldRiskChartPanel");
   const alertPanel = document.getElementById("worldRiskAlertPanel");
-  if (!gaugePanel || !kpiPanel || !chartPanel || !alertPanel) return;
+  if (!gaugePanel || !vixSignalPanel || !kpiPanel || !chartPanel || !alertPanel) return;
   try {
     const res = await fetch(GH_API_URL_WORLDRISK, { cache: "no-store", headers: { "Accept": "application/vnd.github.raw+json" } });
     if (!res.ok) {
       const msg = `<div class="board-text" style="color:var(--text-muted);">아직 기록 없음(첫 실행 전)</div>`;
-      gaugePanel.innerHTML = msg; kpiPanel.innerHTML = msg; chartPanel.innerHTML = ""; alertPanel.innerHTML = msg;
+      gaugePanel.innerHTML = msg; vixSignalPanel.innerHTML = msg; kpiPanel.innerHTML = msg; chartPanel.innerHTML = ""; alertPanel.innerHTML = msg;
       return;
     }
     const days = await res.json();
@@ -2532,6 +2534,27 @@ async function loadWorldRisk() {
     gaugePanel.innerHTML = `<h3>🌍 종합 리스크 점수(${today.date})</h3>
       <div class="marathon-note">5개 카테고리를 하나로 합친 종합지수 — 오락용, 투자판단/예측모델 아님</div>`
       + renderWorldRiskGauge(compositeScore, compositeLabel);
+
+    // 위 종합점수(뉴스 기반, 방향: 높을수록 나쁨)와 VIX(방향: 높을수록 과거 통계상 이후
+    // 수익률 좋음)는 반대방향이라 하나의 점수로 섞지 않음 — 대신 같은 패널 묶음에 별도
+    // 블록으로 끼워서 "매수포인트 보려면 이것도 같이 보라"는 걸 명시(2026-11-28).
+    const vs = today.vix_buy_signal;
+    if (vs && vs.available) {
+      let vsHtml = `<h3>📊 VIX ${vs.vix}(${vs.regime}) — 실측 백테스트 매수신호</h3>
+        <div class="marathon-note">위 종합점수와 무관한 별개 지표 — 10년 실측, 매매신호 아님</div>
+        <div class="kpi-row" style="display:flex; flex-wrap:wrap; gap:8px; margin-top:8px;">`;
+      Object.entries(vs.tickers || {}).forEach(([ticker, d]) => {
+        vsHtml += `<div class="kpi" style="border-left:3px solid var(--cat-invest);">
+          <div class="label">${ticker} · ${d.band}${d.low_confidence ? " ⚠" : ""}</div>
+          <div class="value">${d.fwd_20d_mean}%</div>
+          <div class="sub">20일후 평균 · 승률 ${d.win_rate_20d}%</div>
+        </div>`;
+      });
+      vsHtml += `</div>`;
+      vixSignalPanel.innerHTML = vsHtml;
+    } else {
+      vixSignalPanel.innerHTML = `<div class="board-text" style="color:var(--text-muted);">VIX 매수신호 데이터 없음(N/A)</div>`;
+    }
 
     let kpiHtml = `<h3>📋 카테고리별 세부점수</h3><div class="kpi-row" style="display:flex; flex-wrap:wrap; gap:8px; margin-top:8px;">`;
     WR_CATS.forEach(cat => {
@@ -2565,7 +2588,7 @@ async function loadWorldRisk() {
     }
   } catch (e) {
     gaugePanel.innerHTML = `<div class="board-text" style="color:var(--text-muted);">불러오기 실패</div>`;
-    kpiPanel.innerHTML = ""; chartPanel.innerHTML = ""; alertPanel.innerHTML = "";
+    vixSignalPanel.innerHTML = ""; kpiPanel.innerHTML = ""; chartPanel.innerHTML = ""; alertPanel.innerHTML = "";
   }
 }
 loadWorldRisk();
